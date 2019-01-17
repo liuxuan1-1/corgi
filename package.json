@@ -1,0 +1,14 @@
+{
+  "name": "corgi",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "tslint-fe": "tslint -c ./corgi-fe/tslint.json './corgi-fe/src/**/*.{ts,tsx}'"
+  },
+  "devDependencies": {
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "tslint-fe"
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "name": "corgi",
+  "name": "corgi-fe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -18,18 +18,13 @@
     "build": "npm run build-css && react-app-rewired build --scripts-version react-scripts-ts",
     "test": "react-app-rewired test --env=jsdom --scripts-version react-scripts-ts",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "eject": "react-scripts-ts eject",
-    "tslint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
+    "eject": "react-scripts-ts eject"
   },
-  "pre-commit": [
-    "tslint"
-  ],
   "devDependencies": {
     "@types/jest": "^23.3.11",
     "@types/node": "^10.12.18",
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
-    "pre-commit": "^1.2.2",
     "react-app-rewired": "1.6.2",
     "ts-import-plugin": "^1.5.5",
     "typescript": "^3.2.2"
