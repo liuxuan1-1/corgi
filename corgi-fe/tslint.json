@@ -1,10 +1,26 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "jsx-alignment": true,
+    "jsx-curly-spacing": "always",
+    "jsx-equals-spacing": "always",
+    "jsx-space-before-trailing-slash": true,
+    "jsx-wrap-multiline": true,
+    "jsx-self-close": true,
+    "jsx-key": true,
+    "jsx-no-bind": true
+  },
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js"
+      "coverage/lcov-report/*.js",
+      "*.json",
+      "**/*.json"
     ]
   }
 }
