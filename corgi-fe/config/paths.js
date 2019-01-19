@@ -48,7 +48,6 @@ const appIndexPath = (function () {
     if (fs.statSync(path.resolve(srcPath, fileName)).isDirectory()) {
       webpackResult[fileName] = [
         require.resolve('./polyfills'),
-        require.resolve('react-dev-utils/webpackHotDevClient'),
         path.resolve(srcPath, fileName, 'index.tsx')
       ]
       pathResult.push(path.resolve(srcPath, fileName, 'index.tsx'))

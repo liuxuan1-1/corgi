@@ -7,11 +7,13 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const tsImportPluginFactory = require('ts-import-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const precss = require('precss')();
 
-const { generateHTMLWebpackPlugin } = require('./generateConfiguration');
+const { generateDevHTMLWebpackPlugin, generateDevEntri } = require('./generateConfiguration');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -23,6 +25,19 @@ const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
+const importPluginOption = [
+  {
+    libraryName: 'antd',
+    libraryDirectory: 'lib',
+    style: 'css'
+  },
+  {
+    libraryName: 'antd-mobile',
+    libraryDirectory: 'lib',
+    style: 'css',
+  }
+];
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -33,7 +48,7 @@ module.exports = {
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
-  entry: paths.appWebpackIndexJs,
+  entry: generateDevEntri(),
   output: {
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
@@ -77,7 +92,9 @@ module.exports = {
       '.jsx',
     ],
     alias: {
-      
+      'babel-runtime': path.dirname(
+        require.resolve('babel-runtime/package.json')
+      ),
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -125,8 +142,10 @@ module.exports = {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
-            options: {
-              
+            options: { // 刘翾
+              babelrc: false,
+              presets: [require.resolve('babel-preset-react-app')],
+              plugins: [['babel-plugin-import', importPluginOption]],
               compact: true,
             },
           },
@@ -141,6 +160,9 @@ module.exports = {
                 options: {
                   // disable type checker - we will use it in fork plugin
                   transpileOnly: true,
+                  getCustomTransformers: () => ({
+                    before: [tsImportPluginFactory(importPluginOption)]
+                  }),
                 },
               },
             ],
@@ -182,6 +204,40 @@ module.exports = {
               },
             ],
           },
+          {
+            test: /\.scss$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                }
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  // don't need now
+                  // ident: 'postcss',
+                  plugins: () => [
+                    precss,
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              }
+            ],
+          },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
@@ -207,7 +263,7 @@ module.exports = {
   plugins: [
 
     // 自动生成HTMLWebpackPlugin
-    ...generateHTMLWebpackPlugin(),
+    ...generateDevHTMLWebpackPlugin(),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:

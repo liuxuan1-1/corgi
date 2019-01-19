@@ -12,7 +12,8 @@
     "jsx-wrap-multiline": true,
     "jsx-self-close": true,
     "jsx-key": true,
-    "jsx-no-bind": true
+    "jsx-no-bind": true,
+    "ordered-imports": false
   },
   "linterOptions": {
     "exclude": [
