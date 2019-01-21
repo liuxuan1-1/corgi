@@ -13,7 +13,10 @@
     "jsx-self-close": true,
     "jsx-key": true,
     "jsx-no-bind": true,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "no-console": {
+      "severity": "warning"
+    }
   },
   "linterOptions": {
     "exclude": [

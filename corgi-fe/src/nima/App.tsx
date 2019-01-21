@@ -21,7 +21,7 @@ class App extends React.Component<IProps> {
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
         <div>
-          <Button>coanima</Button>
+          <Button>nima</Button>
         </div>
       </div>
     );
