@@ -6,13 +6,9 @@
       "single",
       "jsx-double"
     ],
-    "no-console": [
-      true,
-      "dir",
-      "log",
-      "error",
-      "warn"
-    ],
+    "no-console": {
+      "severity": "warning"
+    },
     "space-before-function-paren": false,
     "interface-name": [
       true,

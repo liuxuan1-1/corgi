@@ -10,9 +10,11 @@ import './index.scss';
 ReactDOM.render(
   <HashRouter>
     <Route exact={true} path="/">
-      <Provider store={store}>
-        <App name="123" />
-      </Provider>
+      <React.StrictMode>
+        <Provider store={store}>
+          <App name="123" />
+        </Provider>
+      </React.StrictMode>
     </Route>
   </HashRouter>,
   document.getElementById('root') as HTMLElement
