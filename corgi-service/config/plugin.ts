@@ -6,6 +6,10 @@ const plugin: EggPlugin = {
   //   enable: true,
   //   package: 'egg-view-nunjucks',
   // },
+  mongo: {
+    enable: true,
+    package: 'egg-mongo-native',
+  },
 };
 
 export default plugin;

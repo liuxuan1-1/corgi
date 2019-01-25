@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "egg": "^2.6.1",
+    "egg-mongo-native": "^3.4.2",
     "egg-scripts": "^2.6.0"
   },
   "devDependencies": {
@@ -33,13 +34,14 @@
     "@types/supertest": "^2.0.0",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
-    "egg-ci": "^1.8.0",
     "egg-bin": "^4.6.2",
+    "egg-ci": "^1.8.0",
     "egg-mock": "^3.16.0",
     "egg-ts-helper": "^1.11.0",
     "tslib": "^1.9.0",
-    "tslint": "^4.0.0",
-    "typescript": "^3.0.0"
+    "tslint": "^5.0.0",
+    "typescript": "^3.2.4",
+    "typescript-tslint-plugin": "^0.3.0"
   },
   "engines": {
     "node": ">=8.9.0"

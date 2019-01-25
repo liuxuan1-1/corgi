@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "tslint-fe": "tslint -c ./corgi-fe/tslint.json './corgi-fe/src/**/*.{ts,tsx}'"
+    "tslint-fe": "tslint -c ./corgi-fe/tslint.json './corgi-fe/src/**/*.{ts,tsx}'",
+    "tslint-service": "tslint -c ./corgi-service/tslint.json -p ./corgi-service/tsconfig.json"
   },
   "devDependencies": {
     "pre-commit": "^1.2.2"
   },
   "pre-commit": [
-    "tslint-fe"
+    "tslint-fe",
+    "tslint-service"
   ]
 }

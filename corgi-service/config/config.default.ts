@@ -15,9 +15,20 @@ export default (appInfo: EggAppInfo) => {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
 
+  const mongoConfig = {
+    client: {
+      host: '127.0.0.1',
+      port: '27017',
+      name: 'gkd',
+      user: 'rootgkd',
+      password: 'rootgkd',
+    },
+  };
+
   // the return config will combines to EggAppConfig
   return {
     ...config,
     ...bizConfig,
+    mongo: mongoConfig,
   };
 };

@@ -27,7 +27,6 @@
         "ignoreDefinitionFiles": true,
         "configFile": "./tslint.json",
         "suppressWhileTypeErrorsPresent": false,
-        "mockTypeScriptVersion": false
       }
     ]
   },

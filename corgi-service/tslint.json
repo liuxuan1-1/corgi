@@ -33,7 +33,14 @@
       true,
       "allow-leading-underscore"
     ],
-    "align": [true, "statements"]
+    "align": [true, "statements"],
+    "no-this-assignment": false,
+    "no-object-literal-type-assertion": false,
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": [
+      true,
+      "dev"
+    ]
   }
 }
 
