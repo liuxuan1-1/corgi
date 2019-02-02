@@ -19,9 +19,9 @@ export default (appInfo: EggAppInfo) => {
     client: {
       host: '127.0.0.1',
       port: '27017',
-      name: 'gkd',
-      user: 'rootgkd',
-      password: 'rootgkd',
+      name: 'corgi',
+      user: 'corgiAdmin',
+      password: 'root',
     },
   };
 
