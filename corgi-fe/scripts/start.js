@@ -30,6 +30,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
 const createDevServerConfig = require('../config/webpackDevServer.config');
+const { NAVIGATOR_FILE_NAME } = require('../config/configConst')
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
@@ -89,7 +90,7 @@ choosePort(HOST, DEFAULT_PORT)
         clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
+      openBrowser(urls.localUrlForBrowser + `${NAVIGATOR_FILE_NAME}.html`);
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {

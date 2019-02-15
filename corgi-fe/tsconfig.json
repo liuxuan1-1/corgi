@@ -20,6 +20,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
+    "resolveJsonModule": true,
     "plugins": [
       {
         "name": "typescript-tslint-plugin",

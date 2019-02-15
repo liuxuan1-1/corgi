@@ -92,9 +92,9 @@ module.exports = {
       '.jsx',
     ],
     alias: {
-      'babel-runtime': path.dirname(
-        require.resolve('babel-runtime/package.json')
-      ),
+      // 'babel-runtime': path.dirname(
+      //   require.resolve('babel-runtime/package.json')
+      // ),
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -142,7 +142,7 @@ module.exports = {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
-            options: { // 刘翾
+            options: {
               babelrc: false,
               presets: [require.resolve('babel-preset-react-app')],
               plugins: [['babel-plugin-import', importPluginOption]],

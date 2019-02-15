@@ -118,9 +118,9 @@ module.exports = {
       '.jsx',
     ],
     alias: {
-      'babel-runtime': path.dirname(
-        require.resolve('babel-runtime/package.json')
-      ),
+      // 'babel-runtime': path.dirname(
+      //   require.resolve('babel-runtime/package.json')
+      // ),
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',

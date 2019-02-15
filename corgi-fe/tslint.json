@@ -2,7 +2,8 @@
   "extends": [
     "tslint:latest",
     "tslint-react",
-    "tslint-config-prettier"
+    "tslint-config-prettier",
+    "tslint-react-hooks"
   ],
   "rules": {
     "jsx-alignment": true,
@@ -14,6 +15,7 @@
     "jsx-key": true,
     "jsx-no-bind": true,
     "ordered-imports": false,
+    "react-hooks-nesting": "error",
     "no-console": {
       "severity": "warning"
     }
@@ -22,6 +24,7 @@
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts",
+      "node_modules/**/**/*.ts",
       "coverage/lcov-report/*.js",
       "*.json",
       "**/*.json"
