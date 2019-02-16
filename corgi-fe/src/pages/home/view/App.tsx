@@ -1,15 +1,13 @@
 import * as React from 'react';
+import { inject, observer } from 'mobx-react'
 import { Button } from 'antd';
 import './App.scss';
 
 import logo from './logo.svg';
 
-interface IProps {
-  name: string;
-  enthusiasmLevel?: number;
-}
-
-class App extends React.Component<IProps> {
+@inject('store')
+@observer
+class App extends React.Component<any, any> {
   public render() {
     return (
       <div className="App">
@@ -20,8 +18,9 @@ class App extends React.Component<IProps> {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <h1>====> {this.props.store.num}</h1>
         <div>
-          <Button>nima</Button>
+          <Button onClick={this.props.store.setAddNum}>home</Button>
         </div>
       </div>
     );

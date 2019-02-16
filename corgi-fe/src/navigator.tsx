@@ -5,7 +5,7 @@ import navigatorJson from './navigator.json';
 class App extends React.PureComponent {
   public render () {
     return (
-      <ul>
+      <ul style={{"fontSize": '20px'}}>
         {
           navigatorJson.map((value, key) => (
             <li key={key}>

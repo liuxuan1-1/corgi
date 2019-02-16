@@ -40,7 +40,7 @@ function getServedPath(appPackageJson) {
 
 // 获取全部页面配置路径
 const appIndexPath = (function () {
-  const srcPath = path.resolve(appDirectory, 'src');
+  const srcPath = path.resolve(appDirectory, 'src/pages');
   const webpackResult = {};
   const pathResult = [];
 
