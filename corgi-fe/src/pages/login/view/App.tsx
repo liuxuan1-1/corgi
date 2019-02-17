@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react'
-// import { Layout, Form, Input } from 'antd';
-import Ceshi from '../../../components/test';
+import { Layout } from 'antd';
+import Form from './components/from';
 import './App.scss';
 
+const {
+  Header, Content,
+} = Layout;
 interface Istates {
   count: number,
 }
@@ -18,8 +21,14 @@ class App extends React.Component<{}, Istates> {
   public render() {
     return (
       <div className="App">
-        123
-        <Ceshi />
+        <Layout>
+          <Header>平面设计平台</Header>
+          <Content>
+            <div className="form-wrapper">
+              <Form />
+            </div>
+          </Content>
+        </Layout>
       </div>
     );
   }
