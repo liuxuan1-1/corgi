@@ -3,3 +3,4 @@
 
 import 'egg';
 import 'egg-mongo-native';
+import 'egg-cors';
