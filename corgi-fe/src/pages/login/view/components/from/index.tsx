@@ -15,7 +15,7 @@ class MyForm extends React.Component<IUserFormProps, {}> {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('accountId', {
             rules: [{
               message: 'Please input your username!',
               required: true,

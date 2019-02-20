@@ -1,3 +1,11 @@
+# 接口说明
+
+|路径|说明|传参|
+|:----|:----|:-----|
+|`/api/accounts/login`|登录接口|`accountId`: 用户名, `password`: 密码|
+
+
+
 # hackernews-async-ts
 
 [Hacker News](https://news.ycombinator.com/) showcase using typescript && egg

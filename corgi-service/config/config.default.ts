@@ -25,10 +25,24 @@ export default (appInfo: EggAppInfo) => {
     },
   };
 
+  const session = {
+    key: 'EGG_SESS',
+    maxAge: 24 * 3600 * 1000, // 1 天
+    httpOnly: false,
+    encrypt: true,
+  };
+
+  const staticObj = {
+    gzip: true,
+    prefix: '/corgi/public',
+  };
+
   // the return config will combines to EggAppConfig
   return {
     ...config,
     ...bizConfig,
     mongo: mongoConfig,
+    session,
+    static: staticObj,
   };
 };
