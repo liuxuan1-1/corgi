@@ -3,6 +3,7 @@
 |路径|说明|传参|
 |:----|:----|:-----|
 |`/api/accounts/login`|登录接口|`accountId`: 用户名, `password`: 密码|
+|`/api/accounts/sign`|注册接口|`accountId`: 用户名, `password`: 密码, ``: asd|
 
 
 

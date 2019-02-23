@@ -17,7 +17,7 @@ db.user.insert({
 // permission: 
 //    "root" => 超级管理员, 有全部权限
 //    "generalUser" => 普通用户
-//    "professionals" => 专业设计人员
+//    "professional" => 专业设计人员
 ```
 
 

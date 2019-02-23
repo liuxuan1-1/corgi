@@ -1,5 +1,6 @@
 import { Service } from 'egg';
 import { IResponseBody } from '../../typings';
+import { IUserDocument } from '../../typings/mongo';
 
 /**
  * User Service
@@ -41,6 +42,71 @@ export default class User extends Service {
       return {
         success: true,
         message: '密码错误',
+        data: {
+          ok: false,
+        },
+      };
+    }
+
+    return {
+      success: true,
+      message: '未知错误',
+      data: {
+        ok: false,
+      },
+    };
+  }
+
+  /**
+   * registered user
+   * @param accountId => 账号
+   * @param password => 密码
+   */
+  public async sign(accountId: string, password: string): Promise<IResponseBody> {
+    const { ctx } = this;
+    const doc: IUserDocument = {
+      nickName: '',
+      avatarUrl: '',
+      phoneNum: '',
+      faceUrl: '',
+      permission: 'generalUser',
+      accountId,
+      password,
+    };
+
+    const userInfo = await ctx.app.mongo.find('user', {
+      query: {
+        accountId,
+      },
+    });
+    if (Array.isArray(userInfo) && userInfo.length !== 0) {
+      return {
+        success: true,
+        message: '用户名存在',
+        data: {
+          ok: false,
+          hasUser: true,
+        },
+      };
+    }
+
+    try {
+      const result = await ctx.app.mongo.insertOne('user', {
+        doc,
+      });
+      if (result.result.ok === 1) {
+        return {
+          success: true,
+          message: `注册成功`,
+          data: {
+            ok: true,
+          },
+        };
+      }
+    } catch (error) {
+      return {
+        success: true,
+        message: `数据库插入错误: ${error}`,
         data: {
           ok: false,
         },

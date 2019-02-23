@@ -67,7 +67,7 @@ class MyForm extends React.Component<IUserFormProps, {}> {
           data: values,
           headers: { 'Content-Type': 'application/json' },
           method: 'post',
-          url: `${API_URL}/api/accounts/login`,
+          url: `${API_URL}/api/accounts/sign`,
           withCredentials: true,
         })
       }
