@@ -11,7 +11,9 @@ ReactDOM.render(
   <HashRouter>
     <Route exact={true} path="/">
         <Provider store={store}>
-          <App />
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
         </Provider>
     </Route>
   </HashRouter>,

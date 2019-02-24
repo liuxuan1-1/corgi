@@ -215,6 +215,9 @@ module.exports = {
                 }
               },
               {
+                loader: require.resolve('fast-sass-loader'),
+              },
+              {
                 loader: require.resolve('postcss-loader'),
                 options: {
                   // Necessary for external CSS imports to work

@@ -1,27 +1,63 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react'
-import { Button } from 'antd';
+import { Layout, Button, Menu } from 'antd';
+import { ClickParam } from 'antd/lib/menu';
+import HomeContent from './components/content';
 import './App.scss';
 
-import logo from './logo.svg';
+
+const {
+  Header, Content,
+} = Layout;
+interface Istates {
+  menuCurrent: string,
+}
 
 @inject('store')
 @observer
-class App extends React.Component<any, any> {
+class App extends React.Component<{}, Istates> {
+  public readonly state: Readonly<Istates> = {
+    menuCurrent: '0',
+  }
+
+  public handleMenuClick = (e: ClickParam):void => {
+    this.setState({
+      menuCurrent: e.key,
+    });
+  }
+
   public render() {
+    const { menuCurrent } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <h1>====> {this.props.store.num}</h1>
-        <div>
-          <Button onClick={this.props.store.setAddNum}>home</Button>
-        </div>
+        <Layout>
+          <Header className="head-wrapper">
+            <div className="head-left">平面设计平台</div>
+            <div className="head-middle">
+              <Menu
+                onClick={this.handleMenuClick}
+                selectedKeys={[menuCurrent]}
+                style={{ lineHeight: '62px' }}
+                mode="horizontal"
+              >
+                <Menu.Item key="template">
+                  模板中心
+                </Menu.Item>
+                <Menu.Item key="about">
+                  关于
+                </Menu.Item>
+              </Menu>
+            </div>
+            <div className="head-right">
+              <Button className="login-btn" ghost={true}>登录</Button>
+              <Button ghost={true}>注册</Button>
+            </div>
+          </Header>
+          <Content className="content-wrapper">
+            <HomeContent />
+          </Content>
+          <div className="home-bk" />
+        </Layout>
       </div>
     );
   }

@@ -1,28 +1,55 @@
 .App {
-  text-align: center;
-}
+  .ant-layout {
+    background: linear-gradient(180deg, #3b5fe2, #37b6f5);
+    width: 100vw;
+    height: 100vh;
+  }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+  .home-bk {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: url('http://127.0.0.1:7001/corgi/public/img/web/banner-BG_line.png');
+  }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
+  // 头部样式
+  .head-wrapper {
+    display: flex;
+    justify-content: space-between;
+    background: transparent;
+    .head-left {
+      color: #ffffff;
+    }
 
-.App-title {
-  font-size: 1.5em;
-}
+    // 头部菜单样式
+    .ant-menu {
+      background: transparent;
+      color: #ffffff;
+    }
+    .ant-menu-horizontal {
+      border: none;
+    }
+    .ant-menu-horizontal > .ant-menu-item:hover,
+    .ant-menu-horizontal > .ant-menu-item-selected {
+      border-color: #ffffff;
+      color: #ffffff;
+    }
 
-.App-intro {
-  font-size: large;
-}
+    // 头部按钮样式
+    .ant-btn:hover, .ant-btn:focus {
+      color: #ffffff;
+      border-color: transparent;
+    }
+    .login-btn {
+      margin-right: 20px;
+    }
+  }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  // 内容样式
+  .content-wrapper {
+    height: calc(100vh - 64px);
+    width: 100%;
+  }
 }
