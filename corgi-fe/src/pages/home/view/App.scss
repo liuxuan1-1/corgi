@@ -1,8 +1,11 @@
 .App {
   .ant-layout {
-    background: linear-gradient(180deg, #3b5fe2, #37b6f5);
-    width: 100vw;
+    max-width: 1200px;
+    margin: 0 auto;
     height: 100vh;
+    position: relative;
+    background: transparent;
+    z-index: 2;
   }
 
   .home-bk {
@@ -11,7 +14,13 @@
     bottom: 0;
     right: 0;
     left: 0;
-    background: url('http://127.0.0.1:7001/corgi/public/img/web/banner-BG_line.png');
+    z-index: 1;
+    background: linear-gradient(180deg, #3b5fe2, #37b6f5);
+    img {
+      position: relative;
+      left: -1;
+      width: 100%;
+    }
   }
 
   // 头部样式
@@ -50,6 +59,7 @@
   // 内容样式
   .content-wrapper {
     height: calc(100vh - 64px);
+    position: relative;
     width: 100%;
   }
 }

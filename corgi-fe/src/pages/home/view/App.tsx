@@ -2,7 +2,8 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react'
 import { Layout, Button, Menu } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
-import HomeContent from './components/content';
+import HomeContent from './components/content/index';
+import { API_URL } from '../../../pagesConst';
 import './App.scss';
 
 
@@ -56,8 +57,10 @@ class App extends React.Component<{}, Istates> {
           <Content className="content-wrapper">
             <HomeContent />
           </Content>
-          <div className="home-bk" />
         </Layout>
+        <div className="home-bk">
+          <img src={`${API_URL}/corgi/public/img/web/banner-BG_line.png`} />
+        </div>
       </div>
     );
   }
