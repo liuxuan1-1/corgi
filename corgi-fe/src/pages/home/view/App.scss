@@ -18,7 +18,8 @@
     background: linear-gradient(180deg, #3b5fe2, #37b6f5);
     img {
       position: relative;
-      left: -1;
+      left: -1px;
+      height: 100%;
       width: 100%;
     }
   }

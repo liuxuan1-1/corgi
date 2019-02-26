@@ -21,7 +21,8 @@
     "no-empty-interface": false,
     "no-console": {
       "severity": "warning"
-    }
+    },
+    "no-shadowed-variable": false
   },
   "linterOptions": {
     "exclude": [
