@@ -20,7 +20,7 @@ export default class AccountController extends Controller {
   public async sign() {
     const { ctx } = this;
     const param = ctx.request.body;
-    const result: IResponseBody = await ctx.service.user.sign(param.accountId, param.password);
+    const result: IResponseBody = await ctx.service.user.sign(param);
     ctx.body = result;
   }
 }

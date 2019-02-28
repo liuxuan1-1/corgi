@@ -6,10 +6,11 @@ db.user.insert({
   nickName: "刘翾",
   avatarUrl: "",
   phoneNum: "12344557788",
-  accountNum: "admin",
+  accountId: "admin",
   password: "admin",
   faceUrl: "",
   permission: "root"
+  lastLoginTime: '时间'
 })
 
 // avatarUrl: 资料头像地址

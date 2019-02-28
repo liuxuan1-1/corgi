@@ -6,4 +6,6 @@ export default (app: Application) => {
   router.post('/api/accounts/login', controller.account.login);
   router.post('/api/accounts/sign', controller.account.sign);
 
+  router.post('/api/img/uploadAvatar', controller.img.uploadAvatar);
+
 };

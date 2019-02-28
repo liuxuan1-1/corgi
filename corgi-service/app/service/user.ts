@@ -59,24 +59,24 @@ export default class User extends Service {
 
   /**
    * registered user
-   * @param accountId => 账号
-   * @param password => 密码
+   * @param param => 见下面doc参数
    */
-  public async sign(accountId: string, password: string): Promise<IResponseBody> {
+  public async sign(param): Promise<IResponseBody> {
+
     const { ctx } = this;
     const doc: IUserDocument = {
-      nickName: '',
-      avatarUrl: '',
-      phoneNum: '',
+      nickName: param.nickName,
+      avatarUrl: param.avatarUrl,
+      phoneNum: param.phoneNum,
       faceUrl: '',
       permission: 'generalUser',
-      accountId,
-      password,
+      accountId: param.accountId,
+      password: param.password,
     };
 
     const userInfo = await ctx.app.mongo.find('user', {
       query: {
-        accountId,
+        accountId: doc.accountId,
       },
     });
     if (Array.isArray(userInfo) && userInfo.length !== 0) {

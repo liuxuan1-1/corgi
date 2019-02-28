@@ -28,7 +28,8 @@
     "egg-cors": "^2.1.2",
     "egg-mongo-native": "^3.4.2",
     "egg-scripts": "^2.6.0",
-    "ms": "^2.1.1"
+    "ms": "^2.1.1",
+    "mz-modules": "^2.1.0"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",
