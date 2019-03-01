@@ -5,7 +5,7 @@ import './index.scss';
 
 interface IUserFormProps {
   loginFormShow: string,
-  callbackLoginFormClose: () => void
+  callbackLoginFormClose: (result: IcallbackLoginFormCloseParam) => void
 }
 
 
@@ -14,8 +14,11 @@ class LoginOrSignForm extends React.Component<IUserFormProps, {}> {
     loginFormShow: 'login'
   };
 
-  public handleCloseClick = (): void => {
-    this.props.callbackLoginFormClose();
+  public handleCloseClick = (result: IcallbackLoginFormCloseParam = {
+    data: {},
+    success: false,
+  }): void => {
+    this.props.callbackLoginFormClose(result);
   }
 
   public render() {

@@ -5,16 +5,11 @@ configure({
 })
 
 class Store {
-  @observable public num : number;
-
-
-  constructor() {
-    this.num = 1;
-  }
+  @observable public userInfo = {};
 
   @action
-  public setAddNum: () => void = () => {
-    this.num += 1;
+  public setUserInfo = (userInfo: any) => {
+    this.userInfo = userInfo;
   }
 }
 

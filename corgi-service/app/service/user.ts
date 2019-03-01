@@ -36,7 +36,6 @@ export default class User extends Service {
         success: true,
         message: '登录成功',
         data: {
-          id: userInfo[0]._id,
           userInfo: userInfo[0],
         },
       };

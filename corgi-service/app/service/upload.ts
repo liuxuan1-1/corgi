@@ -29,8 +29,13 @@ export default class Upload extends Service {
           filePath,
           `${new Date().getTime()}-${filename}`,
         );
+
+        // url path 和 file path 不同
+        const urlPath: string = filePath.replace(/^(app)\//, () => {
+          return 'corgi/';
+        });
         fileList.push(
-          path.join(filePath,
+          path.join(urlPath,
           `${new Date().getTime()}-${filename}`),
         );
         const writeStream = fs.createWriteStream(target);

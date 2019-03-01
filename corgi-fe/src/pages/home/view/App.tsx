@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react'
-import { Layout, Button, Menu, message } from 'antd';
+import { Layout, Button, Menu } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
 import HomeContent from './components/content/index';
+import CircleUser from './components/circleUser/index';
 import LoginForm from '../../../components/loginForm/index';
 import axios from 'axios';
 import { API_URL } from '../../../pagesConst';
@@ -12,6 +13,7 @@ import './App.scss';
 const {
   Header, Content,
 } = Layout;
+
 interface Istates {
   loginFormShow: string,
   menuCurrent: string,
@@ -20,7 +22,7 @@ interface Istates {
 
 @inject('store')
 @observer
-class App extends React.Component<{}, Istates> {
+class App extends React.Component<any, Istates> {
   public readonly state: Readonly<Istates> = {
     loginFormShow: '',
     loginFormVisible: false,
@@ -35,14 +37,14 @@ class App extends React.Component<{}, Istates> {
       withCredentials: true,
     }).then((e) => {
       const result = e.data;
-      console.log(result);
       if (result.success) {
-        // this.props.callbackLoginFormClose(true);
-      } else {
-        message.error(`获取用户信息出错: ${result.message}`);
-      }
+        props.store.setUserInfo({
+          data: result.data.userInfo,
+          success: true,
+        });
+      } 
     }).catch((e) => {
-      message.error(`获取用户信息出错`);
+      // message.error(`获取用户信息出错`);
       // tslint:disable-next-line: no-console
       console.error(`获取用户信息出错: ${JSON.stringify(e)}`)
     })
@@ -70,15 +72,25 @@ class App extends React.Component<{}, Istates> {
     return
   }
 
-  public callbackLoginFormClose = (): void => {
+  public callbackLoginFormClose = (result: IcallbackLoginFormCloseParam): void => {
     this.setState({
       loginFormVisible: false,
     })
+
+    if (result.success) {
+      this.props.store.setUserInfo(result);
+    }
+
     return
+  }
+
+  public callbackUserExit = (): void => {
+    this.props.store.setUserInfo({});
   }
 
   public render() {
     const { menuCurrent, loginFormShow, loginFormVisible } = this.state;
+    const { userInfo } = this.props.store;
     return (
       <div className="App">
         <Layout>
@@ -100,8 +112,20 @@ class App extends React.Component<{}, Istates> {
               </Menu>
             </div>
             <div className="head-right">
-              <Button className="login-btn" ghost={true} onClick={this.handleHeadLoginClick}>登录</Button>
-              <Button ghost={true} onClick={this.handleHeadSignClick}>注册</Button>
+              {
+                userInfo.success ? (
+                  <CircleUser
+                    avatarUrl={userInfo.data.avatarUrl}
+                    callbackUserExit={this.callbackUserExit}
+                  />
+                ) : (
+                  <>
+                    <Button className="login-btn" ghost={true} onClick={this.handleHeadLoginClick}>登录</Button>
+                    <Button ghost={true} onClick={this.handleHeadSignClick}>注册</Button>
+                  </>
+                )
+              }
+
             </div>
           </Header>
           <Content className="content-wrapper">

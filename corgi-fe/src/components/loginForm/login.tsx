@@ -5,7 +5,7 @@ import axios from 'axios';
 import { API_URL } from '../../pagesConst';
 
 interface IUserFormProps extends FormComponentProps {
-  callbackLoginFormClose: () => void
+  callbackLoginFormClose: (result?: IcallbackLoginFormCloseParam) => void
 }
 
 interface Istates {
@@ -16,7 +16,6 @@ class LoginForm extends React.Component<IUserFormProps, Istates> {
   public readonly state: Istates = {
     loginButtonLoading: false,
   }
-
 
 
   public handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -40,7 +39,10 @@ class LoginForm extends React.Component<IUserFormProps, Istates> {
           });
           if (result.success) {
             message.success('登录成功');
-            this.props.callbackLoginFormClose();
+            this.props.callbackLoginFormClose({
+              data: result.data.userInfo,
+              success: true,
+            });
           } else {
             message.error(`登录失败: ${result.message}`);
           }

@@ -10,7 +10,7 @@ export default class AccountController extends Controller {
 
     const result: IResponseBody = await ctx.service.user.login(param.accountId, param.password);
     if (result.success) {
-      ctx.session.corgi_userId = result.data._id;
+      ctx.session.corgi_userId = result.data.userInfo._id;
       // 如果选择了'记住我', session失效期设为30天
       if (param.remember) { ctx.session.maxAge = ms('30d'); }
     }
@@ -27,6 +27,11 @@ export default class AccountController extends Controller {
   public exit() {
     const { ctx } = this;
     ctx.session.maxAge = -1;
+    ctx.body = {
+      success: true,
+      message: '退出成功',
+      data: {},
+    };
   }
 
   public async getUserInfo() {

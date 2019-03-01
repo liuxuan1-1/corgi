@@ -34,7 +34,7 @@ const tailFormItemLayout = {
 
 
 interface ISignFormProps extends FormComponentProps {
-  callbackLoginFormClose: () => void
+  callbackLoginFormClose: (result?: IcallbackLoginFormCloseParam) => void
 }
 
 interface Istate {
@@ -83,7 +83,10 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
           });
           if (result.success) {
             message.success('注册成功');
-            this.props.callbackLoginFormClose();
+            this.props.callbackLoginFormClose({
+              data: result.data.userInfo,
+              success: true,
+            });
           } else {
             message.error(`注册失败: ${result.message}`);
           }
