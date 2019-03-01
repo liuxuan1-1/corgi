@@ -8,7 +8,9 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1547354118233_3870';
 
   // add your egg config in here
-  config.middleware = [];
+  config.middleware = [
+    'userCheck',
+  ];
 
   // add your special config in here
   const bizConfig = {
@@ -37,6 +39,14 @@ export default (appInfo: EggAppInfo) => {
     prefix: '/corgi/public',
   };
 
+  const userCheck = {
+    ignore: [
+      '/api/accounts/login',
+      '/api/accounts/sign',
+      '/api/img/uploadAvatar',
+    ],
+  };
+
   // the return config will combines to EggAppConfig
   return {
     ...config,
@@ -44,5 +54,6 @@ export default (appInfo: EggAppInfo) => {
     mongo: mongoConfig,
     session,
     static: staticObj,
+    userCheck,
   };
 };

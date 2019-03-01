@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react'
-import { Layout, Button, Menu } from 'antd';
+import { Layout, Button, Menu, message } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
 import HomeContent from './components/content/index';
 import LoginForm from '../../../components/loginForm/index';
+import axios from 'axios';
 import { API_URL } from '../../../pagesConst';
 import './App.scss';
 
@@ -24,6 +25,27 @@ class App extends React.Component<{}, Istates> {
     loginFormShow: '',
     loginFormVisible: false,
     menuCurrent: '0',
+  }
+
+  constructor(props: any) {
+    super(props);
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/accounts/getuserinfo`,
+      withCredentials: true,
+    }).then((e) => {
+      const result = e.data;
+      console.log(result);
+      if (result.success) {
+        // this.props.callbackLoginFormClose(true);
+      } else {
+        message.error(`获取用户信息出错: ${result.message}`);
+      }
+    }).catch((e) => {
+      message.error(`获取用户信息出错`);
+      // tslint:disable-next-line: no-console
+      console.error(`获取用户信息出错: ${JSON.stringify(e)}`)
+    })
   }
 
   public handleMenuClick = (e: ClickParam):void => {
@@ -52,7 +74,7 @@ class App extends React.Component<{}, Istates> {
     this.setState({
       loginFormVisible: false,
     })
-    return;
+    return
   }
 
   public render() {

@@ -39,14 +39,10 @@ class LoginForm extends React.Component<IUserFormProps, Istates> {
             loginButtonLoading: false,
           });
           if (result.success) {
-            if (result.data.ok) {
-              message.success('登录成功');
-              this.props.callbackLoginFormClose();
-            } else {
-              message.error(`登录失败: ${result.message}`);
-            }
+            message.success('登录成功');
+            this.props.callbackLoginFormClose();
           } else {
-            message.error(`登录请求出错: ${result.message}`);
+            message.error(`登录失败: ${result.message}`);
           }
         }).catch((e) => {
           message.error(`登录请求出错`);

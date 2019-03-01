@@ -42,17 +42,14 @@ export default class Upload extends Service {
         success: true,
         message: '上传成功',
         data: {
-          ok: true,
           file: fileList,
         },
       };
     } catch (error) {
       return {
-        success: true,
+        success: false,
         message: `上传失败: ${error}`,
-        data: {
-          ok: false,
-        },
+        data: {},
       };
     }
   }

@@ -54,7 +54,7 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         const params = {
           accountId: values.accountId,
           avatarUrl: '',
@@ -63,10 +63,11 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
           phoneNum: `${values.prefix}${values.phoneNum}`,
         }
 
-        const avatar = values.avatar[0].response;
-        console.log(avatar)
-        if (avatar.data.ok) {
-          params.avatarUrl = avatar.data.file[0] || '' ;
+        if (Array.isArray(values.avatar)) {
+          const avatar = values.avatar[0].response;
+          if (avatar.success) {
+            params.avatarUrl = avatar.data.file[0] || '';
+          }
         }
 
         axios({
@@ -81,14 +82,10 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
             loginButtonLoading: false,
           });
           if (result.success) {
-            if (result.data.ok) {
-              message.success('注册成功');
-              this.props.callbackLoginFormClose();
-            } else {
-              message.error(`注册失败: ${result.message}`);
-            }
+            message.success('注册成功');
+            this.props.callbackLoginFormClose();
           } else {
-            message.error(`注册请求出错: ${result.message}`);
+            message.error(`注册失败: ${result.message}`);
           }
         }).catch((e) => {
           message.error(`注册请求出错`);
@@ -141,7 +138,6 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
   }
 
   public beforeUpload = (file: any): boolean | PromiseLike<any> => {
-    console.log(file);
     const isImg = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isImg) {
       message.error('只能上传jpg, png类型的图片');
@@ -156,7 +152,6 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
   public render() {
     const { getFieldDecorator } = this.props.form;
     const { loginButtonLoading, avatarUploadFileLength } = this.state;
-    // console.log(this.props.form.getFieldValue('avatar'));
     const prefixSelector = getFieldDecorator('prefix', {  
       initialValue: '86',
     })(
@@ -244,6 +239,7 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
               action={`${API_URL}/api/img/uploadAvatar`}
               listType="picture-card"
               disabled={avatarUploadFileLength >= 1}
+              withCredentials={true}
             >
               <div>
                 <Icon type="plus" />

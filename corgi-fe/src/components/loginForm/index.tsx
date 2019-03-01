@@ -14,7 +14,7 @@ class LoginOrSignForm extends React.Component<IUserFormProps, {}> {
     loginFormShow: 'login'
   };
 
-  public handleCloseClick = ( ): void => {
+  public handleCloseClick = (): void => {
     this.props.callbackLoginFormClose();
   }
 
@@ -25,7 +25,6 @@ class LoginOrSignForm extends React.Component<IUserFormProps, {}> {
         {loginFormShow === 'login' ? (
           <LoginForm callbackLoginFormClose={this.handleCloseClick} />
         ) : null}
-
         {loginFormShow === 'sign' ? (
           <SignForm callbackLoginFormClose={this.handleCloseClick} />
         ) : null}

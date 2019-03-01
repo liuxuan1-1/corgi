@@ -4,6 +4,7 @@
 |:----|:----|:-----|
 |`/api/accounts/login`|登录接口|`accountId`: 用户名, `password`: 密码|
 |`/api/accounts/sign`|注册接口|`accountId`: 用户名, `password`: 密码, `nickName`: 姓名, `avatarUrl`: 头像地址, `phoneNum`: 手机号码|
+|`/api/accounts/exit`|退出登录接口||
 |`/api/img/upload`|上传图片||
 
 
