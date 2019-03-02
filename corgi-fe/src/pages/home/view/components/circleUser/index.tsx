@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Avatar, Menu, Dropdown } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
@@ -45,7 +46,7 @@ class CircleUser extends React.Component<Iprops, Istates> {
     return (
       <Menu onClick={this.handleMenuClick}>
         <Menu.Item key='info'>
-          个人信息
+          <Link to="/account">个人信息</Link>
         </Menu.Item>
         <Menu.Item key='exit'>
           退出

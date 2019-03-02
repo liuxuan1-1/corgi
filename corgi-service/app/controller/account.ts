@@ -24,6 +24,13 @@ export default class AccountController extends Controller {
     ctx.body = result;
   }
 
+  public async update() {
+    const { ctx } = this;
+    const param = ctx.request.body;
+    const result = await ctx.service.user.update(param);
+    ctx.body = result;
+  }
+
   public exit() {
     const { ctx } = this;
     ctx.session.maxAge = -1;

@@ -1,22 +1,20 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react'
-import { Layout, Button, Menu } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
-import HomeContent from './components/content/index';
-import CircleUser from './components/circleUser/index';
-import LoginForm from '../../../components/loginForm/index';
+import { Layout } from 'antd';
+import MyHeader from '../../components/header/index';
+import LoginForm from '../../../../../components/loginForm/index';
+import HomeContent from '../../components/homeContent/index';
 import axios from 'axios';
-import { API_URL } from '../../../pagesConst';
-import './App.scss';
+import { API_URL } from '../../../../../pagesConst';
+import './app.scss';
 
 
 const {
-  Header, Content,
+  Content,
 } = Layout;
 
 interface Istates {
   loginFormShow: string,
-  menuCurrent: string,
   loginFormVisible: boolean,
 }
 
@@ -26,7 +24,6 @@ class App extends React.Component<any, Istates> {
   public readonly state: Readonly<Istates> = {
     loginFormShow: '',
     loginFormVisible: false,
-    menuCurrent: '0',
   }
 
   constructor(props: any) {
@@ -46,14 +43,8 @@ class App extends React.Component<any, Istates> {
     }).catch((e) => {
       // message.error(`获取用户信息出错`);
       // tslint:disable-next-line: no-console
-      console.error(`获取用户信息出错: ${JSON.stringify(e)}`)
+      // console.error(`获取用户信息出错: ${JSON.stringify(e)}`)
     })
-  }
-
-  public handleMenuClick = (e: ClickParam):void => {
-    this.setState({
-      menuCurrent: e.key,
-    });
   }
 
   public handleHeadLoginClick = (e: React.MouseEvent):void => {
@@ -89,45 +80,17 @@ class App extends React.Component<any, Istates> {
   }
 
   public render() {
-    const { menuCurrent, loginFormShow, loginFormVisible } = this.state;
+    const { loginFormShow, loginFormVisible } = this.state;
     const { userInfo } = this.props.store;
     return (
       <div className="App">
         <Layout>
-          <Header className="head-wrapper">
-            <div className="head-left">平面设计平台</div>
-            <div className="head-middle">
-              <Menu
-                onClick={this.handleMenuClick}
-                selectedKeys={[menuCurrent]}
-                style={{ lineHeight: '62px' }}
-                mode="horizontal"
-              >
-                <Menu.Item key="template">
-                  模板中心
-                </Menu.Item>
-                <Menu.Item key="about">
-                  关于
-                </Menu.Item>
-              </Menu>
-            </div>
-            <div className="head-right">
-              {
-                userInfo.success ? (
-                  <CircleUser
-                    avatarUrl={userInfo.data.avatarUrl}
-                    callbackUserExit={this.callbackUserExit}
-                  />
-                ) : (
-                  <>
-                    <Button className="login-btn" ghost={true} onClick={this.handleHeadLoginClick}>登录</Button>
-                    <Button ghost={true} onClick={this.handleHeadSignClick}>注册</Button>
-                  </>
-                )
-              }
-
-            </div>
-          </Header>
+          <MyHeader
+            callbackUserExit={this.callbackUserExit}
+            handleHeadLoginClick={this.handleHeadLoginClick}
+            handleHeadSignClick={this.handleHeadSignClick}
+            userInfo={userInfo}
+          />
           <Content className="content-wrapper">
             <HomeContent />
           </Content>

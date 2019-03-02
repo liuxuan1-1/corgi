@@ -117,6 +117,20 @@ export default class User extends Service {
     };
   }
 
+  public async update(param) {
+    console.log(param);
+    const { ctx } = this;
+    const result = await ctx.app.mongo.findOneAndUpdate('user', {
+      filter: {
+        _id: new ObjectId(ctx.session.corgi_userId),
+      },
+      update: {
+        ...param,
+      },
+    });
+    console.log(result);
+  }
+
   /**
    * 获取用户信息
    */

@@ -1,0 +1,69 @@
+  .head-wrapper {
+    display: flex;
+    justify-content: space-between;
+    background: transparent;
+    .head-left {
+      a {
+        color: #ffffff;
+      }
+    }
+
+    // 头部菜单样式
+    .ant-menu {
+      background: transparent;
+      color: #ffffff;
+    }
+    .ant-menu-horizontal {
+      border: none;
+    }
+    .ant-menu-horizontal > .ant-menu-item:hover,
+    .ant-menu-horizontal > .ant-menu-item-selected {
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+
+    // 头部按钮样式
+    .ant-btn:hover, .ant-btn:focus {
+      color: #ffffff;
+      border-color: transparent;
+    }
+    .login-btn {
+      margin-right: 20px;
+    }
+  }
+  
+  .not-home {
+    background: #ffffff;
+    .head-left {
+      a {
+        color: #314659;
+      }
+    }
+
+    // 头部菜单样式
+    .ant-menu {
+      background: transparent;
+      color: #314659;
+    }
+    .ant-menu-horizontal {
+      border: none;
+    }
+    .ant-menu-horizontal > .ant-menu-item:hover,
+    .ant-menu-horizontal > .ant-menu-item-selected {
+      border-color: #1890ff;
+      color: #1890ff;
+    }
+
+    // 头部按钮样式
+    .ant-btn:hover, .ant-btn:focus {
+      color: #40a9ff;
+      background-color: #fff;
+      border-color: #40a9ff;
+    }
+
+    .ant-btn-primary:hover, .ant-btn-primary:focus {
+      color: #fff;
+      background-color: #40a9ff;
+      border-color: #40a9ff;
+    }
+  }
