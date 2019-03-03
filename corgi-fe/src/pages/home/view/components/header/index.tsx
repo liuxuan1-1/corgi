@@ -47,8 +47,20 @@ class MyHeader extends React.Component<Iprops, Istates> {
     this.props.callbackUserExit();
   }
 
+  /**
+   * 根据路由选择点击状态
+   */
+  public switchMenuSelect = (): string[] => {
+    const result = window.location.hash;
+    switch (result) {
+      case '#/template':
+        return ['template']
+      default:
+        return [''];
+    }
+  }
+
   public render() {
-    const { menuCurrent } = this.state;
     const { userInfo, myClassName } = this.props;
     return (
       <Header className={`head-wrapper ${myClassName}`}>
@@ -58,12 +70,12 @@ class MyHeader extends React.Component<Iprops, Istates> {
         <div className="head-middle">
           <Menu
             onClick={this.handleMenuClick}
-            selectedKeys={[menuCurrent]}
+            selectedKeys={this.switchMenuSelect()}
             style={{ lineHeight: '62px' }}
             mode="horizontal"
           >
             <Menu.Item key="template">
-              模板中心
+              <Link to="/template">模板中心</Link>
             </Menu.Item>
             {
               userInfo.success ? (

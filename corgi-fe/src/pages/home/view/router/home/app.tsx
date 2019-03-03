@@ -3,7 +3,11 @@ import { inject, observer } from 'mobx-react'
 import { Layout } from 'antd';
 import MyHeader from '../../components/header/index';
 import LoginForm from '../../../../../components/loginForm/index';
+
 import HomeContent from '../../components/homeContent/index';
+import AccountContent from '../../components/accountContent/index';
+import TemplateContent from '../../components/templateContent/index';
+
 import axios from 'axios';
 import { API_URL } from '../../../../../pagesConst';
 import './app.scss';
@@ -28,23 +32,25 @@ class App extends React.Component<any, Istates> {
 
   constructor(props: any) {
     super(props);
-    axios({
-      method: 'get',
-      url: `${API_URL}/api/accounts/getuserinfo`,
-      withCredentials: true,
-    }).then((e) => {
-      const result = e.data;
-      if (result.success) {
-        props.store.setUserInfo({
-          data: result.data.userInfo,
-          success: true,
-        });
-      } 
-    }).catch((e) => {
-      // message.error(`获取用户信息出错`);
-      // tslint:disable-next-line: no-console
-      // console.error(`获取用户信息出错: ${JSON.stringify(e)}`)
-    })
+    if (!props.store.userInfo.success) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/api/accounts/getuserinfo`,
+        withCredentials: true,
+      }).then((e) => {
+        const result = e.data;
+        if (result.success) {
+          props.store.setUserInfo({
+            data: result.data.userInfo,
+            success: true,
+          });
+        } 
+      }).catch((e) => {
+        // message.error(`获取用户信息出错`);
+        // tslint:disable-next-line: no-console
+        // console.error(`获取用户信息出错: ${JSON.stringify(e)}`)
+      })
+    }
   }
 
   public handleHeadLoginClick = (e: React.MouseEvent):void => {
@@ -79,25 +85,70 @@ class App extends React.Component<any, Istates> {
     this.props.store.setUserInfo({});
   }
 
+  public BodyClassName = (): string => {
+    const result = window.location.hash;
+    switch (result) {
+      case '#/':
+        return 'App';
+      case '#/account':
+        return 'account-wrapper';
+      case '#/template':
+        return 'template-wrapper';
+      default:
+        return '';
+    }
+  }
+
+  public renderContent = (): React.ReactNode | null => {
+    const result = window.location.hash;
+    const { userInfo } = this.props.store;
+    switch (result) {
+      case '#/':
+        return <HomeContent />
+      case '#/account':
+        return (
+          <AccountContent
+            userInfo={userInfo}
+          />
+        )
+      case '#/template':
+        return <TemplateContent />
+      default:
+        return null;
+    }
+  }
+
   public render() {
     const { loginFormShow, loginFormVisible } = this.state;
     const { userInfo } = this.props.store;
+    const MyHeadProps: {
+      myClassName?: string,
+    } = {}
+
+    if (window.location.hash !== '#/') {
+      MyHeadProps.myClassName = "not-home"
+    }
     return (
-      <div className="App">
+      <div className={this.BodyClassName()}>
         <Layout>
           <MyHeader
             callbackUserExit={this.callbackUserExit}
             handleHeadLoginClick={this.handleHeadLoginClick}
             handleHeadSignClick={this.handleHeadSignClick}
             userInfo={userInfo}
+            {...MyHeadProps}
           />
           <Content className="content-wrapper">
-            <HomeContent />
+            {this.renderContent()}
           </Content>
         </Layout>
-        <div className="home-bk">
-          <img src={`${API_URL}/corgi/public/img/web/banner-BG_line.png`} />
-        </div>
+        {
+          window.location.hash === '#/' ? (
+            <div className="home-bk">
+              <img src={`${API_URL}/corgi/public/img/web/banner-BG_line.png`} />
+            </div>
+          ) : null
+        }
         {
           loginFormVisible? (
             <LoginForm

@@ -6,7 +6,6 @@ import store from './model';
 import registerServiceWorker from '../registerServiceWorker';
 
 import App from './view/router/home/app';
-import Account from './view/router/account/index'
 import './index.scss';
 
 
@@ -15,7 +14,8 @@ ReactDOM.render(
     <Provider store={store}>
       <>
         <Route exact={true} path="/" component={App} />
-        <Route exact={true} path="/account" component={Account} />
+        <Route exact={true} path="/account" component={App} />
+        <Route exact={true} path="/template" component={App} />
       </>
     </Provider>
   </HashRouter>,
