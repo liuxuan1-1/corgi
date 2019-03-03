@@ -65,6 +65,13 @@ class MyHeader extends React.Component<Iprops, Istates> {
             <Menu.Item key="template">
               模板中心
             </Menu.Item>
+            {
+              userInfo.success ? (
+                <Menu.Item key="mine">
+                  我的
+                </Menu.Item>
+              ) : null
+            }
             <Menu.Item key="about">
               关于
             </Menu.Item>

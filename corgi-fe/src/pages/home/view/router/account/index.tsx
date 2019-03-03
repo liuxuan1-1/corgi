@@ -96,7 +96,9 @@ class App extends React.Component<any, Istates> {
             userInfo={userInfo}
           />
           <Content className="content-wrapper">
-            <AccountContent />
+            <AccountContent
+              userInfo={userInfo}
+            />
           </Content>
         </Layout>
 

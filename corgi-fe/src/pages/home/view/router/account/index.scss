@@ -1,2 +1,10 @@
 .account-wrapper {
+  .ant-layout {
+    max-width: none;
+    width: 100%;
+  }
+
+  .content-wrapper {
+    margin-top: 10px;
+  }
 }

@@ -33,7 +33,8 @@ export default class Upload extends Service {
         // url path 和 file path 不同
         const urlPath: string = filePath.replace(/^(app)\//, () => {
           return 'corgi/';
-        });
+        }).split('/').join('\\');
+
         fileList.push(
           path.join(urlPath,
           `${new Date().getTime()}-${filename}`),

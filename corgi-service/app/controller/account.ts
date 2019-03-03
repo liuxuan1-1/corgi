@@ -46,6 +46,8 @@ export default class AccountController extends Controller {
     const userInfo = await ctx.service.user.getUserInfo();
     let result: IResponseBody;
     if (Array.isArray(userInfo) && userInfo.length !== 0) {
+      delete userInfo[0].password;
+      delete userInfo[0].permission;
       result = {
         success: true,
         message: '调用成功',

@@ -127,7 +127,7 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
   }
 
   public avatarNormFile = (e: any) => {
-    console.log('Upload event:', e);
+    // console.log('Upload event:', e);
     if (Array.isArray(e)) {
       this.setState({
         avatarUploadFileLength: e.length,

@@ -118,17 +118,43 @@ export default class User extends Service {
   }
 
   public async update(param) {
-    console.log(param);
     const { ctx } = this;
-    const result = await ctx.app.mongo.findOneAndUpdate('user', {
-      filter: {
-        _id: new ObjectId(ctx.session.corgi_userId),
-      },
-      update: {
-        ...param,
-      },
-    });
-    console.log(result);
+    try {
+      const result = await ctx.app.mongo.updateMany('user', {
+        filter: {
+          _id: new ObjectId(ctx.session.corgi_userId),
+        },
+        update: {
+          $set: {
+            accountId: param.accountId,
+            avatarUrl: param.avatarUrl,
+            faceUrl: param.faceUrl,
+            nickName: param.nickName,
+            phoneNum: param.phoneNum,
+          },
+        },
+      });
+      if (result.result.ok === 1) {
+        return {
+          success: true,
+          message: `修改成功`,
+          data: {
+          },
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `数据库插入错误: ${error}`,
+        data: {},
+      };
+    }
+
+    return {
+      success: false,
+      message: '未知错误',
+      data: {},
+    };
   }
 
   /**

@@ -21,7 +21,6 @@ class CircleUser extends React.Component<Iprops, Istates> {
   public handleMenuClick = (e: ClickParam): void => {
     switch (e.key) {
       case 'info':
-        console.log(1)
         break;
       case 'exit':
         axios({

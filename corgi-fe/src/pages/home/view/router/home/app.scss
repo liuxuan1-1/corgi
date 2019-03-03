@@ -1,13 +1,4 @@
 .App {
-  .ant-layout {
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 100vh;
-    position: relative;
-    background: transparent;
-    z-index: 2;
-  }
-
   .home-bk {
     position: absolute;
     top: 0;
@@ -22,14 +13,5 @@
       height: 100%;
       width: 100%;
     }
-  }
-
-  // 头部样式
-
-  // 内容样式
-  .content-wrapper {
-    height: calc(100vh - 64px);
-    position: relative;
-    width: 100%;
   }
 }
