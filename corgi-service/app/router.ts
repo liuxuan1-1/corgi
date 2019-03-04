@@ -13,4 +13,7 @@ export default (app: Application) => {
 
   router.get('/api/template/getlist', controller.template.getList);
 
+  router.get('/api/design/getlist', controller.design.getList);
+  router.get('/api/design/delete', controller.design.delete);
+
 };

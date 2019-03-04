@@ -7,6 +7,7 @@ import LoginForm from '../../../../../components/loginForm/index';
 import HomeContent from '../../components/homeContent/index';
 import AccountContent from '../../components/accountContent/index';
 import TemplateContent from '../../components/templateContent/index';
+import MyContent from '../../components/myContent/index';
 
 import axios from 'axios';
 import { API_URL } from '../../../../../pagesConst';
@@ -94,6 +95,8 @@ class App extends React.Component<any, Istates> {
         return 'account-wrapper';
       case '#/template':
         return 'template-wrapper';
+      case '#/mine':
+        return 'my-wrapper';
       default:
         return '';
     }
@@ -113,6 +116,8 @@ class App extends React.Component<any, Istates> {
         )
       case '#/template':
         return <TemplateContent />
+      case '#/mine':
+        return <MyContent />
       default:
         return null;
     }

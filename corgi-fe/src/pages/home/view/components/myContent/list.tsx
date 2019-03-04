@@ -16,7 +16,7 @@ interface Iprops {
 }
 
 
-class TemplateList extends React.PureComponent<Iprops, Istates> {
+class MyList extends React.PureComponent<Iprops, Istates> {
 
   public readonly state: Readonly<Istates> = {
     list: [],
@@ -27,28 +27,13 @@ class TemplateList extends React.PureComponent<Iprops, Istates> {
     this.fetchData();
   }
 
-  public componentDidUpdate(prevProps: Iprops, prevState: Istates) {
-    if (this.props.category !== prevProps.category) {
-      this.fetchData();
-    }
-  }
-
   /**
-   * 获取模板数据
+   * 获取文件数据
    */
   public fetchData = ():void => {
-    let params = '精选';
-    if (this.props.category === 'info') {
-      params = '精选';
-    } else if (this.props.category === 'other') {
-      params = '其它';
-    }
     axios({
       method: 'get',
-      params: {
-        category: params,
-      },
-      url: `${API_URL}/api/template/getlist`,
+      url: `${API_URL}/api/design/getlist`,
       withCredentials: true,
     }).then((e) => {
       const result = e.data;
@@ -74,7 +59,10 @@ class TemplateList extends React.PureComponent<Iprops, Istates> {
     for (let i = 0; i < list.length; i++) {
       children.push((
         <Col key={list[i]._id} span={6}>
-          <Card data={list[i]} />
+          <Card
+            data={list[i]}
+            fetchData={this.fetchData}
+          />
         </Col>
       ));
       if (children.length === 4 || i === list.length-1) {
@@ -98,4 +86,4 @@ class TemplateList extends React.PureComponent<Iprops, Istates> {
   }
 }
 
-export default TemplateList;
+export default MyList;

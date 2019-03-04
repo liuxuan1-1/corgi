@@ -8,6 +8,8 @@
 |`/api/accounts/exit`|退出登录接口||
 |`/api/accounts/getuserinfo`|获取用户信息||
 |`/api/template/getlist`|获取模板列表|`category`: 分类|
+|`/api/design/getlist`|获取我的列表||
+|`/api/design/delete`|删除我的文件|`id`: 文件id`|
 |`/api/img/upload`|上传图片||
 
 

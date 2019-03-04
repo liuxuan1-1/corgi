@@ -1,6 +1,4 @@
 import * as React from 'react';
-import {  } from 'antd';
-
 
 interface Istates {
 }
@@ -21,7 +19,7 @@ class Card extends React.PureComponent<Iprops, Istates> {
     const { data } = this.props;
     const tempwindow = window.open('_blank'); // 先打开页面
     if (tempwindow) {
-      tempwindow.location.href = `/editor.html?_id=${data._id}`;
+      tempwindow.location.href = `/editor.html?tempalteid=${data._id}`;
     }
   }
 

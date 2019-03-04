@@ -1,4 +1,5 @@
 import { Service } from 'egg';
+// egg-mongo的依赖
 // tslint:disable-next-line: no-implicit-dependencies
 import { ObjectId } from 'mongodb';
 import ms = require('ms');

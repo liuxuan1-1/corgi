@@ -15,10 +15,20 @@
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 0 20px;
+    .list-row {
+      margin-top: 8px;
+    }
     .card-box-wrapper {
       background: #f1f1f1;
       .card-content {
         padding: 16px 12px 10px 12px;
+        display: flex;
+        justify-content: space-between;
+        .card-name {
+          word-wrap: break-word;
+          word-break: normal;
+          margin-right: 10px;
+        }
       }
     }
 

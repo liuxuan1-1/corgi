@@ -55,6 +55,10 @@ class MyHeader extends React.Component<Iprops, Istates> {
     switch (result) {
       case '#/template':
         return ['template']
+      case '#/mine':
+        return ['mine']
+      case '#/about':
+        return ['about']
       default:
         return [''];
     }
@@ -80,12 +84,12 @@ class MyHeader extends React.Component<Iprops, Istates> {
             {
               userInfo.success ? (
                 <Menu.Item key="mine">
-                  我的
+                  <Link to="/mine">我的</Link>
                 </Menu.Item>
               ) : null
             }
             <Menu.Item key="about">
-              关于
+              <Link to="/about">关于</Link>
             </Menu.Item>
           </Menu>
         </div>

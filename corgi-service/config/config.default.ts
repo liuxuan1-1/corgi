@@ -44,6 +44,7 @@ export default (appInfo: EggAppInfo) => {
       '/api/accounts/login',
       '/api/accounts/sign',
       '/api/img/uploadAvatar',
+      '/api/template/getlist',
     ],
   };
 

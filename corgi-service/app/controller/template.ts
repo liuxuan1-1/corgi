@@ -9,5 +9,4 @@ export default class TemplateController extends Controller {
     const result: IResponseBody = await ctx.service.template.list(params);
     ctx.body = result;
   }
-
 }

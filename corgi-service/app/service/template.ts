@@ -2,7 +2,7 @@ import { Service } from 'egg';
 import { IResponseBody } from '../../typings';
 
 /**
- * teplate Service
+ * template Service
  */
 export default class TemplateService extends Service {
   /**
