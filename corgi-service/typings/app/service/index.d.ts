@@ -2,11 +2,13 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportTemplate from '../../../app/service/template';
 import ExportUpload from '../../../app/service/upload';
 import ExportUser from '../../../app/service/user';
 
 declare module 'egg' {
   interface IService {
+    template: ExportTemplate;
     upload: ExportUpload;
     user: ExportUser;
   }

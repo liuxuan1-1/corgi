@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ClickParam } from 'antd/lib/menu';
 import { Menu } from 'antd';
+import List from './list';
 import './index.scss';
 
 interface Istates {
@@ -10,7 +11,7 @@ interface Istates {
 interface Iprops {
 }
 
-class AccountContent extends React.Component<Iprops, Istates> {
+class TemplateContent extends React.Component<Iprops, Istates> {
   public readonly state: Readonly<Istates> = {
     menuCurrent: 'info',
   }
@@ -25,7 +26,7 @@ class AccountContent extends React.Component<Iprops, Istates> {
     const { menuCurrent } = this.state;
 
     return (
-      <div className="account-content-wrapper">
+      <div className="template-content-wrapper">
         <Menu
           onClick={this.handleMenuClick}
           selectedKeys={[menuCurrent]}
@@ -33,15 +34,16 @@ class AccountContent extends React.Component<Iprops, Istates> {
           className="left-menu"
         >
           <Menu.Item key="info">
-            个人信息
+            精选
           </Menu.Item>
-          <Menu.Item key="setting">
-            设置
+          <Menu.Item key="other">
+            其它
           </Menu.Item>
         </Menu>
+        <List category={menuCurrent} />
       </div>
     )
   }
 }
 
-export default AccountContent;
+export default TemplateContent;

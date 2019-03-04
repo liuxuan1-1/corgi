@@ -10,7 +10,8 @@ db.user.insert({
   password: "admin",
   faceUrl: "",
   permission: "root"
-  lastLoginTime: '时间'
+  lastLoginTime: '时间',
+  faceOpen: "0",
 })
 
 // avatarUrl: 资料头像地址
@@ -19,6 +20,7 @@ db.user.insert({
 //    "root" => 超级管理员, 有全部权限
 //    "generalUser" => 普通用户
 //    "professional" => 专业设计人员
+// faceOpen: 是否开启人脸验证;  0 => 不开启;  1 => 开启;
 ```
 
 

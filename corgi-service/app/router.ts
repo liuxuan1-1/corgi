@@ -11,4 +11,6 @@ export default (app: Application) => {
 
   router.post('/api/img/uploadAvatar', controller.img.uploadAvatar);
 
+  router.get('/api/template/getlist', controller.template.getList);
+
 };

@@ -6,6 +6,8 @@
 |`/api/accounts/sign`|注册接口|`accountId`: 用户名, `password`: 密码, `nickName`: 姓名, `avatarUrl`: 头像地址, `phoneNum`: 手机号码|
 |`/api/accounts/update`|注册接口|`accountId`: 用户名, `nickName`: 姓名, `avatarUrl`: 头像地址, `faceUrl`: 头像地址 , `phoneNum`: 手机号码|
 |`/api/accounts/exit`|退出登录接口||
+|`/api/accounts/getuserinfo`|获取用户信息||
+|`/api/template/getlist`|获取模板列表|`category`: 分类|
 |`/api/img/upload`|上传图片||
 
 
