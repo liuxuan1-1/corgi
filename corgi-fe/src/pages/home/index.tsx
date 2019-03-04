@@ -17,6 +17,7 @@ ReactDOM.render(
         <Route exact={true} path="/account" component={App} />
         <Route exact={true} path="/template" component={App} />
         <Route exact={true} path="/mine" component={App} />
+        <Route exact={true} path="/about" component={App} />
       </>
     </Provider>
   </HashRouter>,

@@ -8,6 +8,23 @@
       }
     }
 
+    .head-left, .head-middle, .head-right {
+      width: 240px;
+    }
+
+    .head-right {
+      .circle-user-wrapper {
+        float: right;
+      }
+      .circle-user-wrapper::after {
+        content: '';
+        clear: both;
+        display: block;
+        visibility:hidden;
+        height:0;
+      }
+    }
+
     // 头部菜单样式
     .ant-menu {
       background: transparent;
