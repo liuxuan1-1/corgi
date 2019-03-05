@@ -3,6 +3,7 @@ import { Service } from 'egg';
 // tslint:disable-next-line: no-implicit-dependencies
 import { ObjectId } from 'mongodb';
 import { IResponseBody } from '../../typings';
+import { IDesignDocument } from '../../typings/mongo';
 
 /**
  * design Service
@@ -44,6 +45,7 @@ export default class DesignService extends Service {
 
   /**
    * 删除我的文件
+   * @param _id 删除文件id
    */
   public async delete(_id: string): Promise<IResponseBody> {
     const { ctx } = this;
@@ -72,5 +74,43 @@ export default class DesignService extends Service {
         data: {},
       };
     }
+  }
+
+  public async create(templateId: string): Promise<IResponseBody> {
+    const { ctx } = this;
+    const doc: IDesignDocument = {
+      templateId: new ObjectId(templateId),
+      createUserId: new ObjectId(ctx.session.corgi_userId),
+      info: '{}',
+      coverUrl: '',
+      designName: '未命名',
+    };
+
+    try {
+      const result = await ctx.app.mongo.insertOne('design', {
+        doc,
+      });
+      if (result.result.ok === 1) {
+        return {
+          success: true,
+          message: `创建成功`,
+          data: {
+            designInfo: result.ops[0],
+          },
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `数据库插入错误: ${error}`,
+        data: {},
+      };
+    }
+
+    return {
+      success: false,
+      message: '未知错误',
+      data: {},
+    };
   }
 }

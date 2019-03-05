@@ -15,5 +15,6 @@ export default (app: Application) => {
 
   router.get('/api/design/getlist', controller.design.getList);
   router.get('/api/design/delete', controller.design.delete);
+  router.get('/api/design/create', controller.design.create);
 
 };

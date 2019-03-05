@@ -16,4 +16,11 @@ export default class DesignController extends Controller {
     const result: IResponseBody = await ctx.service.design.delete(param);
     ctx.body = result;
   }
+
+  public async create() {
+    const { ctx } = this;
+    const param = ctx.request.query.templateid;
+    const result: IResponseBody = await ctx.service.design.create(param);
+    ctx.body = result;
+  }
 }

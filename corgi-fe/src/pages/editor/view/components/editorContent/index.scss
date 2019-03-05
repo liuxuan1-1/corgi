@@ -1,0 +1,23 @@
+.editor-content-wrapper {
+  height: 100%;
+  display: flex;
+
+  .editor-nav {
+    width: 68px;
+  }
+  .editor-nav-panel {
+    width: 288px;
+  }
+  .editor-right {
+    flex: 1;
+    display: flex;
+
+    .editor-workspace {
+      flex: 1;
+    }
+
+    .editor-workspace-panel {
+      width: 184px;
+    }
+  }
+}

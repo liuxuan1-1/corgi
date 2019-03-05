@@ -1,0 +1,31 @@
+.head-wrapper {
+  display: flex;
+  justify-content: space-between;
+  background: transparent;
+  background: #ffffff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  .head-left {
+    a {
+      color: #314659;
+    }
+
+    a:hover {
+      border-color: #1890ff;
+      color: #1890ff;
+    }
+  }
+  .head-left, .head-middle, .head-right {
+    width: 240px;
+  }
+  .head-middle {
+    input {
+      border: none;
+      text-align: center;
+    }
+  }  
+  .head-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

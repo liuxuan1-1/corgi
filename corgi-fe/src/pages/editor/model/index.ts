@@ -4,17 +4,18 @@ configure({
   enforceActions: "observed",
 })
 
+interface IDesignData {
+  fileName: string,
+}
+
 class Store {
-  @observable public num : number;
-
-
-  constructor() {
-    this.num = 1;
-  }
+  @observable public data: Partial<IDesignData> = {
+    fileName: '123',
+  };
 
   @action
-  public setAddNum: () => void = () => {
-    this.num += 1;
+  public setDesignData = (value: Partial<IDesignData>): void => {
+    this.data = {...this.data, ...value};
   }
 }
 

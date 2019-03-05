@@ -68,6 +68,7 @@ export default class User extends Service {
       avatarUrl: param.avatarUrl,
       phoneNum: param.phoneNum,
       faceUrl: '',
+      faceOpen: false,
       permission: 'generalUser',
       accountId: param.accountId,
       password: param.password,
