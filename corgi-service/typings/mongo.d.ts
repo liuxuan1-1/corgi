@@ -1,5 +1,21 @@
 import { ObjectId } from 'mongodb';
 
+/**
+ * info json数据结构
+ * {
+ *  size: 640*1008,
+ *  data: {
+ *    element: [{
+ *      id: number,
+ *      type: 'font'
+ *      css: {
+ *        top: 0,
+ *        border: 0,
+ *      }
+ *    }]
+ *  }
+ * }
+ */
 
 export interface IUserDocument {
   nickName: string,

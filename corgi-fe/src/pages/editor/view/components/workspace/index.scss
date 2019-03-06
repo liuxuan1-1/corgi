@@ -1,0 +1,27 @@
+
+.editor-right {
+  flex: 1;
+  display: flex;
+
+  .editor-workspace {
+    flex: 1;
+    background: #ECECEC;
+    .workspace-wrapper {
+      height: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      .workspace {
+        position: absolute;
+        z-index: 1;
+        transform: scale(0.3);
+      }
+    }
+  }
+
+  .editor-workspace-panel {
+    width: 184px;
+  }
+}

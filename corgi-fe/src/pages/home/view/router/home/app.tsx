@@ -120,7 +120,11 @@ class App extends React.Component<any, Istates> {
       case '#/template':
         return <TemplateContent />
       case '#/mine':
-        return <MyContent />
+        return (
+          <MyContent
+            userInfo={userInfo}
+          />
+        )
       case '#/about':
         return <AboutContent />
       default:

@@ -4,20 +4,21 @@
 
   .editor-nav {
     width: 68px;
+    .ant-menu {
+      height: 100%;
+      .ant-menu-item {
+        display: flex;
+        flex-direction: column;
+        padding: 16px 16px;
+        height: 68px;
+      }
+    }
   }
   .editor-nav-panel {
     width: 288px;
-  }
-  .editor-right {
-    flex: 1;
-    display: flex;
-
-    .editor-workspace {
-      flex: 1;
-    }
-
-    .editor-workspace-panel {
-      width: 184px;
+    .nav-panel-wrapper {
+      height: 100%;
     }
   }
+
 }
