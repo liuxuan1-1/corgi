@@ -27,13 +27,28 @@ class MyList extends React.PureComponent<Iprops, Istates> {
     this.fetchData();
   }
 
+  public componentDidUpdate(prevProps: Iprops, prevState: Istates) {
+    if (this.props.category !== prevProps.category) {
+      this.fetchData();
+    }
+  }
+
   /**
    * 获取文件数据
    */
   public fetchData = ():void => {
+    const { category } = this.props;
+
+    let url = `${API_URL}/api/design/getlist`;
+    if (category === 'info') {
+      url = `${API_URL}/api/design/getlist`;
+    } else if (category === 'template') {
+      url = `${API_URL}/api/template/getmine`;
+    }
+
     axios({
       method: 'get',
-      url: `${API_URL}/api/design/getlist`,
+      url,
       withCredentials: true,
     }).then((e) => {
       const result = e.data;
@@ -53,6 +68,8 @@ class MyList extends React.PureComponent<Iprops, Istates> {
 
   public renderList = ():React.ReactNodeArray => {
     const { list } = this.state;
+    const { category } = this.props;
+
     const result: React.ReactNode[] = [];
     let children: React.ReactNode[] = [];
     // tslint:disable-next-line: prefer-for-of
@@ -62,6 +79,7 @@ class MyList extends React.PureComponent<Iprops, Istates> {
           <Card
             data={list[i]}
             fetchData={this.fetchData}
+            category={category}
           />
         </Col>
       ));

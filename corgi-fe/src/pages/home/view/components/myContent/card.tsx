@@ -11,6 +11,7 @@ interface Iprops {
     [propName: string]: any;
   },
   fetchData: () => void,
+  category: string,
 }
 
 const confirm = Modal.confirm;
@@ -21,10 +22,14 @@ class Card extends React.PureComponent<Iprops, Istates> {
   }
 
   public handleClick = (e: React.MouseEvent):void => {
-    const { data } = this.props;
+    const { data, category } = this.props;
     const tempwindow = window.open('_blank'); // 先打开页面
     if (tempwindow) {
-      tempwindow.location.href = `/editor.html?tempalteid=${data.templateId}&designid=${data._id}`;
+      if (category === 'info') {
+        tempwindow.location.href = `/editor.html?tempalteid=${data.templateId}&designid=${data._id}`;
+      } else if (category === 'template') {
+        tempwindow.location.href = `/editor.html?tempalteid=${data._id}`;
+      }
     }
   }
 
@@ -34,7 +39,15 @@ class Card extends React.PureComponent<Iprops, Istates> {
   public handleDeleteClick = (e: React.MouseEvent): void => {
     e.preventDefault();
     e.stopPropagation();
-    const { data, fetchData } = this.props;
+    const { data, fetchData, category } = this.props;
+
+    let url = `${API_URL}/api/design/delete`;
+    if (category === 'info') {
+      url = `${API_URL}/api/design/delete`;
+    } else if (category === 'template') {
+      url = `${API_URL}/api/template/delete`;
+    }
+
     confirm({
       cancelText: '取消',
       content: '',
@@ -46,7 +59,7 @@ class Card extends React.PureComponent<Iprops, Istates> {
           params: {
             id: data._id,
           },
-          url: `${API_URL}/api/design/delete`,
+          url,
           withCredentials: true,
         }).then((e) => {
           const result = e.data;
@@ -75,7 +88,7 @@ class Card extends React.PureComponent<Iprops, Istates> {
         </div>
         <div className="card-content">
           <div className="card-name">
-            {data.designName}
+            {data.designName || data.templateName}
           </div>
           <div className="card-delete">
             <Icon type="delete" onClick={this.handleDeleteClick} />

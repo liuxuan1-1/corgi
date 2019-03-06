@@ -35,12 +35,12 @@ class Card extends React.PureComponent<Iprops, Istates> {
           tempwindow.location.href = `/editor.html?templateid=${data._id}&designid=${result.data.designInfo._id}`;
         }
       } else {
-        message.error(`保存失败: ${result.message}`);
+        message.error(`创建文件失败: ${result.message}`);
       }
     }).catch((e) => {
-      message.error(`保存失败`);
+      message.error(`创建文件请求失败`);
       // tslint:disable-next-line: no-console
-      console.error(`保存失败: ${JSON.stringify(e)}`)
+      console.error(`创建文件请求失败: ${JSON.stringify(e)}`)
     })
   }
 

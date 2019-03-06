@@ -5,6 +5,26 @@ import { ObjectId } from 'mongodb';
 import { IResponseBody } from '../../typings';
 import { IDesignDocument } from '../../typings/mongo';
 
+async function checkPermission(ctx: any, _id: string): Promise<boolean> {
+  const createUserId = await ctx.app.mongo.find('design', {
+    query: {
+      _id: new ObjectId(_id),
+    },
+    projection: {
+      createUserId: true,
+    },
+  });
+
+  if (Array.isArray(createUserId) && createUserId.length !== 0) {
+    if (!createUserId[0].createUserId.equals(ctx.session.corgi_userId)) {
+      return false;
+    }
+  } else {
+    return false;
+  }
+  return true;
+}
+
 /**
  * design Service
  */
@@ -50,6 +70,14 @@ export default class DesignService extends Service {
   public async delete(_id: string): Promise<IResponseBody> {
     const { ctx } = this;
     try {
+      if (!await checkPermission(ctx, _id)) {
+        return {
+          success: false,
+          message: '无权操作',
+          data: {},
+        };
+      }
+
       const result = await ctx.app.mongo.db.collection('design').deleteOne({
           _id: new ObjectId(_id),
       });
@@ -76,6 +104,10 @@ export default class DesignService extends Service {
     }
   }
 
+  /**
+   * 创建文件
+   * @param templateId 创建文件的templateId
+   */
   public async create(templateId: string): Promise<IResponseBody> {
     const { ctx } = this;
     const doc: IDesignDocument = {

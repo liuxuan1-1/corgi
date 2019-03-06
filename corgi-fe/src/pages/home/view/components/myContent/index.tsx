@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { ClickParam } from 'antd/lib/menu';
-import { Menu, Button } from 'antd';
+import { Menu, Button, message } from 'antd';
 import List from './list';
+import axios from 'axios';
+import { API_URL } from '../../../../../pagesConst';
 import '../templateContent/index.scss';
 import './index.scss';
 
@@ -30,7 +32,27 @@ class TemplateContent extends React.Component<Iprops, Istates> {
   }
 
   public handleClickAddTem = (): void => {
-    console.log(1123)
+
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/template/create`,
+      withCredentials: true,
+    }).then((e) => {
+      const result = e.data;
+      if (result.success) {
+        console.log(result);
+        const tempwindow = window.open('_blank'); // 先打开页面
+        if (tempwindow) {
+          tempwindow.location.href = `/editor.html?tempalteid=${result.data.id}`;
+        }
+      } else {
+        message.error(`创建失败: ${result.message}`);
+      }
+    }).catch((e) => {
+      message.error(`创建模板请求出错`);
+      // tslint:disable-next-line: no-console
+      console.error(`创建模板请求出错: ${JSON.stringify(e)}`)
+    })
   }
 
   public render() {
@@ -58,9 +80,15 @@ class TemplateContent extends React.Component<Iprops, Istates> {
 
           {
             showAddTemplteBtn? (
-              <Menu.Item key="btn-wrapper">
-                <Button type="primary" onClick={this.handleClickAddTem}>新增模板</Button>
-              </Menu.Item>
+              [
+                <Menu.Item key="template">
+                  我的模板
+                </Menu.Item>
+              ,
+                <Menu.Item key="btn-wrapper">
+                  <Button type="primary" onClick={this.handleClickAddTem}>新增模板</Button>
+                </Menu.Item>
+              ]
             ) : null
           }
         </Menu>
