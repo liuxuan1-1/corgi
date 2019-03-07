@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { Layout, Button, Input, message } from 'antd';
+import { Layout, Button, Input } from 'antd';
 import { inject, observer } from 'mobx-react';
-import axios from 'axios';
-import { API_URL } from '../../../../../pagesConst';
+import FilePX from './filepx';
 import './index.scss';
-
 
 const {
   Header,
@@ -16,6 +14,15 @@ interface Istates {
 interface Iprops {
   store?: any,
 }
+
+const pageParam = location.search.slice(1).split('&').map(e => e.split('='));
+let isTemplateFile: boolean = false;
+if (Array.isArray(pageParam[0])) {
+  if (pageParam[0][0] === 'templateid' && pageParam[0][1]) {
+    isTemplateFile = true;
+  }
+}
+
 
 @inject('store')
 @observer
@@ -30,29 +37,44 @@ class MyHeader extends React.Component<Iprops, Istates> {
   }
 
   public handleClickSave = (): void => {
-    axios({
-      data: {
-        ...this.props.store.data,
-      },
-      method: 'post',
-      url: `${API_URL}/api/design/save`,
-      withCredentials: true,
-    }).then((e) => {
-      const result = e.data;
-      if (result.success) {
-        message.success(`保存成功`);
-      } else {
-        message.error(`保存失败: ${result.message}`);
+    this.props.store.getSaveData();
+  }
+
+  /**
+   * 文件尺寸大小改变, 要改变两处, 
+   * 一个是root的size, 还有一个是root的css的width和height
+   */
+  public callbackFilePXChange = (e: {
+    x?: number,
+    y?: number
+  }):void => {
+    const info = { ...this.props.store.data.info }
+    const size = info.root.size;
+    let result = [0,0];
+    if (size) {
+      result = size.split('*');
+    }
+
+    if (e.x) {
+      result[0] = e.x;
+      if (info.root.css) {
+        info.root.css.width = `${e.x}px`;
       }
-    }).catch((e) => {
-      message.error(`保存失败`);
-      // tslint:disable-next-line: no-console
-      console.error(`保存失败: ${JSON.stringify(e)}`)
+    } else if (e.y) {
+      result[1] = e.y;
+      if (info.root.css) {
+        info.root.css.height = `${e.y}px`;
+      }
+    }
+
+    info.root.size = result.join('*');
+    this.props.store.setDesignData({
+      info,
     })
   }
 
   public render() {
-    const { fileName } = this.props.store.data;
+    const { fileName, info } = this.props.store.data;
     return (
       <Header className="head-wrapper">
         <div className="head-left">
@@ -62,6 +84,7 @@ class MyHeader extends React.Component<Iprops, Istates> {
           <Input value={fileName} onChange={this.handleChangeFileName} />
         </div>
         <div className="head-right">
+          <FilePX data={info.root} disabled={!isTemplateFile} callbackFilePXChange={this.callbackFilePXChange} />
           <Button type="primary" onClick={this.handleClickSave}>保存</Button>
         </div>
       </Header>

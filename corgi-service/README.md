@@ -8,11 +8,16 @@
 |`/api/accounts/exit`|退出登录接口||
 |`/api/accounts/getuserinfo`|获取用户信息||
 |`/api/template/getlist`|获取模板列表|`category`: 分类|
-|`/api/design/getlist`|获取我的列表||
+|`/api/template/getfile`|获取模板编辑数据|`id`: 模板id|
+|`/api/template/getmine`|获取我的模板列表||
+|`/api/template/create`|新建模板||
+|`/api/template/delete`|删除模板||
+|`/api/design/getlist`|获取我的文件列表||
+|`/api/design/getfile`|获取文件信息|`id`: 文件id|
 |`/api/design/delete`|删除我的文件|`id`: 文件id`|
 |`/api/design/create`|创建文件|`templateId`: 模板id|
 |`/api/design/save`|保存我的文件|`fileName`: 文件名|
-|`/api/img/upload`|上传图片||
+|`/api/img/uploadAvatar`|上传图片||
 
 
 

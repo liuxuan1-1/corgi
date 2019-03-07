@@ -17,6 +17,35 @@ export default class TemplateController extends Controller {
     ctx.body = result;
   }
 
+  public async getFile() {
+    const { ctx } = this;
+    ctx.body = {
+      success: true,
+      message: 'caonima',
+      data: {
+        fileName: '123',
+        info: {
+          element: [{
+            css: {
+              border: 0,
+              top: 0,
+            },
+            id: 0,
+            type: 'font',
+          }],
+          root: {
+            css: {
+              background: '#f1f1f2',
+              height: '1008px',
+              width: '640px',
+            },
+            size: '640*1008',
+          },
+        },
+      },
+    };
+  }
+
   public async create() {
     const { ctx } = this;
     // ctx.request.query get请求

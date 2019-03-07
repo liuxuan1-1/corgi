@@ -32,7 +32,7 @@ class Card extends React.PureComponent<Iprops, Istates> {
       if (result.success) {
         const tempwindow = window.open('_blank'); // 先打开页面
         if (tempwindow) {
-          tempwindow.location.href = `/editor.html?templateid=${data._id}&designid=${result.data.designInfo._id}`;
+          tempwindow.location.href = `/editor.html?designid=${result.data.designInfo._id}`;
         }
       } else {
         message.error(`创建文件失败: ${result.message}`);

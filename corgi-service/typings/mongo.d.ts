@@ -1,5 +1,19 @@
 import { ObjectId } from 'mongodb';
 
+
+export interface IFileInfo {
+  element: Array<{
+    [propName: string]: any,
+  }>,
+  root: {
+    css: {
+      [propName: string]: any,
+    },
+    size: string,
+  },
+}
+
+
 export interface IUserDocument {
   nickName: string,
   avatarUrl: string,
@@ -22,7 +36,7 @@ export interface IDesignDocument {
 export interface ITemplateDocument {
   createUserId: ObjectId,
   userCount: number,
-  info: string,
+  info: IFileInfo,
   category: array<string>,
   coverUrl: string,
   templateName: string,

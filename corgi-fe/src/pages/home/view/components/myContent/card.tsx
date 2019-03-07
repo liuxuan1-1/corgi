@@ -26,9 +26,9 @@ class Card extends React.PureComponent<Iprops, Istates> {
     const tempwindow = window.open('_blank'); // 先打开页面
     if (tempwindow) {
       if (category === 'info') {
-        tempwindow.location.href = `/editor.html?tempalteid=${data.templateId}&designid=${data._id}`;
+        tempwindow.location.href = `/editor.html?designid=${data._id}`;
       } else if (category === 'template') {
-        tempwindow.location.href = `/editor.html?tempalteid=${data._id}`;
+        tempwindow.location.href = `/editor.html?templateid=${data._id}`;
       }
     }
   }

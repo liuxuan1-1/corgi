@@ -12,6 +12,10 @@ const {
 @inject('store')
 @observer
 class App extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    props.store.getFetchData();
+  }
   
   public render() {
     return (

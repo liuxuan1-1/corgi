@@ -3,6 +3,7 @@ import * as React from 'react';
 // import { ClickParam } from 'antd/lib/menu';
 // import axios from 'axios';
 // import { API_URL } from '../../../../../pagesConst';
+
 import './index.scss';
 
 interface Istates {
@@ -24,42 +25,14 @@ class Workspace extends React.Component<Iprops, Istates> {
     }
   }
 
-  constructor(props: Iprops) {
-    super(props);
-    this.conputedInfoCss('constructor');
-  }
-
-  public conputedInfoCss = (mount: string): void => {
-    const { info = {} } = this.props;
-    const result: {
-      [propName: string]: any
-    } = {};
-    if (info.root && info.root.css) {
-      result.root = {
-        ...info.root.css
-      };
-    }
-
-    if (mount === 'constructor') {
-      this.state.data = result;
-    }
-    // this.setState((preState) => {
-    //   return {
-    //     data: {
-    //       ...preState.data,
-    //       ...result,
-    //     }
-    //   }
-    // });
-  }
 
   public render() {
-    const { data } = this.state;
-    // const { info } = this.props;
-    console.log(data);
+    // const { data } = this.state;
+    const { info } = this.props;
+    // console.log(info);
     return (
       <div className="workspace-wrapper">
-        <div className="workspace" style={data.root}>
+        <div className="workspace" style={{...info.root.css}}>
           123
         </div>
       </div>

@@ -10,6 +10,18 @@ export default class DesignController extends Controller {
     ctx.body = result;
   }
 
+  public async getFile() {
+    const { ctx } = this;
+    ctx.body = {
+      success: true,
+      message: 'caonima',
+      data: {
+        fileName: '123',
+        info: {},
+      },
+    };
+  }
+
   public async delete() {
     const { ctx } = this;
     const param = ctx.request.query.id;

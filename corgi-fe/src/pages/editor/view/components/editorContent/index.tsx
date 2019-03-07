@@ -32,8 +32,15 @@ class EditorContent extends React.Component<Iprops, Istates> {
     });
   }
 
+  public callbackChangeStore = (e: any): void => {
+    this.props.store.setDesignData({
+      info: e
+    });
+  }
+
   public render() {
     const { menuCurrent } = this.state;
+    const { data } = this.props.store;
     return (
       <div className="editor-content-wrapper">
         <div className="editor-nav">
@@ -59,7 +66,13 @@ class EditorContent extends React.Component<Iprops, Istates> {
           </Menu>
         </div>
         <div className="editor-nav-panel">
-          <NavPanel menuCurrent={menuCurrent} />
+          <NavPanel
+            callbackChangeStore={this.callbackChangeStore}
+            data={{
+              ...data.info
+            }}
+            menuCurrent={menuCurrent}
+          />
         </div>
         <EditorRight />
       </div>

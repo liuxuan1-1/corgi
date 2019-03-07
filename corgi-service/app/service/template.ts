@@ -4,7 +4,7 @@ import { Service } from 'egg';
 import { ObjectId } from 'mongodb';
 import { IResponseBody } from '../../typings';
 
-import { ITemplateDocument } from '../../typings/mongo';
+import { IFileInfo, ITemplateDocument } from '../../typings/mongo';
 
 async function checkPermission(ctx: any, _id: string): Promise<boolean> {
   const createUserId = await ctx.app.mongo.find('template', {
@@ -102,12 +102,23 @@ export default class TemplateService extends Service {
   public async create(): Promise<IResponseBody> {
 
     const { ctx } = this;
+    const info: IFileInfo = {
+      element: [{}],
+      root: {
+        css: {
+          background: '#f1f1f2',
+          height: '1008px',
+          width: '640px',
+        },
+        size: '640*1008',
+      },
+    };
     const doc: ITemplateDocument = {
       createUserId: new ObjectId(ctx.session.corgi_userId),
       userCount: 0,
       category: ['精选'],
       coverUrl: '',
-      info: '{}',
+      info,
       templateName: '未命名',
     };
 

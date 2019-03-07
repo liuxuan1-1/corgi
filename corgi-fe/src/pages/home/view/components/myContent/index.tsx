@@ -40,7 +40,6 @@ class TemplateContent extends React.Component<Iprops, Istates> {
     }).then((e) => {
       const result = e.data;
       if (result.success) {
-        console.log(result);
         const tempwindow = window.open('_blank'); // 先打开页面
         if (tempwindow) {
           tempwindow.location.href = `/editor.html?tempalteid=${result.data.id}`;

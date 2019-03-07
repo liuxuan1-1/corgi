@@ -17,6 +17,9 @@
   .head-left, .head-middle, .head-right {
     width: 240px;
   }
+  .head-right {
+    width: 285px;
+  }
   .head-middle {
     input {
       border: none;
@@ -28,4 +31,17 @@
     justify-content: flex-end;
     align-items: center;
   }
+
+  .file-px-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    height: 100%;
+    .ant-input-number {
+      width: 70px;
+      margin: 0 8px;
+    }
+  }
+
 }

@@ -12,12 +12,13 @@ export default (app: Application) => {
   router.post('/api/img/uploadAvatar', controller.img.uploadAvatar);
 
   router.get('/api/template/getlist', controller.template.getList);
+  router.get('/api/template/getfile', controller.template.getFile);
   router.get('/api/template/getmine', controller.template.getMine);
   router.get('/api/template/create', controller.template.create);
   router.get('/api/template/delete', controller.template.delete);
 
   router.get('/api/design/getlist', controller.design.getList);
+  router.get('/api/design/getfile', controller.design.getFile);
   router.get('/api/design/delete', controller.design.delete);
   router.get('/api/design/create', controller.design.create);
-
 };
