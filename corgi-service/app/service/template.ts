@@ -45,6 +45,7 @@ export default class TemplateService extends Service {
       const result = await ctx.app.mongo.find('template', {
         query: {
           category,
+          isRelease: true,
         },
         projection: {
           info: false,
@@ -169,6 +170,7 @@ export default class TemplateService extends Service {
       coverUrl: '',
       info,
       templateName: '未命名',
+      isRelease: false,
     };
 
     const userInfo = await ctx.app.mongo.find('user', {
@@ -313,5 +315,53 @@ export default class TemplateService extends Service {
         data: {},
       };
     }
+  }
+
+  /**
+   * 发布模板
+   * @param id 模板id
+   * @param isRelease 是否发布
+   */
+  public async release(id: string, isRelease: boolean): Promise<IResponseBody> {
+    const { ctx } = this;
+    try {
+      if (!await checkPermission(ctx, id)) {
+        return {
+          success: false,
+          message: '无权操作',
+          data: {},
+        };
+      }
+      const result = await ctx.app.mongo.updateMany('template', {
+        filter: {
+          _id: new ObjectId(id),
+        },
+        update: {
+          $set: {
+            isRelease,
+          },
+        },
+      });
+      if (result.result.ok === 1) {
+        return {
+          success: true,
+          message: `修改成功`,
+          data: {
+          },
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `数据库插入错误: ${error}`,
+        data: {},
+      };
+    }
+
+    return {
+      success: false,
+      message: '未知错误',
+      data: {},
+    };
   }
 }

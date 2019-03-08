@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Layout, Button, Input } from 'antd';
+import { Layout, Input, Menu, Dropdown, Icon } from 'antd';
+import { ClickParam } from 'antd/lib/menu';
 import { inject, observer } from 'mobx-react';
 import FilePX from './filepx';
 import './index.scss';
@@ -23,7 +24,6 @@ if (Array.isArray(pageParam[0])) {
   }
 }
 
-
 @inject('store')
 @observer
 class MyHeader extends React.Component<Iprops, Istates> {
@@ -36,8 +36,23 @@ class MyHeader extends React.Component<Iprops, Istates> {
     })
   }
 
-  public handleClickSave = (): void => {
-    this.props.store.getSaveData();
+  /**
+   * 文件菜单点击事件
+   */
+  public handleClickFileMenu = (e: ClickParam) => {
+    switch (e.key) {
+      case "save":
+        this.props.store.getSaveData();
+        break;
+      case "release":
+        this.props.store.getRelease(true);
+        break;
+      case "unrelease":
+        this.props.store.getRelease(false);
+        break;
+      default:
+        break;
+    }
   }
 
   /**
@@ -74,7 +89,29 @@ class MyHeader extends React.Component<Iprops, Istates> {
   }
 
   public render() {
-    const { fileName, info } = this.props.store.data;
+    const { fileName, info, isRelease } = this.props.store.data;
+    const DropMenu = (
+      <Menu onClick={this.handleClickFileMenu}>
+        <Menu.Item key='save'>
+          保存
+        </Menu.Item>
+        {
+          isTemplateFile && isRelease === false ? (
+            <Menu.Item key='release'>
+              发布
+            </Menu.Item>
+          ) : null
+        }
+        {
+          isTemplateFile && isRelease === true ? (
+            <Menu.Item key='unrelease'>
+              取消发布
+            </Menu.Item>
+          ) : null
+        }
+      </Menu>
+    );
+
     return (
       <Header className="head-wrapper">
         <div className="head-left">
@@ -85,7 +122,11 @@ class MyHeader extends React.Component<Iprops, Istates> {
         </div>
         <div className="head-right">
           <FilePX data={info.root} disabled={!isTemplateFile} callbackFilePXChange={this.callbackFilePXChange} />
-          <Button type="primary" onClick={this.handleClickSave}>保存</Button>
+          <Dropdown overlay={DropMenu}>
+            <a className="ant-dropdown-link" href="#">
+              文件 <Icon type="down" />
+            </a>
+          </Dropdown>
         </div>
       </Header>
     );

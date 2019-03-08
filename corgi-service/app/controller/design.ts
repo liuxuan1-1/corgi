@@ -14,6 +14,8 @@ export default class DesignController extends Controller {
     const { ctx } = this;
     const param: string = ctx.request.query.id;
     const result: IResponseBody = await ctx.service.design.getFile(param);
+    result.data.fileName = result.data.designName;
+    delete result.data.designName;
     ctx.body = result;
   }
 

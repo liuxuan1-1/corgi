@@ -50,4 +50,5 @@ export interface ITemplateDocument {
   category: array<string>,
   coverUrl: string,
   templateName: string,
+  isRelease: boolean,
 }

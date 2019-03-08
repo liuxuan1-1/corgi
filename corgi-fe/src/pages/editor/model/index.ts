@@ -11,7 +11,8 @@ interface IDesignData {
   fileName: string,
   info: {
     [propName: string]: any
-  }
+  },
+  isRelease?: boolean,
 }
 
 const pageParam = location.search.slice(1).split('&').map(e => e.split('='));
@@ -103,6 +104,38 @@ class Store {
       message.error(`获取文件数据请求失败`);
       // tslint:disable-next-line: no-console
       console.error(`获取文件数据请求失败: ${JSON.stringify(e)}`)
+    })
+  }
+
+
+  /**
+   * 更改模板发布状态
+   * @param release 变更状态
+   */
+  @action
+  public getRelease(release: boolean) {
+    axios({
+      data: {
+        id: templateId,
+        isRelease: release,
+      },
+      method: 'post',
+      url: `${API_URL}/api/template/release`,
+      withCredentials: true,
+    }).then((e) => {
+      const result = e.data;
+      if (result.success) {
+        runInAction(() => {
+          this.data.isRelease = release;
+        })
+        message.success(`操作成功`);
+      } else {
+        message.error(`操作失败: ${result.message}`);
+      }
+    }).catch((e) => {
+      message.error(`release操作请求失败`);
+      // tslint:disable-next-line: no-console
+      console.error(`release操作请求失败: ${JSON.stringify(e)}`)
     })
   }
 
