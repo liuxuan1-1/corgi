@@ -4,8 +4,13 @@ import { Service } from 'egg';
 import { ObjectId } from 'mongodb';
 import { IResponseBody } from '../../typings';
 
-import { IFileInfo, ITemplateDocument } from '../../typings/mongo';
+import { IFileInfo, ITemplateDocument, ITemplateSaveParam } from '../../typings/mongo';
 
+/**
+ * 检查该操作创建者是否和当前session用户一致
+ * @param ctx egg ctx
+ * @param _id template id
+ */
 async function checkPermission(ctx: any, _id: string): Promise<boolean> {
   const createUserId = await ctx.app.mongo.find('template', {
     query: {
@@ -97,6 +102,50 @@ export default class TemplateService extends Service {
   }
 
   /**
+   * 获取文件数据
+   * @param _id template id
+   */
+  public async getFile(_id: string): Promise<IResponseBody> {
+    const { ctx } = this;
+    try {
+      const result = await ctx.app.mongo.find('template', {
+        query: {
+          _id: new ObjectId(_id),
+        },
+      });
+      if (Array.isArray(result) && result.length !== 0) {
+        if (!result[0].createUserId.equals(ctx.session.corgi_userId)) {
+          return {
+            success: false,
+            message: '无权操作',
+            data: {},
+          };
+        } else {
+          return {
+            success: true,
+            message: '调用成功',
+            data: {
+              ...result[0],
+            },
+          };
+        }
+      } else {
+        return {
+          success: false,
+          message: '未查找到该文件数据',
+          data: {},
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `获取数据失败: ${JSON.stringify(error)}`,
+        data: {},
+      };
+    }
+  }
+
+  /**
    * 创造模板
    */
   public async create(): Promise<IResponseBody> {
@@ -159,6 +208,54 @@ export default class TemplateService extends Service {
           message: `创建成功`,
           data: {
             id: result.ops[0]._id,
+          },
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `数据库插入错误: ${error}`,
+        data: {},
+      };
+    }
+
+    return {
+      success: false,
+      message: '未知错误',
+      data: {},
+    };
+  }
+
+  /**
+   * 保存模板数据
+   */
+  public async save(data: ITemplateSaveParam): Promise<IResponseBody> {
+    const { ctx } = this;
+    try {
+      if (!await checkPermission(ctx, data.id)) {
+        return {
+          success: false,
+          message: '无权操作',
+          data: {},
+        };
+      }
+      const result = await ctx.app.mongo.updateMany('template', {
+        filter: {
+          _id: new ObjectId(data.id),
+        },
+        update: {
+          $set: {
+            info: data.info,
+            templateName: data.fileName,
+            category: data.category,
+          },
+        },
+      });
+      if (result.result.ok === 1) {
+        return {
+          success: true,
+          message: `修改成功`,
+          data: {
           },
         };
       }

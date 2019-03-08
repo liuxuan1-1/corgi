@@ -32,7 +32,7 @@ class FilePX extends React.Component<Iprops, Istates> {
   }
 
   public render() {
-    const { disabled, data } = this.props;
+    const { disabled, data = {} } = this.props;
     // const { x, y } = this.state;
     let x = 640;
     let y = 1008;

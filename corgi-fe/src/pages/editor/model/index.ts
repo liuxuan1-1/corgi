@@ -40,11 +40,11 @@ class Store {
   };
 
   public getSaveData = () => {
-    let url = `${API_URL}/api/design/getfile`;
+    let url = `${API_URL}/api/design/save`;
     if (templateId) {
-      url = `${API_URL}/api/template/getfile`;
+      url = `${API_URL}/api/template/save`;
     } else if (designId) {
-      url = `${API_URL}/api/design/getfile`;
+      url = `${API_URL}/api/design/save`;
     } else {
       message.error(`文件不存在`);
       return;

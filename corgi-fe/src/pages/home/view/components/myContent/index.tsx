@@ -42,7 +42,7 @@ class TemplateContent extends React.Component<Iprops, Istates> {
       if (result.success) {
         const tempwindow = window.open('_blank'); // 先打开页面
         if (tempwindow) {
-          tempwindow.location.href = `/editor.html?tempalteid=${result.data.id}`;
+          tempwindow.location.href = `/editor.html?templateid=${result.data.id}`;
         }
       } else {
         message.error(`创建失败: ${result.message}`);

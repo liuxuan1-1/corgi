@@ -16,9 +16,12 @@ export default (app: Application) => {
   router.get('/api/template/getmine', controller.template.getMine);
   router.get('/api/template/create', controller.template.create);
   router.get('/api/template/delete', controller.template.delete);
+  router.post('/api/template/save', controller.template.save);
 
   router.get('/api/design/getlist', controller.design.getList);
   router.get('/api/design/getfile', controller.design.getFile);
   router.get('/api/design/delete', controller.design.delete);
   router.get('/api/design/create', controller.design.create);
+  router.post('/api/design/save', controller.design.save);
+
 };

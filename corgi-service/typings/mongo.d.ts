@@ -13,6 +13,16 @@ export interface IFileInfo {
   },
 }
 
+export interface IDesignSaveParam {
+  info: IFileInfo,
+  fileName: string,
+  id: string,
+}
+
+export interface ITemplateSaveParam extends IDesignSaveParam {
+  category: array<string>,
+}
+
 
 export interface IUserDocument {
   nickName: string,
@@ -28,7 +38,7 @@ export interface IUserDocument {
 export interface IDesignDocument {
   templateId: ObjectId,
   createUserId: ObjectId,
-  info: string,
+  info: any,
   coverUrl: string,
   designName: string,
 }
