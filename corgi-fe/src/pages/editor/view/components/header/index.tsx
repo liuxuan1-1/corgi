@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { Layout, Input, Menu, Dropdown, Icon } from 'antd';
+import { Layout, Input, Menu, Dropdown, Icon, Modal, Select } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
 import { inject, observer } from 'mobx-react';
 import FilePX from './filepx';
 import './index.scss';
+
+const confirm = Modal.confirm;
+const Option = Select.Option;
 
 const {
   Header,
@@ -36,16 +39,38 @@ class MyHeader extends React.Component<Iprops, Istates> {
     })
   }
 
+  public handleCategoryChange = (e: any): void => {
+    this.props.store.setDesignData({
+      category: e,
+    })
+  }
+
   /**
    * 文件菜单点击事件
    */
   public handleClickFileMenu = (e: ClickParam) => {
+    const { category = ['精品'] } = this.props.store.data;
+
     switch (e.key) {
       case "save":
         this.props.store.getSaveData();
         break;
       case "release":
-        this.props.store.getRelease(true);
+        confirm({
+          cancelText: '取消发布',
+          content: (
+            <Select defaultValue={category} mode="multiple" style={{ width: '100%' }} onChange={this.handleCategoryChange}>
+              <Option value="精品">精品</Option>
+              <Option value="其它">其它</Option>
+            </Select>
+          ),
+          okText: '确定发布',
+          onOk: () => {
+            this.props.store.getRelease(true);
+            this.props.store.getSaveData(true);
+          },
+          title: '选择分类',
+        });
         break;
       case "unrelease":
         this.props.store.getRelease(false);

@@ -12,6 +12,7 @@ interface IDesignData {
   info: {
     [propName: string]: any
   },
+  category: string[],
   isRelease?: boolean,
 }
 
@@ -29,6 +30,7 @@ if (Array.isArray(pageParam[0])) {
 
 class Store {
   @observable public data: Partial<IDesignData> = {
+    category: [],
     fileName: '',
     info: {
       element: [],
@@ -37,10 +39,10 @@ class Store {
         },
         size: '',
       }
-    }
+    },
   };
 
-  public getSaveData = () => {
+  public getSaveData = (noMessage: boolean = false) => {
     let url = `${API_URL}/api/design/save`;
     if (templateId) {
       url = `${API_URL}/api/template/save`;
@@ -62,7 +64,9 @@ class Store {
     }).then((e) => {
       const result = e.data;
       if (result.success) {
-        message.success(`保存成功`);
+        if (!noMessage) {
+          message.success(`保存成功`);
+        }
       } else {
         message.error(`保存失败: ${result.message}`);
       }
