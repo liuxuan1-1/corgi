@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.13.2",
     "axios": "^0.18.0",
+    "lodash.throttle": "^4.1.1",
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
     "rc-texty": "^0.2.0",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.4",
+    "@types/lodash.throttle": "^4.1.6",
     "@types/node": "^11.9.3",
     "@types/react": "^16.8.3",
     "@types/react-color": "^2.14.1",
