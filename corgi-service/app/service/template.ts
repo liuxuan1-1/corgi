@@ -153,7 +153,7 @@ export default class TemplateService extends Service {
 
     const { ctx } = this;
     const info: IFileInfo = {
-      element: [{}],
+      element: [],
       root: {
         css: {
           background: '#f1f1f2',

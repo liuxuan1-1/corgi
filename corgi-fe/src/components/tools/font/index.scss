@@ -1,0 +1,26 @@
+.panel-font-wrapper {
+  height: 100%;
+  font-size: 20px;
+  float: left;
+
+  .font {
+    width: 135px;
+    height: 76px;
+    display: inline-block;
+    text-align: center;
+    line-height: 76px;
+    font-size: 35px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .font:hover {
+    background: #eceef0;
+  }
+}
+
+.panel-font-wrapper::after {
+  clear: both;
+  display: block;
+  content: "";
+}

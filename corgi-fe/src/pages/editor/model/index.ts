@@ -42,6 +42,21 @@ class Store {
     },
   };
 
+  @observable public fontSpecial = {
+    描边: {
+      textShadow: "rgb(93, 97, 255) 1px -2px 0px, rgb(93, 97, 255) 2px -2px 0px, rgb(93, 97, 255) 2px 1px 0px, rgb(93, 97, 255) 2px 2px 0px, rgb(93, 97, 255) 1px 2px 0px, rgb(93, 97, 255) 2px 2px 0px, rgb(93, 97, 255) -2px 1px 0px, rgb(93, 97, 255) -2px 2px 0px, rgb(93, 97, 255) 1px -1px 0px, rgb(93, 97, 255) 1px 1px 0px, rgb(93, 97, 255) 1px 1px 0px, rgb(93, 97, 255) -1px 1px 0px, rgb(255, 42, 106) 0px 0px 0px, rgb(255, 42, 106) 0.707107px 0.707107px 0px, rgb(255, 42, 106) 1.41421px 1.41421px 0px, rgb(255, 42, 106) 2.12132px 2.12132px 0px, rgb(255, 42, 106) 2.82843px 2.82843px 0px, rgb(255, 42, 106) 3.53553px 3.53553px 0px, rgb(255, 42, 106) 4.24264px 4.24264px 0px, rgb(255, 42, 106) 4.94975px 4.94975px 0px, rgb(255, 42, 106) 5.65685px 5.65685px 0px, rgb(255, 42, 106) 6.36396px 6.36396px 0px, rgb(0, 0, 0) 0px 0px 20px"
+    },
+    火焰: {
+      textShadow: "0 -5px 4px #FF3, 2px -10px 6px #fd3,-2px -15px 11px #f80, 2px -18px 18px #f20"
+    },
+    立体: {
+      textShadow: "rgb(204, 213, 219) 0px 0px 0px, rgb(204, 213, 219) 0.707107px 0.707107px 0px, rgb(204, 213, 219) 1.41421px 1.41421px 0px, rgb(204, 213, 219) 2.12132px 2.12132px 0px, rgb(204, 213, 219) 2.82843px 2.82843px 0px, rgb(204, 213, 219) 3.53553px 3.53553px 0px, rgb(204, 213, 219) 4.24264px 4.24264px 0px, rgb(204, 213, 219) 4.94975px 4.94975px 0px, rgb(204, 213, 219) 5.65685px 5.65685px 0px, rgb(204, 213, 219) 6.36396px 6.36396px 0px, rgb(0, 0, 0) 0px 0px 20px"
+    },
+    颤抖: {
+      textShadow: "rgb(255, 42, 106) -1px 0px 0px, rgb(255, 42, 106) -2px 0px 0px, rgb(255, 42, 106) -3px 0px 0px, rgb(83, 235, 239) 1px 0px 0px, rgb(83, 235, 239) 2px 0px 0px, rgb(83, 235, 239) 3px 0px 0px, rgb(0, 0, 0) 0px 0px 0px"
+    },
+  }
+
   public getSaveData = (noMessage: boolean = false) => {
     let url = `${API_URL}/api/design/save`;
     if (templateId) {

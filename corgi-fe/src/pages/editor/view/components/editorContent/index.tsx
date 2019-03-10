@@ -40,7 +40,7 @@ class EditorContent extends React.Component<Iprops, Istates> {
 
   public render() {
     const { menuCurrent } = this.state;
-    const { data } = this.props.store;
+    const { data, fontSpecial } = this.props.store;
     return (
       <div className="editor-content-wrapper">
         <div className="editor-nav">
@@ -71,6 +71,7 @@ class EditorContent extends React.Component<Iprops, Istates> {
             data={{
               ...data.info
             }}
+            fontSpecial={fontSpecial}
             menuCurrent={menuCurrent}
           />
         </div>

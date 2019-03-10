@@ -61,6 +61,9 @@ class EditorRight extends React.Component<Iprops, Istates> {
     }
   }
 
+  /**
+   * 自动适应屏幕大小
+   */
   public computedAutoScale = ():void => {
     const { info } = this.props.store.data;
     const { scale } = this.state;
@@ -78,6 +81,10 @@ class EditorRight extends React.Component<Iprops, Istates> {
     })
   }
 
+  /**
+   * 手动更改缩放大小
+   * @param value 更改大小
+   */
   public computedScale = (value: number): void => {
     const { scale } = this.state;
     const { info } = this.props.store.data;
@@ -98,6 +105,9 @@ class EditorRight extends React.Component<Iprops, Istates> {
     })
   }
 
+  /**
+   * workspace的虚拟滚动, 隐藏滚动条
+   */
   public handleWorkspaceScroll = (e: React.WheelEvent): void => {
     e.stopPropagation();
     if (this.needScroll) {
@@ -127,13 +137,22 @@ class EditorRight extends React.Component<Iprops, Istates> {
     }
   }
 
+  /**
+   * 更改store数据的回调函数
+   */
+  public callbackChangeStore = (e: any): void => {
+    this.props.store.setDesignData({
+      info: e
+    });
+  }
+
   public render() {
     const { info } = this.props.store.data;
     const { scale, scaleValue } = this.state;
     return (
       <div className="editor-right">
         <div className="editor-workspace" ref={this.editorBox} onWheel={this.handleWorkspaceScroll}>
-          <Workspace info={info} scale={scale} />
+          <Workspace info={{ ...info }} scale={{ ...scale, scaleValue }} callbackChangeStore={this.callbackChangeStore} />
           <Enlarge callbackAutoScale={this.computedAutoScale} scaleValue={scaleValue} callbackComputedScale={this.computedScale} />
         </div>
         <div className="editor-workspace-panel">
