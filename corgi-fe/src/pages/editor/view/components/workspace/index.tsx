@@ -138,7 +138,7 @@ class EditorRight extends React.Component<Iprops, Istates> {
   }
 
   /**
-   * 更改store数据的回调函数
+   * 更改store design数据的回调函数
    */
   public callbackChangeStore = (e: any): void => {
     this.props.store.setDesignData({
@@ -146,13 +146,27 @@ class EditorRight extends React.Component<Iprops, Istates> {
     });
   }
 
+  /**
+   * 点击了哪个组件
+   */
+  public callbackChangeSelectStore = (e: any): void => {
+    this.props.store.setSelectData(e);
+  }
+
   public render() {
     const { info } = this.props.store.data;
+    const { selectData } = this.props.store;
     const { scale, scaleValue } = this.state;
     return (
       <div className="editor-right">
         <div className="editor-workspace" ref={this.editorBox} onWheel={this.handleWorkspaceScroll}>
-          <Workspace info={{ ...info }} scale={{ ...scale, scaleValue }} callbackChangeStore={this.callbackChangeStore} />
+          <Workspace
+            info={{ ...info }}
+            scale={{ ...scale, scaleValue }}
+            selectData={{ ...selectData}}
+            callbackChangeStore={this.callbackChangeStore}
+            callbackChangeSelectStore={this.callbackChangeSelectStore}
+          />
           <Enlarge callbackAutoScale={this.computedAutoScale} scaleValue={scaleValue} callbackComputedScale={this.computedScale} />
         </div>
         <div className="editor-workspace-panel">

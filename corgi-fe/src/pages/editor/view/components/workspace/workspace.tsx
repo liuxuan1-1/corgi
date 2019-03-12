@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
+import ResizeBox from '../resizeBox/index';
 
 // import { Menu, Icon } from 'antd';
 // import { ClickParam } from 'antd/lib/menu';
@@ -28,7 +29,18 @@ interface Iprops {
     },
     scaleValue: number,
   },
-  callbackChangeStore: (e: any) => void
+  selectData: {
+    id: number,
+    position: {
+      [propName: string]: any,
+    },
+    style: {
+      [propName: string]: any,
+    },
+    type: string,
+  },
+  callbackChangeStore: (e: any) => void,
+  callbackChangeSelectStore: (e: any) => void,
 }
 
 class Workspace extends React.Component<Iprops, Istates> {
@@ -42,6 +54,9 @@ class Workspace extends React.Component<Iprops, Istates> {
     super(props);
   }
 
+  /**
+   * 拖动停止修正组件top, left位置
+   */
   public handleDragStop = (e: DraggableEvent, data: DraggableData) => {
     const { info, callbackChangeStore } = this.props;
 
@@ -60,6 +75,46 @@ class Workspace extends React.Component<Iprops, Istates> {
     }
   }
 
+  /**
+   * 组件点击事件
+   */
+  public handleComClick = (e: React.MouseEvent): void => {
+    const { info, callbackChangeSelectStore } = this.props;
+    const target: HTMLDivElement = e.target as HTMLDivElement;
+    const result = info.element.find((e: any): boolean => {
+      if (target.dataset.id) {
+        return e.id === parseInt(target.dataset.id, 10)
+      }
+      return false;
+    })
+    callbackChangeSelectStore({
+      id: result.id,
+      position: {
+        ...result.position,
+      },
+      style: {
+        height: result.style.height,
+        width: result.style.width,
+      },
+      type: result.type,
+    });
+  }
+
+  /**
+   * 拖动事件
+   */
+  public handleDraging = (e: DraggableEvent, data: DraggableData ): void => {
+    const { selectData, callbackChangeSelectStore } = this.props;
+    const result = JSON.parse(JSON.stringify(selectData));
+    if (result.position.left) {
+      result.position.transform = `translate(${data.x}px, ${data.y}px)`
+      callbackChangeSelectStore(result);
+    }
+  }
+
+  /**
+   * 根据数据生成组件
+   */
   public renderElements = (): React.ReactNodeArray => {
     const { info, scale } = this.props;
     const result: React.ReactNodeArray = [];
@@ -68,7 +123,7 @@ class Workspace extends React.Component<Iprops, Istates> {
       switch (e.type) {
         case 'font':
           child = (
-            <div key={`${e.id}child`} data-id={e.id} style={{...e.style}}>
+            <div key={`${e.id}child`} data-id={e.id} style={{...e.style}} onMouseDown={this.handleComClick}>
               双击编辑文字
             </div>
           )
@@ -86,6 +141,7 @@ class Workspace extends React.Component<Iprops, Istates> {
           key={`${e.id}drag`}
           scale={scale.scaleValue}
           onStop={this.handleDragStop}
+          onDrag={this.handleDraging}
         >
           <div key={`${e.id}box`} style={{ ...e.position }}>
             {child}
@@ -105,8 +161,9 @@ class Workspace extends React.Component<Iprops, Istates> {
     // console.log(info);
     return (
       <div className="workspace-wrapper" style={{...scale.workspaceBoxCssFix}}>
-        <div className="workspace" style={{...info.root.css, ...scale.workspaceCssFix}}>
+        <div className="workspace" style={{ ...info.root.css, ...scale.workspaceCssFix }}>
           {this.renderElements()}
+          <ResizeBox />
         </div>
       </div>
     );

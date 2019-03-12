@@ -29,6 +29,9 @@ if (Array.isArray(pageParam[0])) {
 }
 
 class Store {
+  /**
+   * 设计数据
+   */
   @observable public data: Partial<IDesignData> = {
     category: [],
     fileName: '',
@@ -42,6 +45,9 @@ class Store {
     },
   };
 
+  /**
+   * 字体特效
+   */
   @observable public fontSpecial = {
     描边: {
       textShadow: "rgb(93, 97, 255) 1px -2px 0px, rgb(93, 97, 255) 2px -2px 0px, rgb(93, 97, 255) 2px 1px 0px, rgb(93, 97, 255) 2px 2px 0px, rgb(93, 97, 255) 1px 2px 0px, rgb(93, 97, 255) 2px 2px 0px, rgb(93, 97, 255) -2px 1px 0px, rgb(93, 97, 255) -2px 2px 0px, rgb(93, 97, 255) 1px -1px 0px, rgb(93, 97, 255) 1px 1px 0px, rgb(93, 97, 255) 1px 1px 0px, rgb(93, 97, 255) -1px 1px 0px, rgb(255, 42, 106) 0px 0px 0px, rgb(255, 42, 106) 0.707107px 0.707107px 0px, rgb(255, 42, 106) 1.41421px 1.41421px 0px, rgb(255, 42, 106) 2.12132px 2.12132px 0px, rgb(255, 42, 106) 2.82843px 2.82843px 0px, rgb(255, 42, 106) 3.53553px 3.53553px 0px, rgb(255, 42, 106) 4.24264px 4.24264px 0px, rgb(255, 42, 106) 4.94975px 4.94975px 0px, rgb(255, 42, 106) 5.65685px 5.65685px 0px, rgb(255, 42, 106) 6.36396px 6.36396px 0px, rgb(0, 0, 0) 0px 0px 20px"
@@ -57,6 +63,21 @@ class Store {
     },
   }
 
+  /**
+   * 选中的组件
+   */
+  @observable public selectData = {
+    id: -1,
+    position: {
+      zIndex: 1,
+    },
+    style: {},
+    type: '',
+  };
+
+  /**
+   * 保存当前文件数据
+   */
   public getSaveData = (noMessage: boolean = false) => {
     let url = `${API_URL}/api/design/save`;
     if (templateId) {
@@ -92,6 +113,9 @@ class Store {
     })
   }
 
+  /**
+   * 获取当前文件数据
+   */
   @action
   public getFetchData = () => {
     let url = `${API_URL}/api/design/getfile`;
@@ -161,6 +185,14 @@ class Store {
   @action
   public setDesignData = (value: Partial<IDesignData>): void => {
     this.data = {...this.data, ...value};
+  }
+
+  /**
+   * 设置选中数据
+   */
+  @action
+  public setSelectData = (value: any): void => {
+    this.selectData = value;
   }
 }
 
