@@ -78,8 +78,8 @@ class Workspace extends React.Component<Iprops, Istates> {
   /**
    * 组件点击事件
    */
-  public handleComClick = (e: React.MouseEvent): void => {
-    const { info, callbackChangeSelectStore } = this.props;
+  public handleComClick = (e: React.MouseEvent): void => {    
+    const { info, callbackChangeSelectStore, scale } = this.props;
     const target: HTMLDivElement = e.target as HTMLDivElement;
     const result = info.element.find((e: any): boolean => {
       if (target.dataset.id) {
@@ -91,10 +91,12 @@ class Workspace extends React.Component<Iprops, Istates> {
       id: result.id,
       position: {
         ...result.position,
+        left: `${parseInt(result.position.left.slice(0, -2), 10) * scale.scaleValue}px`,
+        top: `${parseInt(result.position.top.slice(0, -2), 10) * scale.scaleValue}px`,
       },
       style: {
-        height: result.style.height,
-        width: result.style.width,
+        height: `${parseInt(result.style.height.slice(0, -2), 10) * scale.scaleValue}px`, 
+        width: `${parseInt(result.style.width.slice(0, -2), 10) * scale.scaleValue}px`,
       },
       type: result.type,
     });
@@ -104,10 +106,10 @@ class Workspace extends React.Component<Iprops, Istates> {
    * 拖动事件
    */
   public handleDraging = (e: DraggableEvent, data: DraggableData ): void => {
-    const { selectData, callbackChangeSelectStore } = this.props;
+    const { selectData, callbackChangeSelectStore, scale } = this.props;
     const result = JSON.parse(JSON.stringify(selectData));
     if (result.position.left) {
-      result.position.transform = `translate(${data.x}px, ${data.y}px)`
+      result.position.transform = `translate(${data.x * scale.scaleValue}px, ${data.y * scale.scaleValue}px)`
       callbackChangeSelectStore(result);
     }
   }
@@ -163,8 +165,8 @@ class Workspace extends React.Component<Iprops, Istates> {
       <div className="workspace-wrapper" style={{...scale.workspaceBoxCssFix}}>
         <div className="workspace" style={{ ...info.root.css, ...scale.workspaceCssFix }}>
           {this.renderElements()}
-          <ResizeBox />
         </div>
+        <ResizeBox />
       </div>
     );
   }

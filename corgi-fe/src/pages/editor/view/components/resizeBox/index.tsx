@@ -29,10 +29,15 @@ class ResizeBox extends React.Component<Iprops, Istates> {
   public render() {
     const { selectData } = this.props.store;
     const {  } = this.state;
+    if (selectData.id === -1) { return null; }
     return (
       <div className="resize-box-wrapper" style={{ ...selectData.position, width: selectData.style.width, height: selectData.style.height, zIndex: parseInt(selectData.position.zIndex, 10) - 1}}>
-        <>
-        </>
+        <div className="bar horizon-left">
+          <div className="circle" />
+        </div>
+        <div className="bar horizon-right">
+          <div className="circle" />
+        </div>
       </div>
     );
   }

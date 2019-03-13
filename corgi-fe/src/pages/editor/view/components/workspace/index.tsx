@@ -62,6 +62,32 @@ class EditorRight extends React.Component<Iprops, Istates> {
   }
 
   /**
+   * 拖动框适应屏幕的放大与缩小
+   */
+  public computedReszieBox = (scaleValue: number): void => {
+    const { info } = this.props.store.data;
+    const { selectData } = this.props.store;
+    if (selectData.id !== -1) {
+      const result = info.element.find((e: any): boolean => {
+        return e.id === selectData.id
+      })
+      this.callbackChangeSelectStore({
+        id: selectData.id,
+        position: {
+          ...result.position,
+          left: `${parseInt(result.position.left.slice(0, -2), 10) * scaleValue}px`,
+          top: `${parseInt(result.position.top.slice(0, -2), 10) * scaleValue}px`,
+        },
+        style: {
+          height: `${parseInt(result.style.height.slice(0, -2), 10) * scaleValue}px`,
+          width: `${parseInt(result.style.width.slice(0, -2), 10) * scaleValue}px`,
+        },
+        type: result.type,
+      });
+    }
+  }
+
+  /**
    * 自动适应屏幕大小
    */
   public computedAutoScale = ():void => {
@@ -73,8 +99,11 @@ class EditorRight extends React.Component<Iprops, Istates> {
 
     scale.workspaceCssFix.transform = `scale(${scaleValue})`;
     scale.workspaceBoxCssFix = {
-      height: `${parseInt(workspaceSize[1], 10) * scaleValue}px`
+      height: `${parseInt(workspaceSize[1], 10) * scaleValue}px`,
+      width: `${parseInt(workspaceSize[0], 10) * scaleValue}px`,
     }
+
+    this.computedReszieBox(scaleValue);
     this.setState({
       scale,
       scaleValue
@@ -88,16 +117,20 @@ class EditorRight extends React.Component<Iprops, Istates> {
   public computedScale = (value: number): void => {
     const { scale } = this.state;
     const { info } = this.props.store.data;
+
     const scaleValue = this.state.scaleValue + value;
     scale.workspaceCssFix.transform = `scale(${scaleValue})`;
 
     const workspaceSize: string[] = info.root.size.split('*');
     const workBoxHeight: number = parseInt(workspaceSize[1], 10) * scaleValue;
     scale.workspaceBoxCssFix = {
-      height: `${workBoxHeight}px`
+      height: `${workBoxHeight}px`,
+      width: `${parseInt(workspaceSize[0], 10) * scaleValue}px`,
     }
 
     workBoxHeight > (this.editorClientHeight - 100) ? this.needScroll = true : this.needScroll = false
+
+    this.computedReszieBox(scaleValue);
 
     this.setState({
       scale,
@@ -114,7 +147,12 @@ class EditorRight extends React.Component<Iprops, Istates> {
       const { scale, translateY } = this.state;
       if (e.deltaY > 0) {
         // 向下滑
-        if (translateY === 0) { return; }
+        if (scale.workspaceBoxCssFix.height) {
+          const workspaceHeight = scale.workspaceBoxCssFix.height.slice(0, -2);
+          if (this.editorClientHeight + translateY > parseInt(workspaceHeight, 10)) {
+            return;
+          }
+        }
         scale.workspaceBoxCssFix.transform = `translateY(${translateY + 100}px)`
         this.setState({
           scale,
@@ -138,6 +176,23 @@ class EditorRight extends React.Component<Iprops, Istates> {
   }
 
   /**
+   * 其他区域点击, 取消resizebox
+   */
+  public handleClickEditorSpace = (e: any): void => {
+    const target: HTMLDivElement = e.target as HTMLDivElement;
+    if (target.dataset.id === "null") {
+      this.callbackChangeSelectStore({
+        id: -1,
+        position: {
+          zIndex: 1,
+        },
+        style: {},
+        type: '',
+      });
+    }
+  }
+
+  /**
    * 更改store design数据的回调函数
    */
   public callbackChangeStore = (e: any): void => {
@@ -145,6 +200,7 @@ class EditorRight extends React.Component<Iprops, Istates> {
       info: e
     });
   }
+  
 
   /**
    * 点击了哪个组件
@@ -159,7 +215,7 @@ class EditorRight extends React.Component<Iprops, Istates> {
     const { scale, scaleValue } = this.state;
     return (
       <div className="editor-right">
-        <div className="editor-workspace" ref={this.editorBox} onWheel={this.handleWorkspaceScroll}>
+        <div className="editor-workspace" data-id="null" ref={this.editorBox} onWheel={this.handleWorkspaceScroll} onClick={this.handleClickEditorSpace}>
           <Workspace
             info={{ ...info }}
             scale={{ ...scale, scaleValue }}

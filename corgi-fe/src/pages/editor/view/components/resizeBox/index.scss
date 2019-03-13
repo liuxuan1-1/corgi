@@ -1,3 +1,32 @@
 .resize-box-wrapper {
-  border: 1px dashed #1890ff;
+  border: 1px dashed #1593ff;
+  position: absolute;
+  pointer-events: none;
+  .bar {
+    position: absolute;
+    pointer-events: auto;
+  }
+  .circle {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background: #fff;
+    border: 1px solid #1593ff;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -3px;
+    cursor: ew-resize;
+  }
+  .horizon-left, .horizon-right{
+    width: 5px;
+    height: 100%;
+    top: 0;
+  }
+  .horizon-left {
+    left: -3px;
+  }
+  .horizon-right {
+    right: -3px;
+  }
 }
