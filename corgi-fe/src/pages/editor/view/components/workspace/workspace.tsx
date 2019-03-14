@@ -46,7 +46,6 @@ interface Iprops {
 class Workspace extends React.Component<Iprops, Istates> {
   public state: Istates = {
     data: {
-      a: 1,
     }
   }
 
@@ -58,8 +57,7 @@ class Workspace extends React.Component<Iprops, Istates> {
    * 拖动停止修正组件top, left位置
    */
   public handleDragStop = (e: DraggableEvent, data: DraggableData) => {
-    const { info, callbackChangeStore } = this.props;
-
+    const { info, callbackChangeStore, callbackChangeSelectStore, scale } = this.props;
     if (e.target) {
       const targetEle: HTMLDivElement = e.target as HTMLDivElement;
       const id = targetEle.dataset.id;
@@ -69,9 +67,24 @@ class Workspace extends React.Component<Iprops, Istates> {
         }
         return false;
       })
-      result.position.left = `${parseInt(result.position.left.slice(0, -2), 10) + data.x}px`
-      result.position.top = `${parseInt(result.position.top.slice(0, -2), 10) + data.y}px`
+      const leftNumber: number = parseInt(result.position.left.slice(0, -2), 10);
+      const topNumber: number = parseInt(result.position.top.slice(0, -2), 10);
+      result.position.left = `${leftNumber + data.x}px`
+      result.position.top = `${topNumber + data.y}px`
       callbackChangeStore(info);
+      callbackChangeSelectStore({
+        id: result.id,
+        position: {
+          ...result.position,
+          left: `${(leftNumber + data.x) * scale.scaleValue}px`,
+          top: `${(topNumber + data.y) * scale.scaleValue}px`,
+        },
+        style: {
+          height: `${parseInt(result.style.height.slice(0, -2), 10) * scale.scaleValue}px`,
+          width: `${parseInt(result.style.width.slice(0, -2), 10) * scale.scaleValue}px`,
+        },
+        type: result.type,
+      });
     }
   }
 
@@ -80,7 +93,7 @@ class Workspace extends React.Component<Iprops, Istates> {
    */
   public handleComClick = (e: React.MouseEvent): void => {    
     const { info, callbackChangeSelectStore, scale } = this.props;
-    const target: HTMLDivElement = e.target as HTMLDivElement;
+    const target: HTMLDivElement = e.currentTarget as HTMLDivElement;
     const result = info.element.find((e: any): boolean => {
       if (target.dataset.id) {
         return e.id === parseInt(target.dataset.id, 10)
@@ -114,6 +127,14 @@ class Workspace extends React.Component<Iprops, Istates> {
     }
   }
 
+  public handleFontdbClick = (e: React.MouseEvent): void => {
+    const target: HTMLDivElement = e.currentTarget as HTMLDivElement;
+    console.log(target);
+  }
+
+  public handleasd = (e: React.FocusEvent) => {
+    console.log(e)
+  }
   /**
    * 根据数据生成组件
    */
@@ -125,8 +146,8 @@ class Workspace extends React.Component<Iprops, Istates> {
       switch (e.type) {
         case 'font':
           child = (
-            <div key={`${e.id}child`} data-id={e.id} style={{...e.style}} onMouseDown={this.handleComClick}>
-              双击编辑文字
+            <div key={`${e.id}child`} data-id={e.id} style={{ ...e.style }} onMouseDown={this.handleComClick} onDoubleClick={this.handleFontdbClick} contentEditable={true} onBlur={this.handleasd} suppressContentEditableWarning={true}>
+              {e.extends.content}
             </div>
           )
           break;
@@ -142,6 +163,7 @@ class Workspace extends React.Component<Iprops, Istates> {
           }}
           key={`${e.id}drag`}
           scale={scale.scaleValue}
+          // tslint:disable-next-line: jsx-no-lambda 刘翾
           onStop={this.handleDragStop}
           onDrag={this.handleDraging}
         >
@@ -166,7 +188,7 @@ class Workspace extends React.Component<Iprops, Istates> {
         <div className="workspace" style={{ ...info.root.css, ...scale.workspaceCssFix }}>
           {this.renderElements()}
         </div>
-        <ResizeBox />
+        <ResizeBox scaleValue={scale.scaleValue} />
       </div>
     );
   }

@@ -215,7 +215,7 @@ class EditorRight extends React.Component<Iprops, Istates> {
     const { scale, scaleValue } = this.state;
     return (
       <div className="editor-right">
-        <div className="editor-workspace" data-id="null" ref={this.editorBox} onWheel={this.handleWorkspaceScroll} onClick={this.handleClickEditorSpace}>
+        <div className="editor-workspace" data-id="null" ref={this.editorBox} onWheel={this.handleWorkspaceScroll} onMouseDown={this.handleClickEditorSpace}>
           <Workspace
             info={{ ...info }}
             scale={{ ...scale, scaleValue }}

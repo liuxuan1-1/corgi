@@ -39,6 +39,9 @@ class NavPanel extends React.Component<Iprops, Istates> {
   public callbackChangeFont = (e: string): void => {
     const { fontSpecial, data, callbackChangeStore } = this.props;
     const element = {
+      extends: {
+        content: '双击输入内容',
+      },
       id: 0,
       position: {
         left: '0px',
@@ -61,7 +64,6 @@ class NavPanel extends React.Component<Iprops, Istates> {
         overflowWrap: 'break-word',
         padding: '26px',
         textAlign: 'center',
-        userSelect: 'none',
       },
       type: 'font',
     }
