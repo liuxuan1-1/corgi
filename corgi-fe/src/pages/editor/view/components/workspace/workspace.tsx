@@ -67,6 +67,11 @@ class Workspace extends React.Component<Iprops, Istates> {
         }
         return false;
       })
+      if (!result) {
+        // tslint:disable-next-line: no-console
+        console.error('drag stop result not found');
+        return
+      };
       const leftNumber: number = parseInt(result.position.left.slice(0, -2), 10);
       const topNumber: number = parseInt(result.position.top.slice(0, -2), 10);
       result.position.left = `${leftNumber + data.x}px`
@@ -128,12 +133,38 @@ class Workspace extends React.Component<Iprops, Istates> {
   }
 
   public handleFontdbClick = (e: React.MouseEvent): void => {
-    const target: HTMLDivElement = e.currentTarget as HTMLDivElement;
-    console.log(target);
+    const { selectData, callbackChangeStore, info } = this.props;
+    if (e.target) {
+      const target: HTMLDivElement = e.currentTarget as HTMLDivElement;
+      const result = info.element.find((e: any): boolean => {
+        if (target.dataset.id) {
+          return e.id === parseInt(target.dataset.id, 10)
+        }
+        return false;
+      })
+      if (selectData.id === result.id) {
+        // 说明这是第二次点击, 如果该组件是文本组件开启编辑态
+        if (result.type === 'font') {
+          result.extends.contentEditable = true;
+          result.extends.contentOld = result.extends.content;
+          result.style.cursor = 'text';
+          callbackChangeStore(info);
+        }
+      }
+    }
   }
 
-  public handleasd = (e: React.FocusEvent) => {
-    console.log(e)
+  public handleasd = (e: React.FormEvent) => {
+    const { info, callbackChangeStore } = this.props;
+    const target: HTMLDivElement = e.target as HTMLDivElement;
+    const result = info.element.find((e: any): boolean => {
+      if (target.dataset.id) {
+        return e.id === parseInt(target.dataset.id, 10)
+      }
+      return false;
+    })
+    result.extends.content = target.innerText
+    callbackChangeStore(info);
   }
   /**
    * 根据数据生成组件
@@ -141,13 +172,24 @@ class Workspace extends React.Component<Iprops, Istates> {
   public renderElements = (): React.ReactNodeArray => {
     const { info, scale } = this.props;
     const result: React.ReactNodeArray = [];
+    let dragDisable = false;
     info.element.forEach((e: any): void => {
       let child: React.ReactNode | React.ReactNodeArray | null = null;
       switch (e.type) {
         case 'font':
+          e.extends.contentEditable === true ? dragDisable = true : dragDisable = false;
           child = (
-            <div key={`${e.id}child`} data-id={e.id} style={{ ...e.style }} onMouseDown={this.handleComClick} onDoubleClick={this.handleFontdbClick} contentEditable={true} onBlur={this.handleasd} suppressContentEditableWarning={true}>
-              {e.extends.content}
+            <div
+              key={`${e.id}child`}
+              data-id={e.id}
+              style={{ ...e.style }}
+              onMouseDown={this.handleComClick}
+              onDoubleClick={this.handleFontdbClick}
+              contentEditable={e.extends.contentEditable === true}
+              onInput={this.handleasd}
+              suppressContentEditableWarning={true}
+            >
+              {e.extends.contentEditable === true ? e.extends.contentOld : e.extends.content}
             </div>
           )
           break;
@@ -162,8 +204,8 @@ class Workspace extends React.Component<Iprops, Istates> {
             y: 0,
           }}
           key={`${e.id}drag`}
+          disabled={dragDisable}
           scale={scale.scaleValue}
-          // tslint:disable-next-line: jsx-no-lambda 刘翾
           onStop={this.handleDragStop}
           onDrag={this.handleDraging}
         >

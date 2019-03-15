@@ -56,6 +56,7 @@ class NavPanel extends React.Component<Iprops, Istates> {
         borderStyle: 'solid',
         borderWidth: '0px',
         color: '#000000',
+        cursor: 'default',
         ...fontSpecial[e],
         fontSize: '70px',
         lineHeight: 1.2,
@@ -64,6 +65,7 @@ class NavPanel extends React.Component<Iprops, Istates> {
         overflowWrap: 'break-word',
         padding: '26px',
         textAlign: 'center',
+        userSelect: 'none',
       },
       type: 'font',
     }

@@ -10,7 +10,12 @@ configure({
 interface IDesignData {
   fileName: string,
   info: {
-    [propName: string]: any
+    element: Array<{
+      [propName: string]: any,
+    }>,
+    root: {
+      [propName: string]: any,
+    }
   },
   category: string[],
   isRelease?: boolean,
@@ -192,6 +197,18 @@ class Store {
    */
   @action
   public setSelectData = (value: any): void => {
+    if (this.selectData.id !== value.id && this.selectData.type === 'font' && this.data.info) {
+      const result = this.data.info.element.find((e: any): boolean => {
+          return e.id === this.selectData.id
+      });
+      if (result) {
+        if (result.extends.contentEditable) {
+          result.extends.contentEditable = false;
+          result.style.cursor = 'default';
+          Reflect.deleteProperty(result.extends, 'contentOld')
+        }
+      }
+    }
     this.selectData = value;
   }
 }
