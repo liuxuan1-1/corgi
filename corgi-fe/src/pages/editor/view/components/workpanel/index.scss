@@ -1,0 +1,31 @@
+.workspace-panel-wrapper {
+  height: 100%;
+  .font-panel-wrapper {
+    height: 100%;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .font-type-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    .type-btn {
+      border: 1px solid #d6dbe1;
+      border-radius: 2px;
+      color: #666;
+      cursor: pointer;
+      height: 38px;
+      line-height: 38px;
+      text-align: center;
+      width: 38px;
+      font-size: 18px;
+      transition: all 0.3s;
+    }
+    .type-select, .type-btn:hover {
+      background: #f1f3f7;
+    }
+  }
+}

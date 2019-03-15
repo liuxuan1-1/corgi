@@ -132,6 +132,9 @@ class Workspace extends React.Component<Iprops, Istates> {
     }
   }
 
+  /**
+   * 字体组件双击事件
+   */
   public handleFontdbClick = (e: React.MouseEvent): void => {
     const { selectData, callbackChangeStore, info } = this.props;
     if (e.target) {

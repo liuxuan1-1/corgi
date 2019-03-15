@@ -66,6 +66,9 @@ class Store {
     颤抖: {
       textShadow: "rgb(255, 42, 106) -1px 0px 0px, rgb(255, 42, 106) -2px 0px 0px, rgb(255, 42, 106) -3px 0px 0px, rgb(83, 235, 239) 1px 0px 0px, rgb(83, 235, 239) 2px 0px 0px, rgb(83, 235, 239) 3px 0px 0px, rgb(0, 0, 0) 0px 0px 0px"
     },
+    默认: {
+      
+    }
   }
 
   /**

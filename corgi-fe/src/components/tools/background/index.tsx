@@ -6,36 +6,33 @@ import './index.scss';
 
 
 interface Istates {
-  color: string,
 }
 
 interface Iprops {
-  callbackChange: (e: any) => void
+  callbackChange: (e: any) => void,
+  color: string,
+  noCircle?: boolean,
 }
 
 class BackgroundPanel extends React.Component<Iprops, Istates> {
   public readonly state: Readonly<Istates> = {
-    color: '#ffffff',
   }
 
   /**
    * 颜色改变事件
    */
   public handleColorChange = (e: any):void => {
-    this.setState({
-      color: e.hex,
-    }, ():void => {
-      this.props.callbackChange(e.hex);
-    })
+    this.props.callbackChange(e.hex);
   }
 
   public render() {
-    const { } = this.props;
-    const { color } = this.state;
+    const { color, noCircle } = this.props;
     return (
       <div className="panel-background-wrapper">
         <ChromePicker color={color} disableAlpha={true} onChangeComplete={this.handleColorChange} />
-        <CirclePicker color={color} onChangeComplete={this.handleColorChange} />
+        {
+          !noCircle ? <CirclePicker color={color} onChangeComplete={this.handleColorChange} /> : null
+        }
       </div>
     );
   }

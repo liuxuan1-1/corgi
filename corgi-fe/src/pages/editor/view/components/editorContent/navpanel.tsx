@@ -1,11 +1,9 @@
 import * as React from 'react';
 // import { Menu, Icon } from 'antd';
 // import { ClickParam } from 'antd/lib/menu';
+import { action } from 'mobx';
 import BackgroundPanel from '../../../../../components/tools/background';
 import Font from '../../../../../components/tools/font';
-
-// import axios from 'axios';
-// import { API_URL } from '../../../../../pagesConst';
 
 
 interface Istates {
@@ -36,6 +34,7 @@ class NavPanel extends React.Component<Iprops, Istates> {
    * 生成font组件
    * @param e font类型
    */
+  @action
   public callbackChangeFont = (e: string): void => {
     const { fontSpecial, data, callbackChangeStore } = this.props;
     const element = {
@@ -86,10 +85,10 @@ class NavPanel extends React.Component<Iprops, Istates> {
   }
 
   public renderNavPanel = (): React.ReactNode => {
-    const { menuCurrent, fontSpecial } = this.props;
+    const { menuCurrent, fontSpecial, data } = this.props;
     switch (menuCurrent) {
       case 'background':
-        return <BackgroundPanel callbackChange={this.callbackChangeBackground} />
+        return <BackgroundPanel color={data.root.css.background} callbackChange={this.callbackChangeBackground} />
       case 'font':
         return <Font fontSpecial={fontSpecial} callbackChangeFont={this.callbackChangeFont}  />
       case 'material':

@@ -1,13 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import _throttle from 'lodash.throttle';
-
-// import { Menu, Icon } from 'antd';
-// import { ClickParam } from 'antd/lib/menu';
-// import axios from 'axios';
-// import { API_URL } from '../../../../../pagesConst';
 import Workspace from './workspace';
-import WorkPanel from './workpanel';
+import WorkPanel from '../workpanel/index';
 import Enlarge from './enlarge';
 import './index.scss';
 
