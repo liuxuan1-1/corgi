@@ -1,0 +1,41 @@
+.panel-material-wrapper {
+  height: 100%;
+  .ant-menu {
+    display: flex;
+    justify-content: center;
+    .ant-menu-item {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .material-wrapper {
+    height: 100%;
+    float: left;
+    .material-item-wrapper {
+      width: 141px;
+      padding: 10px 10px;
+      height: 120px;
+      display: inline-block;
+      cursor: pointer;
+      margin-top: 10px;
+      position: relative;
+      .material-item {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .material-item-wrapper:hover {
+      background: #eceef0;
+    }
+  }
+  .material-wrapper::after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+
+}
