@@ -21,7 +21,6 @@ class Font extends React.Component<Iprops, Istates> {
 
   public handleClickFont = (e: React.MouseEvent<HTMLDivElement>):void => {
     const target: HTMLDivElement = e.target as HTMLDivElement;
-    // console.log()
     if (target.dataset.key) {
       this.props.callbackChangeFont(target.dataset.key)
     }

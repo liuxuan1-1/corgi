@@ -37,3 +37,23 @@ body {
   font-family: 'font5';
   src: url('http://127.0.0.1:7001/corgi/public/font/xb.woff') format('truetype'),
 }
+
+#circle {
+  width: 100px;
+  height: 100px;
+  background: #1890ff;
+  border-radius: 50%
+}
+
+#square {
+  width: 100px;
+  height: 100px;
+  background: #1890ff;
+}
+
+#triangle-up {
+  width: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 100px solid #1890ff;
+}

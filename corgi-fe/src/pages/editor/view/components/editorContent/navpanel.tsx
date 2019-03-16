@@ -4,6 +4,7 @@ import * as React from 'react';
 import { action } from 'mobx';
 import BackgroundPanel from '../../../../../components/tools/background';
 import Font from '../../../../../components/tools/font';
+import Material from '../../../../../components/tools/material';
 
 
 interface Istates {
@@ -13,6 +14,9 @@ interface Iprops {
   menuCurrent: string,
   callbackChangeStore: (e: any) => void,
   fontSpecial: {
+    [propName: string]: any,
+  },
+  materialSpecial: {
     [propName: string]: any,
   }
   data: any,
@@ -84,14 +88,58 @@ class NavPanel extends React.Component<Iprops, Istates> {
     callbackChangeStore(data);
   }
 
+  @action
+  public callbackChangeMaterial = (e: {
+    type: string,
+    target: string,
+  }): void => {
+    const { materialSpecial, data, callbackChangeStore } = this.props;
+    if (e.type === 'material') {
+      const element = {
+        extends: {
+          childStyle: {},
+          eleId: materialSpecial[e.target].id,
+        },
+        id: 0,
+        position: {
+          left: '0px',
+          position: 'absolute',
+          top: '0px',
+          transform: 'rotateZ(0deg)',
+          zIndex: 1,
+        },
+        style: {
+          height: '',
+          width: '',
+        },
+        type: 'material',
+      }
+
+      const size = data.root.size;
+      let result = [0, 0];
+      if (size) {
+        result = size.split('*');
+      }
+
+      element.style.width = `${result[0]}px`;
+      element.style.height = `136px`;
+      element.position.zIndex = data.element.length + 1;
+      element.id = data.element.length;
+
+      data.element.push(element);
+      callbackChangeStore(data);
+    }
+  }
+
   public renderNavPanel = (): React.ReactNode => {
-    const { menuCurrent, fontSpecial, data } = this.props;
+    const { menuCurrent, fontSpecial, data, materialSpecial } = this.props;
     switch (menuCurrent) {
       case 'background':
         return <BackgroundPanel color={data.root.css.background} callbackChange={this.callbackChangeBackground} />
       case 'font':
         return <Font fontSpecial={fontSpecial} callbackChangeFont={this.callbackChangeFont}  />
       case 'material':
+        return <Material materialSpecial={materialSpecial} callbackChangeMaterial={this.callbackChangeMaterial} />
       default:
         return null;
     }

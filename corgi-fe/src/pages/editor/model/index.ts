@@ -51,6 +51,11 @@ class Store {
   };
 
   /**
+   * 通知工作区更改wrapper的px
+   */
+  @observable public changeFilepx = false;
+
+  /**
    * 字体特效
    */
   @observable public fontSpecial = {
@@ -69,6 +74,21 @@ class Store {
     默认: {
       
     }
+  }
+
+  /**
+   * 素材特效
+   */
+  @observable public materialSpecial = {
+    向上三角: {
+      id: "triangle-up",
+    },
+    圆: {
+      id: "circle",
+    },
+    正方形: {
+      id: "square",
+    },
   }
 
   /**
@@ -190,6 +210,32 @@ class Store {
     })
   }
 
+  /**
+   * 删除正在选中的组件
+   */
+  @action
+  public setDeleteSelectData = (): void => {
+    if (this.selectData.id !== -1 && this.data.info) {
+      const result = this.data.info.element.findIndex((e: any): boolean => {
+        return e.id === this.selectData.id
+      });
+      if (result !== -1) {
+        this.data.info.element.splice(result, 1);
+        this.selectData = {
+          id: -1,
+          position: {
+            zIndex: 1,
+          },
+          style: {},
+          type: '',
+        };
+      }
+    }
+  }
+
+  /**
+   * 设置工作区数据
+   */
   @action
   public setDesignData = (value: Partial<IDesignData>): void => {
     this.data = {...this.data, ...value};
@@ -213,6 +259,11 @@ class Store {
       }
     }
     this.selectData = value;
+  }
+
+  @action
+  public setChangeFilepx = (value: boolean) => {
+    this.changeFilepx = value;
   }
 }
 

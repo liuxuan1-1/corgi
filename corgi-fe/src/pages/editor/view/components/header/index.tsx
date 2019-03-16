@@ -111,6 +111,7 @@ class MyHeader extends React.Component<Iprops, Istates> {
     this.props.store.setDesignData({
       info,
     })
+    this.props.store.setChangeFilepx(true);
   }
 
   public render() {

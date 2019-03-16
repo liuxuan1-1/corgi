@@ -7,6 +7,7 @@ import { inject, observer } from 'mobx-react';
 // import { API_URL } from '../../../../../pagesConst';
 
 import FontPanel from './font';
+import MaterialPanel from './material';
 import './index.scss';
 
 interface Istates {
@@ -40,12 +41,19 @@ class WorkPanel extends React.Component<Iprops, Istates> {
     })
     switch (selectData.type) {
       case 'font':
-      return (
-        <FontPanel
-          data={result}
-          callbackChangeStore={this.callbackChangeStore}
-        />
-      )
+        return (
+          <FontPanel
+            data={result}
+            callbackChangeStore={this.callbackChangeStore}
+          />
+        );
+      case 'material':
+        return (
+          <MaterialPanel
+            data={result}
+            callbackChangeStore={this.callbackChangeStore}
+          />
+        );
       default:
         return null;
     }

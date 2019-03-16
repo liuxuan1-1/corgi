@@ -49,48 +49,37 @@ class Workspace extends React.Component<Iprops, Istates> {
     }
   }
 
-  constructor(props: Iprops) {
-    super(props);
-  }
-
   /**
    * 拖动停止修正组件top, left位置
    */
   public handleDragStop = (e: DraggableEvent, data: DraggableData) => {
-    const { info, callbackChangeStore, callbackChangeSelectStore, scale } = this.props;
-    if (e.target) {
-      const targetEle: HTMLDivElement = e.target as HTMLDivElement;
-      const id = targetEle.dataset.id;
-      const result = info.element.find((e: any) => {
-        if (id) {
-          return e.id === parseInt(id, 10);
-        }
-        return false;
-      })
-      if (!result) {
-        // tslint:disable-next-line: no-console
-        console.error('drag stop result not found');
-        return
-      };
-      const leftNumber: number = parseInt(result.position.left.slice(0, -2), 10);
-      const topNumber: number = parseInt(result.position.top.slice(0, -2), 10);
-      result.position.left = `${leftNumber + data.x}px`
-      result.position.top = `${topNumber + data.y}px`
-      callbackChangeStore(info);
-      callbackChangeSelectStore({
-        id: result.id,
-        position: {
-          ...result.position,
-          left: `${(leftNumber + data.x) * scale.scaleValue}px`,
-          top: `${(topNumber + data.y) * scale.scaleValue}px`,
-        },
-        style: {
-          height: `${parseInt(result.style.height.slice(0, -2), 10) * scale.scaleValue}px`,
-          width: `${parseInt(result.style.width.slice(0, -2), 10) * scale.scaleValue}px`,
-        },
-        type: result.type,
-      });
-    }
+    const { info, callbackChangeStore, callbackChangeSelectStore, scale, selectData } = this.props;
+    const result = info.element.find((e: any) => {
+        return e.id === selectData.id;
+    })
+    if (!result) {
+      // tslint:disable-next-line: no-console
+      console.error('drag stop result not found');
+      return
+    };
+    const leftNumber: number = parseInt(result.position.left.slice(0, -2), 10);
+    const topNumber: number = parseInt(result.position.top.slice(0, -2), 10);
+    result.position.left = `${leftNumber + data.x}px`
+    result.position.top = `${topNumber + data.y}px`
+    callbackChangeStore(info);
+    callbackChangeSelectStore({
+      id: result.id,
+      position: {
+        ...result.position,
+        left: `${(leftNumber + data.x) * scale.scaleValue}px`,
+        top: `${(topNumber + data.y) * scale.scaleValue}px`,
+      },
+      style: {
+        height: `${parseInt(result.style.height.slice(0, -2), 10) * scale.scaleValue}px`,
+        width: `${parseInt(result.style.width.slice(0, -2), 10) * scale.scaleValue}px`,
+      },
+      type: result.type,
+    });
   }
 
   /**
@@ -196,7 +185,18 @@ class Workspace extends React.Component<Iprops, Istates> {
             </div>
           )
           break;
-      
+        case 'material':
+          child = (
+            <div
+              key={`${e.id}child`}
+              data-id={e.id}
+              style={{ ...e.style }}
+              onMouseDown={this.handleComClick}
+            >
+              <div data-id={e.id} className="material-com" style={{ ...e.extends.childStyle }} id={e.extends.eleId} />
+            </div>
+          )
+          break;
         default:
           break;
       }

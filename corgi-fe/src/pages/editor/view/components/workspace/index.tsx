@@ -42,6 +42,15 @@ class EditorRight extends React.Component<Iprops, Istates> {
   public editorClientHeight: number = 0;
   public needScroll: boolean = false;
 
+  constructor(props: Iprops) {
+    super(props);
+    document.body.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.keyCode === 46) {
+        props.store.setDeleteSelectData()
+      }
+    })
+  }
+
   public componentDidMount () {
     if (this.editorBox.current) {
       this.editorClientHeight = this.editorBox.current.clientHeight;
@@ -49,9 +58,15 @@ class EditorRight extends React.Component<Iprops, Istates> {
   }
 
   public componentDidUpdate() {
+    const { changeFilepx } = this.props.store;
     if (firstLoad) {
       firstLoad = false;
       this.computedAutoScale();
+    }
+
+    if (changeFilepx) {
+      this.computedScale(0);
+      this.props.store.setChangeFilepx(false);
     }
   }
 
@@ -207,6 +222,7 @@ class EditorRight extends React.Component<Iprops, Istates> {
     const { info } = this.props.store.data;
     const { selectData } = this.props.store;
     const { scale, scaleValue } = this.state;
+
     return (
       <div className="editor-right">
         <div className="editor-workspace" data-id="null" ref={this.editorBox} onWheel={this.handleWorkspaceScroll} onMouseDown={this.handleClickEditorSpace}>
