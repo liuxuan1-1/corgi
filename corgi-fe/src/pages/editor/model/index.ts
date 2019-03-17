@@ -104,6 +104,16 @@ class Store {
   };
 
   /**
+   * 图片素材
+   */
+  @observable public materialImgList: Array<{
+    _id: string,
+    type: string,
+    url: string,
+  }> = []
+
+  
+  /**
    * 保存当前文件数据
    */
   public getSaveData = (noMessage: boolean = false) => {
@@ -178,6 +188,31 @@ class Store {
     })
   }
 
+  /**
+   * 获取用户上传的素材图片  
+   */
+  @action
+  public getMaterialImgList() {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/img/getMaterial`,
+      withCredentials: true,
+    }).then((e) => {
+      const result = e.data;
+      if (result.success) {
+        runInAction(() => {
+          this.materialImgList = result.data.list;
+        })
+      } else {
+        message.error(`获取素材图片失败: ${result.message}`);
+      }
+    }).catch((e) => {
+      message.error(`获取素材图片请求失败`);
+      // tslint:disable-next-line: no-console
+      console.error(`132获取素材图片请求失败: ${JSON.stringify(e)}`)
+    })
+  }
+
 
   /**
    * 更改模板发布状态
@@ -247,6 +282,7 @@ class Store {
   @action
   public setSelectData = (value: any): void => {
     if (this.selectData.id !== value.id && this.selectData.type === 'font' && this.data.info) {
+      // 由于font组件实现是基于contentible, 无法受控, 只能监听此处
       const result = this.data.info.element.find((e: any): boolean => {
           return e.id === this.selectData.id
       });

@@ -240,7 +240,7 @@ class InfoForm extends React.Component<Iprops, Istate> {
             <Upload
               beforeUpload={this.beforeUpload}
               name="face"
-              action={`${API_URL}/api/img/uploadAvatar`}
+              action={`${API_URL}/api/img/uploadFace`}
               listType="picture-card"
               disabled={this.checkFaceUpload()}
               withCredentials={true}

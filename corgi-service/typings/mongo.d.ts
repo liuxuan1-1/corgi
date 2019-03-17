@@ -52,3 +52,9 @@ export interface ITemplateDocument {
   templateName: string,
   isRelease: boolean,
 }
+
+export interface IImgDocument {
+  url: string,
+  type: string,
+  userId: ObjectId,
+}

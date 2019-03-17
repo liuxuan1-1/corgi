@@ -2,9 +2,6 @@ import * as React from 'react';
 // import { Menu, Icon } from 'antd';
 // import { ClickParam } from 'antd/lib/menu';
 
-import './index.scss';
-
-
 
 interface Istates {
 }

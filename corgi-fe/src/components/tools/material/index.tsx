@@ -19,7 +19,13 @@ interface Iprops {
   callbackChangeMaterial: (e: {
     type: string,
     target: string,
-  }) => void
+  }) => void,
+  getMaterialImgList: () => void,
+  materialImgList: Array<{
+    _id: string,
+    type: string,
+    url: string,
+  }>,
 }
 
 class MaterialPanel extends React.Component<Iprops, Istates> {
@@ -34,7 +40,7 @@ class MaterialPanel extends React.Component<Iprops, Istates> {
   }
 
   public render() {
-    const { materialSpecial, callbackChangeMaterial } = this.props;
+    const { materialSpecial, callbackChangeMaterial, getMaterialImgList, materialImgList } = this.props;
     const { menuCurrent } = this.state;
 
     return (
@@ -59,7 +65,11 @@ class MaterialPanel extends React.Component<Iprops, Istates> {
         }
         {
           menuCurrent === 'mine' ? (
-            <Mine />
+            <Mine
+              getMaterialImgList={getMaterialImgList}
+              materialImgList={materialImgList}
+              callbackChangeMaterial={callbackChangeMaterial}
+            />
           ) : null
         }
       </div>

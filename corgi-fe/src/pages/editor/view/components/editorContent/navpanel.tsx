@@ -1,10 +1,11 @@
 import * as React from 'react';
 // import { Menu, Icon } from 'antd';
 // import { ClickParam } from 'antd/lib/menu';
-import { action } from 'mobx';
+import { action, runInAction } from 'mobx';
 import BackgroundPanel from '../../../../../components/tools/background';
 import Font from '../../../../../components/tools/font';
 import Material from '../../../../../components/tools/material';
+import { API_URL } from '../../../../../pagesConst';
 
 
 interface Istates {
@@ -20,6 +21,12 @@ interface Iprops {
     [propName: string]: any,
   }
   data: any,
+  getMaterialImgList: () => void,
+  materialImgList: Array<{
+    _id: string,
+    type: string,
+    url: string,
+  }>
 }
 
 class NavPanel extends React.Component<Iprops, Istates> {
@@ -88,12 +95,16 @@ class NavPanel extends React.Component<Iprops, Istates> {
     callbackChangeStore(data);
   }
 
+  /**
+   * 生成素材组件
+   * @param e {type: string, target: string}
+   */
   @action
   public callbackChangeMaterial = (e: {
     type: string,
     target: string,
   }): void => {
-    const { materialSpecial, data, callbackChangeStore } = this.props;
+    const { materialSpecial, data, callbackChangeStore, materialImgList } = this.props;
     if (e.type === 'material') {
       const element = {
         extends: {
@@ -128,18 +139,74 @@ class NavPanel extends React.Component<Iprops, Istates> {
 
       data.element.push(element);
       callbackChangeStore(data);
+    } else if (e.type === 'img') {
+      const item = materialImgList.find((item) => {
+        return item._id === e.target
+      })
+
+      if (!item) { return; }
+      const element = {
+        extends: {
+          url: item.url,
+        },
+        id: 0,
+        position: {
+          left: '0px',
+          position: 'absolute',
+          top: '0px',
+          transform: 'rotateZ(0deg)',
+          zIndex: 1,
+        },
+        style: {
+          height: '',
+          width: '',
+        },
+        type: 'img',
+      }
+
+      const size = data.root.size;
+      let result = [0, 0];
+      if (size) {
+        result = size.split('*');
+      }
+      const imgEle = document.createElement('img')
+      imgEle.onload = () => {
+        runInAction(() => {
+          if (imgEle.width > result[0]) {
+            element.style.width = `${result[0]}px`;
+            element.style.height = `${result[0] * imgEle.height / imgEle.width}px`;
+
+          } else {
+            element.style.width = `${imgEle.width}px`;
+            element.style.height = `${imgEle.height}px`;
+          }
+          element.position.zIndex = data.element.length + 1;
+          element.id = data.element.length;
+
+          data.element.push(element);
+          callbackChangeStore(data);
+        })
+      }
+      imgEle.src = `${API_URL}/${item.url}`
     }
   }
 
   public renderNavPanel = (): React.ReactNode => {
-    const { menuCurrent, fontSpecial, data, materialSpecial } = this.props;
+    const { menuCurrent, fontSpecial, data, materialSpecial, getMaterialImgList, materialImgList } = this.props;
     switch (menuCurrent) {
       case 'background':
         return <BackgroundPanel color={data.root.css.background} callbackChange={this.callbackChangeBackground} />
       case 'font':
         return <Font fontSpecial={fontSpecial} callbackChangeFont={this.callbackChangeFont}  />
       case 'material':
-        return <Material materialSpecial={materialSpecial} callbackChangeMaterial={this.callbackChangeMaterial} />
+        return (
+          <Material
+            materialSpecial={materialSpecial}
+            callbackChangeMaterial={this.callbackChangeMaterial}
+            getMaterialImgList={getMaterialImgList}
+            materialImgList={materialImgList}
+          />
+        )
       default:
         return null;
     }

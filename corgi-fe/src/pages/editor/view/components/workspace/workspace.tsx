@@ -5,7 +5,7 @@ import ResizeBox from '../resizeBox/index';
 // import { Menu, Icon } from 'antd';
 // import { ClickParam } from 'antd/lib/menu';
 // import axios from 'axios';
-// import { API_URL } from '../../../../../pagesConst';
+import { API_URL } from '../../../../../pagesConst';
 
 import './index.scss';
 
@@ -197,6 +197,15 @@ class Workspace extends React.Component<Iprops, Istates> {
             </div>
           )
           break;
+        case 'img':
+          child = (
+            <div
+              key={`${e.id}child`}
+              data-id={e.id}
+              style={{ ...e.style, background: `url(${API_URL}/${e.extends.url}) center center / cover` }}
+              onMouseDown={this.handleComClick}
+            />
+          )
         default:
           break;
       }

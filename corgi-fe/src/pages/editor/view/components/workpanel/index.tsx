@@ -8,6 +8,7 @@ import { inject, observer } from 'mobx-react';
 
 import FontPanel from './font';
 import MaterialPanel from './material';
+import ImgPanel from './img';
 import './index.scss';
 
 interface Istates {
@@ -51,6 +52,14 @@ class WorkPanel extends React.Component<Iprops, Istates> {
         return (
           <MaterialPanel
             data={result}
+            callbackChangeStore={this.callbackChangeStore}
+          />
+        );
+      case 'img':
+        return (
+          <ImgPanel
+            data={result}
+            selectData={selectData}
             callbackChangeStore={this.callbackChangeStore}
           />
         );

@@ -10,6 +10,10 @@ export default (app: Application) => {
   router.get('/api/accounts/getuserinfo', controller.account.getUserInfo);
 
   router.post('/api/img/uploadAvatar', controller.img.uploadAvatar);
+  router.post('/api/img/uploadFace', controller.img.uploadFace);
+  router.post('/api/img/uploadMaterial', controller.img.uploadMaterial);
+  router.get('/api/img/getMaterial', controller.img.getMaterial);
+  router.get('/api/img/delete', controller.img.delete);
 
   router.get('/api/template/getlist', controller.template.getList);
   router.get('/api/template/getfile', controller.template.getFile);

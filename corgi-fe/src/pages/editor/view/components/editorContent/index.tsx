@@ -23,7 +23,7 @@ interface Iprops {
 @observer
 class EditorContent extends React.Component<Iprops, Istates> {
   public readonly state: Readonly<Istates> = {
-    menuCurrent: 'material',
+    menuCurrent: 'background',
   }
 
   public handleMenuClick = (e: ClickParam): void => {
@@ -38,9 +38,13 @@ class EditorContent extends React.Component<Iprops, Istates> {
     });
   }
 
+  public callbackGetMaterialImgList = (): void => {
+    this.props.store.getMaterialImgList();
+  }
+
   public render() {
     const { menuCurrent } = this.state;
-    const { data, fontSpecial, materialSpecial } = this.props.store;
+    const { data, fontSpecial, materialSpecial, materialImgList } = this.props.store;
     return (
       <div className="editor-content-wrapper">
         <div className="editor-nav">
@@ -74,6 +78,8 @@ class EditorContent extends React.Component<Iprops, Istates> {
             fontSpecial={fontSpecial}
             menuCurrent={menuCurrent}
             materialSpecial={materialSpecial}
+            getMaterialImgList={this.callbackGetMaterialImgList}
+            materialImgList={materialImgList}
           />
         </div>
         <EditorRight />
