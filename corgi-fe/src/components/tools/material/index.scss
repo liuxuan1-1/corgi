@@ -13,8 +13,10 @@
   .material-wrapper {
     height: 100%;
     float: left;
+    overflow-y: auto;
+    overflow-x: hidden;
     .material-item-wrapper {
-      width: 141px;
+      width: 130px;
       padding: 10px 10px;
       height: 120px;
       display: inline-block;
@@ -61,10 +63,13 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      height: calc(100% - 144px);
+      overflow-y: auto;
+      overflow-x: hidden;
       .mine-item {
         position: relative;
-        width: 124px;
-        height: 124px;
+        width: 115px;
+        height: 115px;
         margin-top: 8px;
         background: #eceef0 50%/contain no-repeat;
         cursor: pointer;

@@ -104,7 +104,9 @@ class EditorRight extends React.Component<Iprops, Istates> {
     const { scale } = this.state;
     // width * height
     const workspaceSize: string[] = info.root.size.split('*');
-    const scaleValue = (this.editorClientHeight - 100) / parseInt(workspaceSize[1], 10)
+    const scaleValue = (this.editorClientHeight - 100) / parseInt(workspaceSize[1], 10);
+
+    this.props.store.setScaleValue(scaleValue);
 
     scale.workspaceCssFix.transform = `scale(${scaleValue})`;
     scale.workspaceBoxCssFix = {
@@ -128,6 +130,8 @@ class EditorRight extends React.Component<Iprops, Istates> {
     const { info } = this.props.store.data;
 
     const scaleValue = this.state.scaleValue + value;
+    this.props.store.setScaleValue(scaleValue);
+
     scale.workspaceCssFix.transform = `scale(${scaleValue})`;
 
     const workspaceSize: string[] = info.root.size.split('*');

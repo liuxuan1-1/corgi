@@ -23,7 +23,7 @@ interface Iprops {
 @observer
 class EditorContent extends React.Component<Iprops, Istates> {
   public readonly state: Readonly<Istates> = {
-    menuCurrent: 'background',
+    menuCurrent: 'zIndex',
   }
 
   public handleMenuClick = (e: ClickParam): void => {
@@ -42,9 +42,13 @@ class EditorContent extends React.Component<Iprops, Istates> {
     this.props.store.getMaterialImgList();
   }
 
+  public callbackChangeSelectData = (value: any): void => {
+    this.props.store.setSelectData(value);
+  }
+
   public render() {
     const { menuCurrent } = this.state;
-    const { data, fontSpecial, materialSpecial, materialImgList } = this.props.store;
+    const { data, fontSpecial, materialSpecial, materialImgList, scaleValue, selectData  } = this.props.store;
     return (
       <div className="editor-content-wrapper">
         <div className="editor-nav">
@@ -67,11 +71,16 @@ class EditorContent extends React.Component<Iprops, Istates> {
               <Icon type="experiment" />
               素材
             </Menu.Item>
+            <Menu.Item key="zIndex">
+              <Icon type="switcher" />
+              图层
+            </Menu.Item>
           </Menu>
         </div>
         <div className="editor-nav-panel">
           <NavPanel
             callbackChangeStore={this.callbackChangeStore}
+            callbackChangeSelectData={this.callbackChangeSelectData}
             data={{
               ...data.info
             }}
@@ -80,6 +89,8 @@ class EditorContent extends React.Component<Iprops, Istates> {
             materialSpecial={materialSpecial}
             getMaterialImgList={this.callbackGetMaterialImgList}
             materialImgList={materialImgList}
+            scaleValue={scaleValue}
+            selectData={selectData}
           />
         </div>
         <EditorRight />

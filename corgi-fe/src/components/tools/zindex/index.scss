@@ -1,0 +1,33 @@
+.panel-zindex-wrapper {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .zindex-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 47px;
+    cursor: pointer;
+    user-select: none;
+    .item-right {
+      width: 50px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      i:hover {
+        color: #1890ff;
+      }
+    }
+  }
+  .zindex-item:nth-child(odd){
+    background:#ffffff;
+  }
+  .zindex-item:nth-child(even){
+    background: #f7f8f9;
+  }
+  .zindex-item:hover, .zindex-item-select {
+    background: #eceef0 !important;
+  }
+  .zindex-item-select{
+    border-bottom: 1px dashed #1890ff;
+  }
+}

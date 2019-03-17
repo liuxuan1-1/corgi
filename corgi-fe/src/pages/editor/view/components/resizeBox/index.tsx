@@ -108,8 +108,8 @@ class ResizeBox extends React.Component<Iprops, Istates> {
   }
 
   public handleMouseUp = (e: MouseEvent): void => {
-    e.stopPropagation();
-    e.preventDefault();
+    // e.stopPropagation();
+    // e.preventDefault();
     this.dragObj = {
       able: false,
       clientX: 0,
@@ -122,8 +122,8 @@ class ResizeBox extends React.Component<Iprops, Istates> {
    * 鼠标移动
    */
   public handleMouseMove = (e: MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
+    // e.stopPropagation();
+    // e.preventDefault();
     if (!this.dragObj.able) { return }
     const { selectData, data } = this.props.store;
     const { scaleValue } = this.props;

@@ -5,6 +5,7 @@ import { action, runInAction } from 'mobx';
 import BackgroundPanel from '../../../../../components/tools/background';
 import Font from '../../../../../components/tools/font';
 import Material from '../../../../../components/tools/material';
+import ZindexPanel from '../../../../../components/tools/zindex';
 import { API_URL } from '../../../../../pagesConst';
 
 
@@ -14,6 +15,11 @@ interface Istates {
 interface Iprops {
   menuCurrent: string,
   callbackChangeStore: (e: any) => void,
+  callbackChangeSelectData: (e: any) => void,
+  selectData: {
+    [propName: string]: any,
+  },
+  scaleValue: number,
   fontSpecial: {
     [propName: string]: any,
   },
@@ -192,7 +198,7 @@ class NavPanel extends React.Component<Iprops, Istates> {
   }
 
   public renderNavPanel = (): React.ReactNode => {
-    const { menuCurrent, fontSpecial, data, materialSpecial, getMaterialImgList, materialImgList } = this.props;
+    const { menuCurrent, fontSpecial, data, materialSpecial, getMaterialImgList, materialImgList, callbackChangeSelectData, scaleValue, selectData, callbackChangeStore } = this.props;
     switch (menuCurrent) {
       case 'background':
         return <BackgroundPanel color={data.root.css.background} callbackChange={this.callbackChangeBackground} />
@@ -207,6 +213,16 @@ class NavPanel extends React.Component<Iprops, Istates> {
             materialImgList={materialImgList}
           />
         )
+      case 'zIndex':
+          return (
+            <ZindexPanel
+              data={data}
+              callbackChangeSelectData={callbackChangeSelectData}
+              callbackChangeStore={callbackChangeStore}
+              scaleValue={scaleValue}
+              selectData={selectData}
+            />
+          );
       default:
         return null;
     }

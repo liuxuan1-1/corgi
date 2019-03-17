@@ -2,9 +2,10 @@
   height: 100%;
   font-size: 20px;
   float: left;
-
+  overflow-y: auto;
+  overflow-x: hidden;
   .font {
-    width: 135px;
+    width: 130px;
     height: 76px;
     display: inline-block;
     text-align: center;

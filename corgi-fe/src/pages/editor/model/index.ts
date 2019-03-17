@@ -112,6 +112,7 @@ class Store {
     url: string,
   }> = []
 
+  @observable public scaleValue: number = 1;
   
   /**
    * 保存当前文件数据
@@ -300,6 +301,11 @@ class Store {
   @action
   public setChangeFilepx = (value: boolean) => {
     this.changeFilepx = value;
+  }
+
+  @action
+  public setScaleValue = (value: number) => {
+    this.scaleValue = value;
   }
 }
 
