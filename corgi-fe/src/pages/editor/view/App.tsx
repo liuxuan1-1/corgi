@@ -24,12 +24,12 @@ class App extends React.Component<any, any> {
         <Layout>
           <MyHeader />
           <Content className="content-wrapper">
-            <EditorContent exporting={exporting} />
+            <EditorContent exporting={exporting.ok} />
           </Content>
           {
-            exporting ? (
+            exporting.ok ? (
               <div className="spin-wrapper">
-                <Spin size="large" tip="导出中..." />
+                <Spin size="large" tip={exporting.tips} />
               </div>
             ) : null
           }

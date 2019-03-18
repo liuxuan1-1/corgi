@@ -12,6 +12,7 @@ export default (app: Application) => {
   router.post('/api/img/uploadAvatar', controller.img.uploadAvatar);
   router.post('/api/img/uploadFace', controller.img.uploadFace);
   router.post('/api/img/uploadMaterial', controller.img.uploadMaterial);
+  router.post('/api/img/uploadcover', controller.img.uploadCoverUrl);
   router.get('/api/img/getMaterial', controller.img.getMaterial);
   router.get('/api/img/delete', controller.img.delete);
 

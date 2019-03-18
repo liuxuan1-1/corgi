@@ -74,6 +74,9 @@ export default class DesignService extends Service {
         query: {
           _id: new ObjectId(_id),
         },
+        projection: {
+          templateId: false,
+        },
       });
       if (Array.isArray(result) && result.length !== 0) {
         if (!result[0].createUserId.equals(ctx.session.corgi_userId)) {
@@ -83,6 +86,7 @@ export default class DesignService extends Service {
             data: {},
           };
         } else {
+          Reflect.deleteProperty(result[0], 'createUserId');
           return {
             success: true,
             message: '调用成功',
@@ -99,6 +103,7 @@ export default class DesignService extends Service {
         };
       }
     } catch (error) {
+      console.log(error);
       return {
         success: false,
         message: `获取数据失败: ${JSON.stringify(error)}`,
@@ -230,6 +235,7 @@ export default class DesignService extends Service {
           $set: {
             info: data.info,
             designName: data.fileName,
+            coverUrl: data.coverUrl,
           },
         },
       });

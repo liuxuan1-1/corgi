@@ -13,7 +13,12 @@ export default class ImgController extends Controller {
 
   public async uploadMaterial() {
     const { ctx } = this;
-    ctx.body = await ctx.service.upload.upload('app/public/material', 'material');
+    ctx.body = await ctx.service.upload.upload('app/public/img/material', 'material');
+  }
+
+  public async uploadCoverUrl() {
+    const { ctx } = this;
+    ctx.body = await ctx.service.upload.upload('app/public/img/cover', 'cover');
   }
 
   public async delete() {

@@ -48,9 +48,7 @@ class Card extends React.PureComponent<Iprops, Istates> {
     const { data } = this.props;
     return (
       <div className="card-box-wrapper" onClick={this.handleClick}>
-        <div className="card-img">
-          <img src={data.coverUrl} />
-        </div>
+        <div className="card-img" style={{ backgroundImage: `url(${API_URL}/${data.coverUrl})` }} />
         <div className="card-content">
           <div className="card-name">
             {data.templateName}

@@ -48,6 +48,12 @@ export default (appInfo: EggAppInfo) => {
     ],
   };
 
+  const multipart = {
+    fileExtensions: [
+      '',
+    ],
+  };
+
   // the return config will combines to EggAppConfig
   return {
     ...config,
@@ -56,5 +62,6 @@ export default (appInfo: EggAppInfo) => {
     session,
     static: staticObj,
     userCheck,
+    multipart,
   };
 };

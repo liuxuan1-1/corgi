@@ -16,6 +16,7 @@ export interface IFileInfo {
 export interface IDesignSaveParam {
   info: IFileInfo,
   fileName: string,
+  coverUrl: string,
   id: string,
 }
 

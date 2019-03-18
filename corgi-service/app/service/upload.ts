@@ -13,6 +13,45 @@ import { IImgDocument } from '../../typings/mongo';
  * Upload Service
  */
 export default class Upload extends Service {
+  public async uploadCheck(coverId: {type: string, id: string}): Promise<boolean> {
+    const { ctx } = this;
+    if (!coverId.id) { return false; }
+    try {
+      // 取出对应表里的数据
+      const imgTarget = await ctx.app.mongo.find(coverId.type, {
+        query: {
+          _id: new ObjectId(coverId.id),
+        },
+      });
+      if (Array.isArray(imgTarget) && imgTarget.length !== 0) {
+        if (!imgTarget[0].createUserId.equals(ctx.session.corgi_userId)) {
+          return false;
+        }
+      } else {
+        return false;
+      }
+      const filePath = imgTarget[0].coverUrl.replace(/^(corgi)\//, () => {
+        return 'app/';
+      }).split('/').join('\\');
+      const allPath = path.join(
+        this.config.baseDir,
+        filePath,
+      );
+
+      if (fs.statSync(allPath).isFile) {
+        // fs.unlinkSync(allPath); 因为文件名相同, 原有文件被覆盖掉, 此处不必删除
+        // 删除文档数据
+        await ctx.app.mongo.db.collection('img').deleteOne({
+          url: imgTarget[0].coverUrl,
+        });
+      }
+    } catch {
+      return false;
+    }
+
+    return true;
+  }
+
   /**
    * upload file
    * @param filePath => 文件路径
@@ -21,13 +60,38 @@ export default class Upload extends Service {
     const { ctx } = this;
     const parts = ctx.multipart({ autoFields: true });
     const files: any[] = [];
+
+    const coverId = {
+      type: '',
+      id: '',
+    };
     try {
       let stream = await parts();
+
+      if (type === 'cover') {
+        if (parts.field.designId) {
+          coverId.type = 'design';
+          coverId.id = parts.field.designId;
+        } else if (parts.field.templateId) {
+          coverId.type = 'template';
+          coverId.id = parts.field.templateId;
+        }
+        if (!this.uploadCheck(coverId)) {
+          return {
+            success: false,
+            message: `上传检查出现错误`,
+            data: {},
+          };
+        }
+      }
 
       // 文件url
       const fileList: string[] = [];
       while (stream != null) {
-        const filename: string = `${new Date().getTime()}-${stream.filename.toLowerCase()}`;
+        let filename: string = `${new Date().getTime()}-${stream.filename.toLowerCase()}`;
+        if (type === 'cover') {
+          filename = `${coverId.id}.png`;
+        }
         const target = path.join(
           this.config.baseDir,
           filePath,

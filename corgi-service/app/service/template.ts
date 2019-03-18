@@ -122,6 +122,7 @@ export default class TemplateService extends Service {
             data: {},
           };
         } else {
+          Reflect.deleteProperty(result[0], 'createUserId');
           return {
             success: true,
             message: '调用成功',
@@ -250,6 +251,7 @@ export default class TemplateService extends Service {
             info: data.info,
             templateName: data.fileName,
             category: data.category,
+            coverUrl: data.coverUrl,
           },
         },
       });

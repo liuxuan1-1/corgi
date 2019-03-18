@@ -1,6 +1,8 @@
 import { observable, configure, action, runInAction } from 'mobx';
 import { message } from 'antd';
 import axios from 'axios';
+import domtoimage from 'dom-to-image';
+
 import { API_URL } from '../../../pagesConst';
 
 configure({
@@ -9,6 +11,7 @@ configure({
 
 interface IDesignData {
   fileName: string,
+  coverUrl: string,
   info: {
     element: Array<{
       [propName: string]: any,
@@ -39,6 +42,7 @@ class Store {
    */
   @observable public data: Partial<IDesignData> = {
     category: [],
+    coverUrl: '',
     fileName: '',
     info: {
       element: [],
@@ -58,7 +62,10 @@ class Store {
   /**
    * 通知工作区scale设置为1, 要不然导出图片有问题, 以及开关加载状态
    */
-  @observable public exporting = false; 
+  @observable public exporting = {
+    ok: false,
+    tips: '',
+  }
 
   /**
    * 字体特效
@@ -118,11 +125,57 @@ class Store {
   }> = []
 
   @observable public scaleValue: number = 1;
+
+  /**
+   * 导出封面
+   */
+  @action
+  public getCoverUrl = async () => {
+    this.setexporting(true, '保存中...')
+    const target = document.getElementsByClassName('workspace')[0];
+    if (target) {
+      const blob = await domtoimage.toBlob(target, { quality: 0.5 });
+      const formData = new FormData()
+      formData.append('cover', blob);
+      if (templateId) {
+        formData.append('templateId', templateId);
+      } else if (designId) {
+        formData.append('designId', designId);
+      } else {
+        message.error(`无法保存`);
+        return;
+      }
+
+      await axios({
+        data: formData,
+        method: 'post',
+        url: `${API_URL}/api/img/uploadcover`,
+        withCredentials: true,
+      }).then((e) => {
+        const result = e.data;
+        if (result.success) {
+          runInAction(() => {
+            this.data.coverUrl = result.data.file;
+          })
+        } else {
+          message.error(`封面图保存失败: ${result.message}`);
+        }
+      }).catch((e) => {
+        this.setexporting(false, '');
+        message.error(`封面图保存失败`);
+        // tslint:disable-next-line: no-console
+        console.error(`封面图保存失败: ${JSON.stringify(e)}`)
+      })
+    } else {
+      this.setexporting(false, '');
+    }
+  }
   
   /**
    * 保存当前文件数据
    */
-  public getSaveData = (noMessage: boolean = false) => {
+  public getSaveData = async (noMessage: boolean = false) => {
+    await this.getCoverUrl();
     let url = `${API_URL}/api/design/save`;
     if (templateId) {
       url = `${API_URL}/api/template/save`;
@@ -130,6 +183,7 @@ class Store {
       url = `${API_URL}/api/design/save`;
     } else {
       message.error(`文件不存在`);
+      this.setexporting(false, '');
       return;
     }
   
@@ -150,8 +204,10 @@ class Store {
       } else {
         message.error(`保存失败: ${result.message}`);
       }
+      this.setexporting(false, '');
     }).catch((e) => {
       message.error(`保存失败`);
+      this.setexporting(false, '');
       // tslint:disable-next-line: no-console
       console.error(`保存失败: ${JSON.stringify(e)}`)
     })
@@ -315,8 +371,9 @@ class Store {
 
 
   @action
-  public setexporting = (value: boolean) => {
-    this.exporting = value
+  public setexporting = (value: boolean, message: string = '导出中...') => {
+    this.exporting.ok = value;
+    this.exporting.tips = message;
   }
 }
 
