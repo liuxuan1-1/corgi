@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Layout, Input, Menu, Dropdown, Icon, Modal, Select } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
 import { inject, observer } from 'mobx-react';
+import domtoimage from 'dom-to-image';
+
 import FilePX from './filepx';
 import './index.scss';
 
@@ -19,11 +21,15 @@ interface Iprops {
   store?: any,
 }
 
+// 判断是design还是template文件
 const pageParam = location.search.slice(1).split('&').map(e => e.split('='));
 let isTemplateFile: boolean = false;
+let isDesignFile: boolean = false;
 if (Array.isArray(pageParam[0])) {
   if (pageParam[0][0] === 'templateid' && pageParam[0][1]) {
     isTemplateFile = true;
+  } else if (pageParam[0][0] === "designid" && pageParam[0][1]) {
+    isDesignFile = true;
   }
 }
 
@@ -32,6 +38,8 @@ if (Array.isArray(pageParam[0])) {
 class MyHeader extends React.Component<Iprops, Istates> {
   public readonly state: Readonly<Istates> = {
   }
+  
+  public exportImgType: string = 'jpeg';
 
   public handleChangeFileName = (e: React.ChangeEvent<HTMLInputElement>): void => {
     this.props.store.setDesignData({
@@ -45,11 +53,16 @@ class MyHeader extends React.Component<Iprops, Istates> {
     })
   }
 
+  public handleExportImgChange = (e: any): void => {
+    this.exportImgType = e;
+  }
+
   /**
    * 文件菜单点击事件
    */
   public handleClickFileMenu = (e: ClickParam) => {
-    const { category = ['精品'] } = this.props.store.data;
+    const { category = ['精品'], fileName } = this.props.store.data;
+    const { setexporting } = this.props.store
 
     switch (e.key) {
       case "save":
@@ -74,6 +87,46 @@ class MyHeader extends React.Component<Iprops, Istates> {
         break;
       case "unrelease":
         this.props.store.getRelease(false);
+        break;
+      case "export":
+        confirm({
+          cancelText: '取消',
+          content: (
+            <Select defaultValue={this.exportImgType} style={{ width: '100%' }} onChange={this.handleExportImgChange}>
+              <Option value="jpeg">jpeg</Option>
+              <Option value="png">png</Option>
+            </Select>
+          ),
+          okText: '导出',
+          onOk: () => {
+            const target = document.getElementsByClassName('workspace')[0];
+            if (target) {
+              setexporting(true);
+              if (this.exportImgType === 'jpeg') {
+                domtoimage.toJpeg(target)
+                  .then((dataUrl: string) => {
+                    const link = document.createElement('a');
+                    link.download = `${fileName}.jpeg`;
+                    link.href = dataUrl;
+                    link.click();
+                    setexporting(false);
+                  });
+              } else if (this.exportImgType === 'png') {
+                domtoimage.toPng(target)
+                  .then((dataUrl: string) => {
+                    const link = document.createElement('a');
+                    link.download = `${fileName}.png`;
+                    link.href = dataUrl;
+                    link.click();
+                    setexporting(false);
+                  })
+              }
+            }
+          },
+          title: '选择分类',
+        });
+
+
         break;
       default:
         break;
@@ -132,6 +185,13 @@ class MyHeader extends React.Component<Iprops, Istates> {
           isTemplateFile && isRelease === true ? (
             <Menu.Item key='unrelease'>
               取消发布
+            </Menu.Item>
+          ) : null
+        }
+        {
+          isDesignFile ? (
+            <Menu.Item key='export'>
+              导出
             </Menu.Item>
           ) : null
         }

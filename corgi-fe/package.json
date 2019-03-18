@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.13.2",
     "axios": "^0.18.0",
+    "dom-to-image": "^2.6.0",
     "lodash.throttle": "^4.1.1",
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
@@ -25,6 +26,7 @@
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
   "devDependencies": {
+    "@types/dom-to-image": "^2.6.0",
     "@types/jest": "^24.0.4",
     "@types/lodash.throttle": "^4.1.6",
     "@types/node": "^11.9.3",

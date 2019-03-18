@@ -56,6 +56,11 @@ class Store {
   @observable public changeFilepx = false;
 
   /**
+   * 通知工作区scale设置为1, 要不然导出图片有问题, 以及开关加载状态
+   */
+  @observable public exporting = false; 
+
+  /**
    * 字体特效
    */
   @observable public fontSpecial = {
@@ -306,6 +311,12 @@ class Store {
   @action
   public setScaleValue = (value: number) => {
     this.scaleValue = value;
+  }
+
+
+  @action
+  public setexporting = (value: boolean) => {
+    this.exporting = value
   }
 }
 

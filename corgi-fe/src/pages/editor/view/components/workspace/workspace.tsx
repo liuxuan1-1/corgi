@@ -234,9 +234,7 @@ class Workspace extends React.Component<Iprops, Istates> {
 
 
   public render() {
-    // const { data } = this.state;
     const { info, scale } = this.props;
-    // console.log(info);
     return (
       <div className="workspace-wrapper" style={{...scale.workspaceBoxCssFix}}>
         <div className="workspace" style={{ ...info.root.css, ...scale.workspaceCssFix }}>

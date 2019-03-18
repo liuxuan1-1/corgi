@@ -17,6 +17,7 @@ interface Istates {
 
 interface Iprops {
   store?: any,
+  exporting: boolean,
 }
 
 @inject('store')
@@ -49,6 +50,7 @@ class EditorContent extends React.Component<Iprops, Istates> {
   public render() {
     const { menuCurrent } = this.state;
     const { data, fontSpecial, materialSpecial, materialImgList, scaleValue, selectData  } = this.props.store;
+    const { exporting } = this.props;
     return (
       <div className="editor-content-wrapper">
         <div className="editor-nav">
@@ -93,7 +95,7 @@ class EditorContent extends React.Component<Iprops, Istates> {
             selectData={selectData}
           />
         </div>
-        <EditorRight />
+        <EditorRight exporting={exporting} />
       </div>
     );
   }

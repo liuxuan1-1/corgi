@@ -23,6 +23,7 @@ interface Istates {
 
 interface Iprops {
   store?: any,
+  exporting: boolean,
 }
 
 let firstLoad = true;
@@ -41,6 +42,10 @@ class EditorRight extends React.Component<Iprops, Istates> {
   public editorBox: React.RefObject<HTMLDivElement> = React.createRef();
   public editorClientHeight: number = 0;
   public needScroll: boolean = false;
+  public exportingPre: {
+    preScaleValue: number,
+    preChange: boolean,
+  } = { preScaleValue: 1, preChange: false}
 
   constructor(props: Iprops) {
     super(props);
@@ -59,14 +64,31 @@ class EditorRight extends React.Component<Iprops, Istates> {
 
   public componentDidUpdate() {
     const { changeFilepx } = this.props.store;
+    const { exporting } = this.props;
+    const { scaleValue } = this.state;
     if (firstLoad) {
       firstLoad = false;
       this.computedAutoScale();
     }
 
+    // 改变文件尺寸的时候修改工作区高度
     if (changeFilepx) {
       this.computedScale(0);
       this.props.store.setChangeFilepx(false);
+    }
+
+    // 导出的时候需要设置scale为1
+    if (exporting) {
+      if (scaleValue !== 1) {
+        this.exportingPre.preScaleValue = scaleValue;
+        this.exportingPre.preChange = true;
+        this.computedScale(1 - scaleValue);
+      }
+    } else {
+      if (this.exportingPre.preChange) {
+        this.exportingPre.preChange = false;
+        this.computedScale(this.exportingPre.preScaleValue - scaleValue);
+      }
     }
   }
 
