@@ -8,7 +8,18 @@ export default class ImgController extends Controller {
 
   public async uploadFace() {
     const { ctx } = this;
-    ctx.body = await ctx.service.upload.upload('app/public/img/user/face', 'face');
+    const result = await ctx.service.upload.upload('app/public/img/user/face', 'face');
+    const faceOk = await ctx.service.face.computed(result.data.file);
+    if (faceOk) {
+      ctx.body = result;
+    } else {
+      await ctx.service.upload.deleteUrl(result.data.file);
+      ctx.body = {
+        success: false,
+        message: '人脸识别度太低',
+        data: {},
+      };
+    }
   }
 
   public async uploadMaterial() {

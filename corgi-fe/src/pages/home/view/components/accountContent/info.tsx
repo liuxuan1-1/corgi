@@ -120,6 +120,10 @@ class InfoForm extends React.Component<Iprops, Istate> {
    */
   public avatarNormFile = (e: any) => {
     // console.log('Upload event:', e);
+    if (e.fileList && e.fileList[0] && e.fileList[0].response && !e.fileList[0].response.success ) {
+      e.fileList[0].status = 'error';
+      message.error(`上传错误: ${e.fileList[0].response.message}`);
+    }
     if (Array.isArray(e)) {
       return e;
     }

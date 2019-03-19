@@ -52,7 +52,7 @@ class AccountContent extends React.Component<Iprops, Istates> {
         }
         {
           menuCurrent === 'setting' ? (
-            <Setting />
+            <Setting userInfo={userInfo} />
           ) : null
         }
       </div>

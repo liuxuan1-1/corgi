@@ -24,7 +24,7 @@ interface Iprops {
 @observer
 class EditorContent extends React.Component<Iprops, Istates> {
   public readonly state: Readonly<Istates> = {
-    menuCurrent: 'zIndex',
+    menuCurrent: 'background',
   }
 
   public handleMenuClick = (e: ClickParam): void => {

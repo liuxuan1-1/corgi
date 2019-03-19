@@ -24,10 +24,13 @@
     "clean": "ets clean"
   },
   "dependencies": {
+    "@tensorflow/tfjs-node": "^1.0.1",
+    "canvas": "^2.4.0",
     "egg": "^2.6.1",
     "egg-cors": "^2.1.2",
     "egg-mongo-native": "^3.4.2",
     "egg-scripts": "^2.6.0",
+    "face-api.js": "^0.18.0",
     "ms": "^2.1.1",
     "mz-modules": "^2.1.0"
   },

@@ -31,6 +31,9 @@ const tailFormItemLayout = {
 };
 
 interface Iprops extends FormComponentProps {
+  userInfo: {
+    [propName: string]: any,
+  },
 }
 
 interface Istate {
@@ -47,15 +50,12 @@ class SettingForm extends React.Component<Iprops, Istate> {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values);
-        const params = {
-          faceOpen: false,
-        }
 
         axios({
-          data: params,
+          data: values,
           headers: { 'Content-Type': 'application/json' },
           method: 'post',
-          url: `${API_URL}/api/accounts/update123123`,
+          url: `${API_URL}/api/accounts/openface`,
           withCredentials: true,
         }).then((e) => {
           const result = e.data;
@@ -85,7 +85,8 @@ class SettingForm extends React.Component<Iprops, Istate> {
           {...formItemLayout}
           label="开启人脸登录"
         >
-          {getFieldDecorator('faceOpen', {
+          {getFieldDecorator('open', {
+            valuePropName: 'checked',
           })(
             <Switch />
           )}
@@ -106,6 +107,16 @@ class SettingForm extends React.Component<Iprops, Istate> {
   }
 }
 
-const WrappedSettingForm = Form.create({ name: 'setting' })(SettingForm);
+const WrappedSettingForm = Form.create({ name: 'setting',
+  mapPropsToFields(props: any) {
+    const result = props.userInfo.data;
+    if (!result) {return {}}
+    return {
+      open: Form.createFormField({
+        value: !!result.faceOpen,
+      }),
+    }
+  }
+ })(SettingForm);
 
 export default WrappedSettingForm;

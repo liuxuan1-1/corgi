@@ -126,6 +126,18 @@ class Store {
 
   @observable public scaleValue: number = 1;
 
+  @observable public userInfo = {};
+  @observable public faceCheck: boolean = false;
+
+  @action
+  public setUserInfo = (userInfo: any) => {
+    this.userInfo = userInfo;
+  }
+
+  @action
+  public setFaceCheck = (ok: boolean) => {
+    this.faceCheck = ok;
+  }
   /**
    * 导出封面
    */
@@ -248,6 +260,7 @@ class Store {
       // tslint:disable-next-line: no-console
       console.error(`获取文件数据请求失败: ${JSON.stringify(e)}`)
     })
+
   }
 
   /**

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { inject, observer } from 'mobx-react'
+import { inject, observer } from 'mobx-react';
 import { Layout } from 'antd';
 import MyHeader from '../../components/header/index';
 import LoginForm from '../../../../../components/loginForm/index';
+import Face from '../../../../../components/face/index'
 
 import HomeContent from '../../components/homeContent/index';
 import AccountContent from '../../components/accountContent/index';
@@ -46,6 +47,9 @@ class App extends React.Component<any, Istates> {
             data: result.data.userInfo,
             success: true,
           });
+          if (result.data.userInfo.faceOpen) {
+            Face.startFace()
+          }
         } 
       }).catch((e) => {
         // message.error(`获取用户信息出错`);
@@ -78,6 +82,9 @@ class App extends React.Component<any, Istates> {
 
     if (result.success) {
       this.props.store.setUserInfo(result);
+      if (result.data.faceOpen) {
+        Face.startFace()
+      }
     }
 
     return
@@ -134,11 +141,10 @@ class App extends React.Component<any, Istates> {
 
   public render() {
     const { loginFormShow, loginFormVisible } = this.state;
-    const { userInfo } = this.props.store;
+    const { userInfo, faceCheck } = this.props.store;
     const MyHeadProps: {
       myClassName?: string,
     } = {}
-
     if (window.location.hash !== '#/') {
       MyHeadProps.myClassName = "not-home"
     }
@@ -156,6 +162,11 @@ class App extends React.Component<any, Istates> {
             {this.renderContent()}
           </Content>
         </Layout>
+        {
+          userInfo.success && userInfo.data.faceOpen && !faceCheck ? (
+            <Face />
+          ) : null
+        }
         {
           window.location.hash === '#/' ? (
             <div className="home-bk">

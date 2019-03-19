@@ -159,6 +159,58 @@ export default class User extends Service {
     };
   }
 
+  public async openface(faceOpen: boolean) {
+    const { ctx } = this;
+    try {
+      const userInfo = await ctx.app.mongo.find('user', {
+        query: {
+          _id: new ObjectId(ctx.session.corgi_userId),
+        },
+      });
+      // console.log(userInfo);
+      if (Array.isArray(userInfo) && userInfo.length !== 0) {
+        if (!!!userInfo[0].faceDescriptor) {
+          return {
+            success: false,
+            message: '没找到人脸匹配图像',
+            data: {},
+          };
+        }
+      }
+
+      const result = await ctx.app.mongo.updateMany('user', {
+        filter: {
+          _id: new ObjectId(ctx.session.corgi_userId),
+        },
+        update: {
+          $set: {
+            faceOpen,
+          },
+        },
+      });
+      if (result.result.ok === 1) {
+        return {
+          success: true,
+          message: `修改成功`,
+          data: {
+          },
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: `数据库插入错误: ${error}`,
+        data: {},
+      };
+    }
+
+    return {
+      success: false,
+      message: '未知错误',
+      data: {},
+    };
+  }
+
   /**
    * 获取用户信息
    */

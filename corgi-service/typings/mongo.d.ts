@@ -34,6 +34,7 @@ export interface IUserDocument {
   faceUrl: string,
   permission: string,
   faceOpen: false,
+  faceDescriptor?: Float32Array,
 }
 
 export interface IDesignDocument {

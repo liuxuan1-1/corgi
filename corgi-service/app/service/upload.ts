@@ -135,6 +135,71 @@ export default class Upload extends Service {
     }
   }
 
+  public async deleteUrl(url: string): Promise<IResponseBody> {
+    const { ctx } = this;
+    const imgTarget = await ctx.app.mongo.find('img', {
+      query: {
+        url,
+      },
+    });
+    if (Array.isArray(imgTarget) && imgTarget.length !== 0) {
+      if (!imgTarget[0].userId.equals(ctx.session.corgi_userId)) {
+        return {
+          success: false,
+          message: '无权操作',
+          data: {},
+        };
+      }
+    } else {
+      return {
+        success: false,
+        message: '无权操作',
+        data: {},
+      };
+    }
+
+    try {
+      const filePath = imgTarget[0].url.replace(/^(corgi)\//, () => {
+        return 'app/';
+      }).split('/').join('\\');
+      fs.unlinkSync(path.join(
+        this.config.baseDir,
+        filePath,
+      ));
+    } catch (err) {
+      // 处理错误
+      return {
+        success: false,
+        message: `删除文件失败: ${JSON.stringify(err)}`,
+        data: {},
+      };
+    }
+
+    try {
+      const result = await ctx.app.mongo.db.collection('img').deleteOne({
+        url,
+      });
+      if (result.result.ok === 1) {
+        return {
+          success: true,
+          message: '删除成功',
+          data: {},
+        };
+      }
+    } catch (err) {
+      return {
+        success: false,
+        message: `删除数据库记录失败: ${JSON.stringify(err)}`,
+        data: {},
+      };
+    }
+    return {
+      success: false,
+      message: `未知错误`,
+      data: {},
+    };
+  }
+
   public async delete(id: string): Promise<IResponseBody> {
     const { ctx } = this;
     const imgTarget = await ctx.app.mongo.find('img', {
