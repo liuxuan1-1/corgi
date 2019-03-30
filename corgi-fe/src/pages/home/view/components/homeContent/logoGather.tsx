@@ -66,6 +66,7 @@ class LogoGather extends React.Component<IProps, any> {
   public setDataToDom(data: any, w: any, h: any) {
     this.pointArray = [];
     const pixSizeNumber: any = this.props.pixSize;
+    // 默认每间隔20个取一个点，并判断其透明度如果合适则放到pointArray
     for (let i = 0; i < w; i += pixSizeNumber) {
       for (let j = 0; j < h; j += pixSizeNumber) {
         if (data[((i + j * w) * 4) + 3] > 150) {
@@ -123,6 +124,7 @@ class LogoGather extends React.Component<IProps, any> {
     const img = new Image();
     img.onload = () => {
       ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, w as number, h as number);
+      // 获取图片像素点
       const data = ctx.getImageData(0, 0, w as number, h as number).data;
       this.setDataToDom(data, w, h);
       this.dom.removeChild(canvas);

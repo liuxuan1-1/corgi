@@ -8,6 +8,7 @@ import registerServiceWorker from '../registerServiceWorker';
 import App from './view/router/home/app';
 import './index.scss';
 
+document.title = '平面设计系统';
 
 ReactDOM.render(
   <HashRouter>

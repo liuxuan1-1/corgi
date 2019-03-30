@@ -7,6 +7,8 @@ import registerServiceWorker from '../registerServiceWorker';
 import App from './view/App';
 import './index.scss';
 
+document.title = '平面编辑';
+
 ReactDOM.render(
   <HashRouter>
     <Route exact={true} path="/">

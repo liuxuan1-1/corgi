@@ -75,6 +75,9 @@ class App extends React.Component<any, Istates> {
     return
   }
 
+  /**
+   * 关闭login弹窗的回调，应用与直接点击x，或者点击登录/注册按钮时的回调
+   */
   public callbackLoginFormClose = (result: IcallbackLoginFormCloseParam): void => {
     this.setState({
       loginFormVisible: false,
@@ -90,10 +93,16 @@ class App extends React.Component<any, Istates> {
     return
   }
 
+  /**
+   * 用户退出的回调，清除用户信息
+   */
   public callbackUserExit = (): void => {
     this.props.store.setUserInfo({});
   }
 
+  /**
+   * 根据路由切换样式
+   */
   public BodyClassName = (): string => {
     const result = window.location.hash;
     switch (result) {
@@ -112,6 +121,9 @@ class App extends React.Component<any, Istates> {
     }
   }
 
+  /**
+   * 根据路由显示content
+   */
   public renderContent = (): React.ReactNode | null => {
     const result = window.location.hash;
     const { userInfo } = this.props.store;

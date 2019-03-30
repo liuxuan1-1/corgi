@@ -35,6 +35,7 @@ function drawLandmarks(dimensions: any, canvas: any, results: any, withBoxes = t
 }
 
 let options: any;
+let stream: MediaStream;
 
 interface Istates {
 }
@@ -46,7 +47,7 @@ class Face extends React.Component<any, Istates> {
     await faceapi.loadTinyFaceDetectorModel(`${API_URL}/corgi/public/weights/`)
     await faceapi.loadFaceLandmarkModel(`${API_URL}/corgi/public/weights/`)
     await faceapi.loadFaceRecognitionModel(`${API_URL}/corgi/public/weights/`)
-    const stream = await navigator.mediaDevices.getUserMedia({ video: {} })
+    stream = await navigator.mediaDevices.getUserMedia({ video: {} })
     const faceVideo: HTMLVideoElement = document.getElementById('faceVideo') as HTMLVideoElement;
     if (faceVideo) {
       faceVideo.srcObject = stream;
@@ -58,6 +59,13 @@ class Face extends React.Component<any, Istates> {
 
   constructor(props: any) {
     super(props);
+  }
+
+  public componentWillUnmount() {
+    // 关闭视频流
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
   }
 
   public handleVideoPlay = async (): Promise<any> => {
