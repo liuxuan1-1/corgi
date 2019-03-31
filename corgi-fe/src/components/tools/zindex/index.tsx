@@ -52,11 +52,11 @@ class ZindexPanel extends React.Component<Iprops, Istates> {
     let end: any = {};
     let endIndex: number = 0;
     data.element.forEach((item, index): void => {
-      if (item.id === parseInt(this.drogId, 10)) {
+      if (item.id === this.drogId) {
         start = item;
         startIndex = index;
       }
-      if (item.id === parseInt(this.drogOverId, 10)) {
+      if (item.id === this.drogOverId) {
         end = item;
         endIndex = index;
       }
