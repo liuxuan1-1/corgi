@@ -299,8 +299,13 @@ const WrappedInfoForm = Form.create({
       }
 
       if (result.faceUrl) {
-        let fileName = result.faceUrl.match(fileRex)[2];
-        fileName = fileName.split('-')[1];
+        const match = result.faceUrl.match(fileRex);
+        let fileName: string = '';
+        if (Array.isArray(match) && match[2]) {
+          fileName = match[2];
+          fileName = fileName.split('-')[1];
+        }
+
         faceObj[0] = {
           name: '',
           postUrl: '',

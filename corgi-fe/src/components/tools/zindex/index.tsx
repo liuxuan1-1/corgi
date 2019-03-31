@@ -75,10 +75,7 @@ class ZindexPanel extends React.Component<Iprops, Istates> {
     const { callbackChangeSelectData, data, scaleValue } = this.props;
     const target: HTMLDivElement = e.currentTarget as HTMLDivElement;
     const result = data.element.find((item: any): boolean => {
-      if (target.dataset.id) {
-        return item.id === parseInt(target.dataset.id, 10)
-      }
-      return false;
+      return item.id === target.dataset.id
     })
     callbackChangeSelectData({
       id: result.id,
@@ -113,7 +110,7 @@ class ZindexPanel extends React.Component<Iprops, Istates> {
                 onDragEnd={this.handleDrogEnd}
                 onClick={this.handleClick}
               >
-                <span className="item-left">{e.id}. {e.type}</span>
+                <span className="item-left">{e.id}</span>
                 <div className="item-right" />
               </div>
             )

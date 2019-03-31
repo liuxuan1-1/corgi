@@ -70,8 +70,10 @@ class FontPanel extends React.Component<Iprops, Istates> {
 
   public handleLargeChange = (e: number) => {
     const { data, callbackChangeStore } = this.props;
-    data.style.fontSize = `${e}px`;
-    callbackChangeStore();
+    if (e >= 1 && e <= 200) {
+      data.style.fontSize = `${e}px`;
+      callbackChangeStore();
+    }
   }
 
   public handleColorChange = (e: string) => {

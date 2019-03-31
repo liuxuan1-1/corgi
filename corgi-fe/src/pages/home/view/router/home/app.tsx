@@ -86,6 +86,7 @@ class App extends React.Component<any, Istates> {
     if (result.success) {
       this.props.store.setUserInfo(result);
       if (result.data.faceOpen) {
+        this.props.store.setFaceCheck(false);
         Face.startFace()
       }
     }

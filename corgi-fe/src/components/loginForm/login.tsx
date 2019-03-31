@@ -102,7 +102,7 @@ class LoginForm extends React.Component<IUserFormProps, Istates> {
             <Button type="primary" htmlType="submit" className="login-form-button" loading={loginButtonLoading}>
               登录
             </Button>
-            Or <a href="#">注册!</a>
+            {/* Or <a href="#">注册!</a> */}
           </Form.Item>
           <Icon type="close" className="login-form-close" onClick={this.handleCloseClick} />
         </Form>

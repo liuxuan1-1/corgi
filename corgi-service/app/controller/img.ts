@@ -29,7 +29,7 @@ export default class ImgController extends Controller {
 
   public async uploadCoverUrl() {
     const { ctx } = this;
-    ctx.body = await ctx.service.upload.upload('app/public/img/cover', 'cover');
+    ctx.body = await ctx.service.upload.upload('app/public/img/cover', 'cover', ctx.query);
   }
 
   public async delete() {

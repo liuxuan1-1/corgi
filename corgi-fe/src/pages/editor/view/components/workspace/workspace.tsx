@@ -89,10 +89,7 @@ class Workspace extends React.Component<Iprops, Istates> {
     const { info, callbackChangeSelectStore, scale } = this.props;
     const target: HTMLDivElement = e.currentTarget as HTMLDivElement;
     const result = info.element.find((e: any): boolean => {
-      if (target.dataset.id) {
-        return e.id === parseInt(target.dataset.id, 10)
-      }
-      return false;
+      return e.id === target.dataset.id
     })
     callbackChangeSelectStore({
       id: result.id,
@@ -129,10 +126,7 @@ class Workspace extends React.Component<Iprops, Istates> {
     if (e.target) {
       const target: HTMLDivElement = e.currentTarget as HTMLDivElement;
       const result = info.element.find((e: any): boolean => {
-        if (target.dataset.id) {
-          return e.id === parseInt(target.dataset.id, 10)
-        }
-        return false;
+        return e.id === target.dataset.id;
       })
       if (selectData.id === result.id) {
         // 说明这是第二次点击, 如果该组件是文本组件开启编辑态
@@ -150,10 +144,7 @@ class Workspace extends React.Component<Iprops, Istates> {
     const { info, callbackChangeStore } = this.props;
     const target: HTMLDivElement = e.target as HTMLDivElement;
     const result = info.element.find((e: any): boolean => {
-      if (target.dataset.id) {
-        return e.id === parseInt(target.dataset.id, 10)
-      }
-      return false;
+      return e.id === target.dataset.id;
     })
     result.extends.content = target.innerText
     callbackChangeStore(info);

@@ -99,11 +99,11 @@ class MyHeader extends React.Component<Iprops, Istates> {
           ),
           okText: '导出',
           onOk: () => {
-            const target = document.getElementsByClassName('workspace')[0];
+            const target: any = document.getElementsByClassName('workspace')[0];
             if (target) {
               setexporting(true);
               if (this.exportImgType === 'jpeg') {
-                domtoimage.toJpeg(target)
+                domtoimage.toJpeg(target, { width: parseInt(target.style.width, 10), height: parseInt(target.style.height, 10)})
                   .then((dataUrl: string) => {
                     const link = document.createElement('a');
                     link.download = `${fileName}.jpeg`;
@@ -112,7 +112,7 @@ class MyHeader extends React.Component<Iprops, Istates> {
                     setexporting(false);
                   });
               } else if (this.exportImgType === 'png') {
-                domtoimage.toPng(target)
+                domtoimage.toPng(target, { width: parseInt(target.style.width, 10), height: parseInt(target.style.height, 10) })
                   .then((dataUrl: string) => {
                     const link = document.createElement('a');
                     link.download = `${fileName}.png`;

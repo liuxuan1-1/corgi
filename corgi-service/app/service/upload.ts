@@ -56,7 +56,7 @@ export default class Upload extends Service {
    * upload file
    * @param filePath => 文件路径
    */
-  public async upload(filePath: string, type: string): Promise<IResponseBody> {
+  public async upload(filePath: string, type: string, extra?: any): Promise<IResponseBody> {
     const { ctx } = this;
     const parts = ctx.multipart({ autoFields: true });
     const files: any[] = [];
@@ -69,14 +69,14 @@ export default class Upload extends Service {
       let stream = await parts();
 
       if (type === 'cover') {
-        if (parts.field.designId) {
+        if (extra.designid) {
           coverId.type = 'design';
-          coverId.id = parts.field.designId;
-        } else if (parts.field.templateId) {
+          coverId.id = extra.designid;
+        } else if (extra.templateid) {
           coverId.type = 'template';
-          coverId.id = parts.field.templateId;
+          coverId.id = extra.templateid;
         }
-        if (!this.uploadCheck(coverId)) {
+        if (!await this.uploadCheck(coverId)) {
           return {
             success: false,
             message: `上传检查出现错误`,

@@ -58,7 +58,7 @@ class NavPanel extends React.Component<Iprops, Istates> {
       extends: {
         content: '双击输入内容',
       },
-      id: 0,
+      id: '',
       position: {
         left: '0px',
         position: 'absolute',
@@ -94,8 +94,10 @@ class NavPanel extends React.Component<Iprops, Istates> {
 
     element.style.width = `${result[0]}px`;
     element.style.height = `136px`;
-    element.position.zIndex = data.element.length + 1;
-    element.id = data.element.length;
+    data.element[data.element.length - 1] ? (
+      element.position.zIndex = data.element[data.element.length - 1].position.zIndex + 1
+     ) : element.position.zIndex = 1;
+    element.id = `font-${new Date().getTime()}`;
 
     data.element.push(element);
     callbackChangeStore(data);
@@ -117,7 +119,7 @@ class NavPanel extends React.Component<Iprops, Istates> {
           childStyle: {},
           eleId: materialSpecial[e.target].id,
         },
-        id: 0,
+        id: '',
         position: {
           left: '0px',
           position: 'absolute',
@@ -140,8 +142,10 @@ class NavPanel extends React.Component<Iprops, Istates> {
 
       element.style.width = `${result[0]}px`;
       element.style.height = `136px`;
-      element.position.zIndex = data.element.length + 1;
-      element.id = data.element.length;
+      data.element[data.element.length - 1] ? (
+        element.position.zIndex = data.element[data.element.length - 1].position.zIndex + 1
+      ) : element.position.zIndex = 1;
+      element.id = `material-${new Date().getTime()}`;
 
       data.element.push(element);
       callbackChangeStore(data);
@@ -155,7 +159,7 @@ class NavPanel extends React.Component<Iprops, Istates> {
         extends: {
           url: item.url,
         },
-        id: 0,
+        id: '',
         position: {
           left: '0px',
           position: 'absolute',
@@ -186,8 +190,10 @@ class NavPanel extends React.Component<Iprops, Istates> {
             element.style.width = `${imgEle.width}px`;
             element.style.height = `${imgEle.height}px`;
           }
-          element.position.zIndex = data.element.length + 1;
-          element.id = data.element.length;
+          data.element[data.element.length - 1] ? (
+            element.position.zIndex = data.element[data.element.length - 1].position.zIndex + 1
+          ) : element.position.zIndex = 1;
+          element.id = `img-${new Date().getTime()}`;
 
           data.element.push(element);
           callbackChangeStore(data);

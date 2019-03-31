@@ -144,15 +144,16 @@ class Store {
   @action
   public getCoverUrl = async () => {
     this.setexporting(true, '保存中...')
-    const target = document.getElementsByClassName('workspace')[0];
+    const target: any = document.getElementsByClassName('workspace')[0];
     if (target) {
-      const blob = await domtoimage.toBlob(target, { quality: 0.5 });
+      const blob = await domtoimage.toBlob(target, { quality: 0.5, width: parseInt(target.style.width, 10), height: parseInt(target.style.height, 10) });
       const formData = new FormData()
       formData.append('cover', blob);
+      let dataParam = '';
       if (templateId) {
-        formData.append('templateId', templateId);
+        dataParam = `templateid=${templateId}`;
       } else if (designId) {
-        formData.append('designId', designId);
+        dataParam = `designid=${designId}`;
       } else {
         message.error(`无法保存`);
         return;
@@ -161,7 +162,7 @@ class Store {
       await axios({
         data: formData,
         method: 'post',
-        url: `${API_URL}/api/img/uploadcover`,
+        url: `${API_URL}/api/img/uploadcover?${dataParam}`,
         withCredentials: true,
       }).then((e) => {
         const result = e.data;
