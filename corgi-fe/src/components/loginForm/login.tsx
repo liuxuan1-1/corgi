@@ -47,10 +47,17 @@ class LoginForm extends React.Component<IUserFormProps, Istates> {
             message.error(`登录失败: ${result.message}`);
           }
         }).catch((e) => {
+          this.setState({
+            loginButtonLoading: false,
+          });
           message.error(`登录请求出错`);
           // tslint:disable-next-line: no-console
           console.error(`登录请求出错: ${JSON.stringify(e)}`)
         })
+      } else {
+        this.setState({
+          loginButtonLoading: false,
+        });
       }
     });
   }

@@ -117,7 +117,7 @@ class HomeText extends React.Component<{}, {}> {
               delay={2200}
               interval={30}
             >
-              by:  刘翾
+              by:  刘志翾
             </Texty>
         </div>
       </div>

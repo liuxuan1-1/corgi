@@ -52,6 +52,9 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
 
   public handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
+    this.setState({
+      loginButtonLoading: true,
+    });
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values);
@@ -91,10 +94,17 @@ class SignForm extends React.Component<ISignFormProps, Istate> {
             message.error(`注册失败: ${result.message}`);
           }
         }).catch((e) => {
+          this.setState({
+            loginButtonLoading: false,
+          });
           message.error(`注册请求出错`);
           // tslint:disable-next-line: no-console
           console.error(`注册请求出错: ${JSON.stringify(e)}`)
         })
+      } else {
+        this.setState({
+          loginButtonLoading: false,
+        });
       }
     });
   }
