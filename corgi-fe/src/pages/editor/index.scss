@@ -64,3 +64,19 @@ ul, li {
   border-right: 50px solid transparent;
   border-bottom: 100px solid #1890ff;
 }
+
+#tv {
+  position: relative;
+  width: 100px;
+  height: 75px;
+  margin: 20px 0;
+  background: #1890ff;
+  border-radius: 50% / 10%;
+}
+#tv:before {
+  content: '';
+  position: absolute;
+  top: 10%; bottom: 10%; right: -5%; left: -5%;
+  background: inherit;
+  border-radius: 5% / 50%;
+}

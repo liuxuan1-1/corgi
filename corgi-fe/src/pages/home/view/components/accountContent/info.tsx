@@ -73,19 +73,14 @@ class InfoForm extends React.Component<Iprops, Istate> {
         if (Array.isArray(values.avatar) && values.avatar.length !== 0) {
           const avatar = values.avatar[0].response;
           if (avatar && avatar.success) {
-            params.avatarUrl = avatar.data.file[0] || '';
-          } else if (values.avatar[0].postUrl) {
-            params.avatarUrl = values.avatar[0].postUrl;
+            params.avatarUrl = avatar.data.file || '';
           }
-
         }
 
         if (Array.isArray(values.face) && values.face.length !== 0) {
           const face = values.face[0].response;
           if (face && face.success) {
-            params.faceUrl = face.data.file[0] || '';
-          } else if (values.face[0].postUrl) {
-            params.faceUrl = values.face[0].postUrl;
+            params.faceUrl = face.data.file || '';
           }
         }
 
@@ -282,8 +277,12 @@ const WrappedInfoForm = Form.create({
     if (result) {
       const fileRex = /(\\|\/)(\d+-\S+.(jpg|png))$/;
       if (result.avatarUrl) {
-        let fileName = result.avatarUrl.match(fileRex)[2];
-        fileName = fileName.split('-')[1];
+        const match = result.avatarUrl.match(fileRex);
+        let fileName: string = '';
+        if (Array.isArray(match) && match[2]) {
+          fileName = match[2];
+          fileName = fileName.split('-')[1];
+        }
         avatarObj[0] = {
           name: '',
           postUrl: '',

@@ -122,6 +122,22 @@ export default class User extends Service {
   public async update(param) {
     const { ctx } = this;
     try {
+      const userInfo = await ctx.app.mongo.find('user', {
+        query: {
+          accountId: param.accountId,
+        },
+      });
+      if (Array.isArray(userInfo) && userInfo.length !== 0) {
+        if (!userInfo[0]._id.equals(ctx.session.corgi_userId)) {
+          return {
+            success: false,
+            message: '用户名存在',
+            data: {
+              hasUser: true,
+            },
+          };
+        }
+      }
       const result = await ctx.app.mongo.updateMany('user', {
         filter: {
           _id: new ObjectId(ctx.session.corgi_userId),

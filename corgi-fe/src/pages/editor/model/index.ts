@@ -101,6 +101,9 @@ class Store {
     正方形: {
       id: "square",
     },
+    电视: {
+      id: "tv"
+    },
   }
 
   /**

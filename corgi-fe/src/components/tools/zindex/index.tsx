@@ -63,9 +63,17 @@ class ZindexPanel extends React.Component<Iprops, Istates> {
     })
     if (startIndex === endIndex) { return }
 
-    const temZIndex = start.position.zIndex;
     start.position.zIndex = end.position.zIndex;
-    end.position.zIndex = temZIndex;
+    if (startIndex > endIndex) {
+      for (let i = endIndex; i < startIndex; i++) {
+        data.element[i].position.zIndex += 1;
+      }
+    } else {
+      for (let i = endIndex; i > startIndex; i--) {
+        data.element[i].position.zIndex -= 1;
+      }
+    }
+
     data.element.splice(endIndex, 0, data.element.splice(startIndex, 1)[0]);
     callbackChangeStore(data);
   }

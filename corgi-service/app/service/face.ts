@@ -35,7 +35,7 @@ export default class Face extends Service {
     await faceapi.nets.tinyFaceDetector.loadFromDisk('./app/public/weights');
     await faceapi.nets.faceLandmark68Net.loadFromDisk('./app/public/weights');
     await faceapi.nets.faceRecognitionNet.loadFromDisk('./app/public/weights');
-    const img  = await canvas.loadImage(`http://127.0.0.1:7001/${url}`);
+    const img = await canvas.loadImage(`http://127.0.0.1:7001/${encodeURI(url)}`);
     const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.5 });
 
     const detections = await faceapi.detectSingleFace(img, options).withFaceLandmarks().withFaceDescriptor();

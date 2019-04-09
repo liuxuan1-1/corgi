@@ -60,14 +60,14 @@
     }
     .mine-body-wrapper {
       padding: 0 14px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      float: left;
+      width: 100%;
       height: calc(100% - 144px);
       overflow-y: auto;
       overflow-x: hidden;
       .mine-item {
         position: relative;
+        display: inline-block;
         width: 115px;
         height: 115px;
         margin-top: 8px;
@@ -113,6 +113,14 @@
           display: block;
         }
       }
+      .mine-item:nth-child(even) {
+        margin-left: 5px;
+      }
+    }
+    .mine-body-wrapper::after {
+      clear: both;
+      display: block;
+      content: '';
     }
   }
 

@@ -83,7 +83,7 @@ class SettingForm extends React.Component<Iprops, Istate> {
       <Form onSubmit={this.handleSubmit} className="info-form">
         <Form.Item
           {...formItemLayout}
-          label="开启人脸登录"
+          label="开启人脸二次验证"
         >
           {getFieldDecorator('open', {
             valuePropName: 'checked',
