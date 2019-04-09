@@ -71,12 +71,14 @@ ul, li {
   height: 75px;
   margin: 20px 0;
   background: #1890ff;
-  border-radius: 50% / 10%;
+  border-radius: 10%;
+  // border-radius: 50% / 10%;
 }
 #tv:before {
   content: '';
   position: absolute;
   top: 10%; bottom: 10%; right: -5%; left: -5%;
   background: inherit;
-  border-radius: 5% / 50%;
+  border-radius: 10%;
+  // border-radius: 5% / 50%;
 }
