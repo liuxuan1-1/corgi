@@ -22,7 +22,11 @@
     "no-console": {
       "severity": "warning"
     },
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "no-implicit-dependencies": [
+      true,
+      "dev"
+    ]
   },
   "linterOptions": {
     "exclude": [

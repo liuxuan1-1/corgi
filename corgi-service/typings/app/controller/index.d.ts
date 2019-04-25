@@ -5,6 +5,7 @@ import 'egg';
 import ExportAccount from '../../../app/controller/account';
 import ExportDesign from '../../../app/controller/design';
 import ExportImg from '../../../app/controller/img';
+import ExportPage from '../../../app/controller/page';
 import ExportTemplate from '../../../app/controller/template';
 
 declare module 'egg' {
@@ -12,6 +13,7 @@ declare module 'egg' {
     account: ExportAccount;
     design: ExportDesign;
     img: ExportImg;
+    page: ExportPage;
     template: ExportTemplate;
   }
 }

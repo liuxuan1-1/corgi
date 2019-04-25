@@ -74,6 +74,8 @@ class InfoForm extends React.Component<Iprops, Istate> {
           const avatar = values.avatar[0].response;
           if (avatar && avatar.success) {
             params.avatarUrl = avatar.data.file || '';
+          } else if (values.avatar[0] && values.avatar[0].postUrl) {
+            params.avatarUrl = values.avatar[0].postUrl;
           }
         }
 
@@ -81,6 +83,8 @@ class InfoForm extends React.Component<Iprops, Istate> {
           const face = values.face[0].response;
           if (face && face.success) {
             params.faceUrl = face.data.file || '';
+          } else if (values.face[0] && values.face[0].postUrl) {
+            params.avatarUrl = values.face[0].postUrl;
           }
         }
 

@@ -31,4 +31,8 @@ export default (app: Application) => {
   router.get('/api/design/create', controller.design.create);
   router.post('/api/design/save', controller.design.save);
 
+  router.get('/', controller.page.home);
+  router.get('/home.html', controller.page.home);
+  router.get('/editor.html', controller.page.editor);
+
 };
